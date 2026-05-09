@@ -1,0 +1,3079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6824YHJX6G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6824YHJX6G');
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pressure Washing Calculator App | WashQuoteLab</title>
+  <meta name="description" content="Free pressure washing price calculator and quote builder for contractors. Estimate driveway, house wash, roof softwash, labor, chemicals, travel, overhead, profit margin, sealer, sand, and customer quotes." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Pressure Washing Calculator App | WashQuoteLab" />
+  <meta property="og:description" content="Create pressure washing price estimates and customer quotes, check profit margin, calculate softwash mix, and estimate sealer or polymeric sand materials." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://izoden.github.io/washquotelab/app.html" />
+  <!-- Google Search Console: replace the content value with the code Google gives you, or send me the code and I will generate a new file. -->
+  <meta name="google-site-verification" content="REPLACE_WITH_SEARCH_CONSOLE_CODE" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pressure Washing Price Calculator by WashQuoteLab",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Pressure washing price calculator and quote builder for contractors with softwash, sealer, sand, measurement, margin and PDF quote tools.",
+    "offers": [
+      {"@type":"Offer","name":"Free Calculator","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"Pro Monthly","price":"19","priceCurrency":"USD"},
+      {"@type":"Offer","name":"Lifetime Template","price":"49","priceCurrency":"USD"}
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #18202f;
+      --muted: #667085;
+      --primary: #1266f1;
+      --primary-dark: #0d4ec1;
+      --border: #d9e1ef;
+      --danger: #b42318;
+      --danger-bg: #fff1f0;
+      --success: #027a48;
+      --success-bg: #ecfdf3;
+      --warning: #b54708;
+      --warning-bg: #fffaeb;
+      --blue-bg: #eff6ff;
+      --shadow: 0 12px 30px rgba(24, 32, 47, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: linear-gradient(135deg, #0f172a, #123b7a);
+      color: white;
+      padding: 34px 20px;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 17px;
+      line-height: 1.55;
+    }
+
+    .hero-card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: var(--radius);
+      padding: 22px;
+      backdrop-filter: blur(8px);
+    }
+
+    .hero-card strong {
+      display: block;
+      font-size: 34px;
+      margin-bottom: 6px;
+      letter-spacing: -0.04em;
+    }
+
+    .hero-card span {
+      color: rgba(255, 255, 255, 0.8);
+      line-height: 1.45;
+    }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 20;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      padding: 12px 0;
+      overflow-x: auto;
+    }
+
+    .tab-btn {
+      border: 1px solid var(--border);
+      background: white;
+      border-radius: 999px;
+      padding: 10px 16px;
+      cursor: pointer;
+      color: var(--text);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    main { padding: 28px 0 60px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 0.92fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .section-note {
+      color: var(--muted);
+      font-size: 14px;
+      margin: -4px 0 18px;
+      line-height: 1.45;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .form-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full { grid-column: 1 / -1; }
+
+    label {
+      font-size: 13px;
+      font-weight: 800;
+      color: #344054;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      font: inherit;
+      background: white;
+      color: var(--text);
+      outline: none;
+    }
+
+    textarea {
+      min-height: 88px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(18, 102, 241, 0.11);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 22px 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 13px;
+      padding: 12px 16px;
+      font-weight: 800;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .primary { background: var(--primary); color: white; }
+    .primary:hover { background: var(--primary-dark); }
+    .secondary { background: #eef4ff; color: #175cd3; }
+    .ghost { background: white; color: var(--text); border: 1px solid var(--border); }
+    .danger-btn { background: var(--danger-bg); color: var(--danger); }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fbfcff;
+    }
+
+    .metric small {
+      display: block;
+      color: var(--muted);
+      font-weight: 800;
+      margin-bottom: 6px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+    }
+
+    .metric.highlight { background: var(--blue-bg); border-color: #b9d7ff; }
+    .metric.success { background: var(--success-bg); border-color: #abefc6; }
+    .metric.warning { background: var(--warning-bg); border-color: #fedf89; }
+    .metric.danger { background: var(--danger-bg); border-color: #fecdca; }
+
+    .notice {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.45;
+      border: 1px solid var(--border);
+    }
+
+    .notice.good { color: var(--success); background: var(--success-bg); border-color: #abefc6; }
+    .notice.warn { color: var(--warning); background: var(--warning-bg); border-color: #fedf89; }
+    .notice.bad { color: var(--danger); background: var(--danger-bg); border-color: #fecdca; }
+    .notice.info { color: #175cd3; background: #eff6ff; border-color: #b9d7ff; }
+
+    .line-items {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .line {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .line:last-child { border-bottom: 0; }
+    .line span:first-child { color: var(--muted); }
+    .line span:last-child { font-weight: 800; text-align: right; }
+
+    .quote-preview {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-top: 18px;
+    }
+
+    .quote-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+
+    .quote-top h3 {
+      margin: 0 0 6px;
+      font-size: 26px;
+      letter-spacing: -0.03em;
+    }
+
+    .quote-top p, .quote-preview p {
+      margin: 4px 0;
+      color: var(--muted);
+      line-height: 1.45;
+    }
+
+    .quote-badge {
+      background: #0f172a;
+      color: white;
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: right;
+      min-width: 160px;
+    }
+
+    .quote-badge small {
+      display: block;
+      color: rgba(255,255,255,.72);
+      font-weight: 700;
+    }
+
+    .quote-badge strong {
+      font-size: 26px;
+      letter-spacing: -0.04em;
+    }
+
+    .quote-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fbfcff;
+    }
+
+    .option-card.recommended {
+      background: var(--blue-bg);
+      border-color: #b9d7ff;
+    }
+
+    .option-card h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+    }
+
+    .option-card strong {
+      display: block;
+      font-size: 23px;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .option-card p {
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .assumption-box {
+      background: #fbfcff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .saved-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .saved-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .saved-item h3 { margin: 0 0 4px; }
+    .saved-item p { margin: 0; color: var(--muted); line-height: 1.45; }
+
+
+
+    .approval-box {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fbfcff;
+    }
+
+    .approval-box h4 { margin: 0 0 8px; font-size: 16px; }
+    .approval-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .signature-line {
+      border-top: 1px solid #98a2b3;
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 38px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .status-draft { color: #175cd3; background: #eff6ff; border-color: #b9d7ff; }
+    .status-sent { color: #b54708; background: var(--warning-bg); border-color: #fedf89; }
+    .status-accepted { color: var(--success); background: var(--success-bg); border-color: #abefc6; }
+    .status-declined { color: var(--danger); background: var(--danger-bg); border-color: #fecdca; }
+
+    .feedback-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .feedback-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      padding: 14px;
+    }
+
+    .feedback-item strong { display: block; margin-bottom: 4px; }
+    .feedback-item p { margin: 3px 0; color: var(--muted); line-height: 1.45; }
+
+    .methodology {
+      display: grid;
+      gap: 16px;
+    }
+
+    .methodology h3 { margin: 0 0 6px; }
+    .methodology p, .methodology li {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .source-list {
+      padding-left: 18px;
+      margin: 10px 0 0;
+    }
+
+    .hidden { display: none; }
+
+    .copy-status {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--success);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .mini-grid { grid-template-columns: 1fr 1fr; }
+      .approval-grid { grid-template-columns: 1fr; }
+    }
+
+    footer {
+      text-align: center;
+      padding: 28px 16px 36px;
+      border-top: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: #1f4e7a;
+      text-decoration: underline;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .footer-sep {
+      color: #64748b;
+      user-select: none;
+    }
+
+    @media (max-width: 920px) {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .form-grid, .form-grid.three, .result-grid, .quote-options, .quote-top {
+        grid-template-columns: 1fr;
+      }
+      .quote-badge { text-align: left; }
+    }
+
+    @media print {
+      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #materialsSection, #measureSection, #feedbackSection, #methodologySection, #pricingSection, #contactSection, #feedbackSection, #termsSection, #privacySection, .notice {
+        display: none !important;
+      }
+      body { background: white; }
+      main { padding: 0; }
+      .container { width: 100%; }
+      .grid { display: block; }
+      .card { box-shadow: none; border: none; padding: 0; }
+      .quote-preview { border: none; margin-top: 0; padding: 0; }
+      .line-items, .result-grid { display: none; }
+      .assumption-box { page-break-inside: avoid; }
+    }
+
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .price-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .price-card.featured {
+      border-color: #8bb8ff;
+      box-shadow: 0 10px 30px rgba(18, 102, 241, 0.12);
+      background: #f8fbff;
+    }
+
+    .price-card h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .price {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .price small {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .feature-list {
+      margin: 0;
+      padding-left: 20px;
+      color: #344054;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      background: #eef4ff;
+      color: #175cd3;
+      border: 1px solid #c7d7fe;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 900;
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid #fedf89;
+    }
+
+    .status-pill.active {
+      background: var(--success-bg);
+      color: var(--success);
+      border-color: #abefc6;
+    }
+
+    .legal-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fbfcff;
+    }
+
+    .legal-box h3 {
+      margin: 0 0 8px;
+    }
+
+    .legal-box p, .legal-box li {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 920px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+
+    .brand-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.88);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .landing-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .landing-copy h2 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+
+    .landing-copy p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .landing-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 0;
+    }
+
+    .landing-point {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fbfcff;
+    }
+
+    .landing-point strong { display: block; margin-bottom: 5px; }
+    .landing-point span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    .landing-mini {
+      background: linear-gradient(135deg, #eff6ff, #ecfdf3);
+      border: 1px solid #b9d7ff;
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .landing-mini h3 { margin: 0 0 8px; font-size: 20px; }
+    .landing-mini p { color: var(--muted); line-height: 1.55; }
+
+    @media (max-width: 920px) {
+      .landing-grid, .landing-points { grid-template-columns: 1fr; }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container hero">
+      <div>
+        <div class="brand-kicker">WashQuoteLab · Contractor quoting toolkit</div>
+        <h1>Pressure Washing Price Calculator</h1>
+        <p>
+          Estimate pressure washing prices, job costs, profit margin, softwash mix, sealer, sand, measurements, and professional customer quotes from one mobile-friendly web app.
+        </p>
+      </div>
+      <div class="hero-card">
+        <strong id="heroPrice">$0.00</strong>
+        <span>Recommended customer quote based on your own cost assumptions and target margin.</span>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container tabs">
+      <a class="tab-btn" href="index.html" style="text-decoration:none; display:inline-flex; align-items:center;">Home</a>
+      <button class="tab-btn active" data-tab="calculatorSection">New Quote</button>
+      <button class="tab-btn" data-tab="softwashSection">Softwash Mix</button>
+      <button class="tab-btn" data-tab="materialsSection">Sealer & Sand</button>
+      <button class="tab-btn" data-tab="measureSection">Measure</button>
+      <button class="tab-btn" data-tab="pricingSection">Pricing</button>
+      <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="calculatorSection">
+      <div class="notice warn" style="margin-bottom:18px;">Sample values are shown so the tool works immediately. They are not hidden recommendations. Review every assumption before using a quote commercially.</div>
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">1. Pressure washing quote details</h2>
+          <p class="section-note">The prefilled values are transparent sample defaults only. Replace company, customer, cost, labor, production rate, and margin assumptions with your real local data before sending any quote.</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="companyName">Company name</label>
+              <input id="companyName" value="Your Cleaning Company" />
+            </div>
+            <div class="field">
+              <label for="companyEmail">Company email</label>
+              <input id="companyEmail" value="hello@example.com" />
+            </div>
+            <div class="field">
+              <label for="companyPhone">Company phone</label>
+              <input id="companyPhone" value="+1 555 000 0000" />
+            </div>
+            <div class="field">
+              <label for="companyWebsite">Company website</label>
+              <input id="companyWebsite" value="www.example.com" />
+            </div>
+            <div class="field">
+              <label for="quoteNumber">Quote number</label>
+              <input id="quoteNumber" />
+            </div>
+            <div class="field">
+              <label for="validUntil">Quote valid until</label>
+              <input id="validUntil" type="date" />
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">2. Customer and project</h2>
+          <div class="form-grid">
+            <div class="field">
+              <label for="projectName">Project name</label>
+              <input id="projectName" value="Driveway cleaning estimate" />
+            </div>
+            <div class="field">
+              <label for="customerName">Customer name</label>
+              <input id="customerName" value="Sample Customer" />
+            </div>
+            <div class="field">
+              <label for="customerEmail">Customer email</label>
+              <input id="customerEmail" value="customer@example.com" />
+            </div>
+            <div class="field">
+              <label for="customerPhone">Customer phone</label>
+              <input id="customerPhone" value="+1 555 111 1111" />
+            </div>
+            <div class="field full">
+              <label for="jobAddress">Job address</label>
+              <input id="jobAddress" value="123 Sample Street" />
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">3. Job scope</h2>
+          <p class="section-note">Choose a service preset, then adjust area, difficulty, access, and method.</p>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="serviceType">Service type</label>
+              <select id="serviceType">
+                <option value="driveway">Driveway / concrete flatwork</option>
+                <option value="house">House wash</option>
+                <option value="roof">Roof soft wash</option>
+                <option value="deck">Deck / fence cleaning</option>
+                <option value="commercial">Commercial flatwork</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="surfaceType">Surface type</label>
+              <select id="surfaceType">
+                <option>Concrete</option>
+                <option>Brick / pavers</option>
+                <option>Vinyl siding</option>
+                <option>Roof shingles</option>
+                <option>Wood deck</option>
+                <option>Fence</option>
+                <option>Commercial pavement</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="area">Area to clean, sq ft</label>
+              <input id="area" type="number" value="800" min="1" />
+            </div>
+
+            <div class="field">
+              <label for="condition">Condition / soil level</label>
+              <select id="condition">
+                <option value="light">Light dirt</option>
+                <option value="normal" selected>Normal dirt</option>
+                <option value="heavy">Heavy algae / grime</option>
+                <option value="extreme">Extreme stains / slow job</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="access">Access difficulty</label>
+              <select id="access">
+                <option value="easy">Easy access</option>
+                <option value="normal" selected>Normal access</option>
+                <option value="difficult">Difficult access</option>
+                <option value="veryDifficult">Very difficult / risky</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="method">Cleaning method</label>
+              <select id="method">
+                <option>Pressure wash</option>
+                <option>Soft wash</option>
+                <option>Hot-water power wash</option>
+                <option>Surface cleaner</option>
+                <option>Manual detail work</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">4. Cost assumptions</h2>
+          <p class="section-note">
+            This is the heart of the app. Market ranges are only a sanity check. Your quote should be driven by your costs, speed, overhead, and target margin.
+          </p>
+
+          <div class="form-grid three">
+            <div class="field">
+              <label for="productionRate">Production rate, sq ft/hour</label>
+              <input id="productionRate" type="number" value="450" min="1" />
+            </div>
+            <div class="field">
+              <label for="setupHours">Setup/cleanup hours</label>
+              <input id="setupHours" type="number" value="0.5" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="crewSize">Crew size</label>
+              <input id="crewSize" type="number" value="1" step="1" min="1" />
+            </div>
+            <div class="field">
+              <label for="laborRate">Labor cost per person/hour</label>
+              <input id="laborRate" type="number" value="35" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="chemicalRate">Chemical/material cost per sq ft</label>
+              <input id="chemicalRate" type="number" value="0.02" step="0.01" min="0" />
+            </div>
+            <div class="field">
+              <label for="equipmentRate">Equipment/fuel cost per hour</label>
+              <input id="equipmentRate" type="number" value="12" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="travelHours">Travel time, hours</label>
+              <input id="travelHours" type="number" value="0.5" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="travelMiles">Travel distance, miles</label>
+              <input id="travelMiles" type="number" value="12" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="mileRate">Vehicle cost per mile</label>
+              <input id="mileRate" type="number" value="0.75" step="0.01" min="0" />
+            </div>
+            <div class="field">
+              <label for="overheadPct">Overhead %</label>
+              <input id="overheadPct" type="number" value="15" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="targetMargin">Target gross margin %</label>
+              <input id="targetMargin" type="number" value="45" step="1" min="1" max="95" />
+            </div>
+            <div class="field">
+              <label for="minimumCharge">Minimum job charge</label>
+              <input id="minimumCharge" type="number" value="150" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="addOnCost">Special add-on internal cost</label>
+              <input id="addOnCost" type="number" value="0" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="addOnCharge">Special add-on customer charge</label>
+              <input id="addOnCharge" type="number" value="0" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="taxPct">Tax %</label>
+              <input id="taxPct" type="number" value="0" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="discount">Discount amount</label>
+              <input id="discount" type="number" value="0" step="1" min="0" />
+            </div>
+            <div class="field">
+              <label for="depositPct">Deposit %</label>
+              <input id="depositPct" type="number" value="30" step="1" min="0" max="100" />
+            </div>
+            <div class="field">
+              <label for="currency">Currency symbol</label>
+              <input id="currency" value="$" />
+            </div>
+
+            <div class="field full">
+              <label for="notes">Customer-facing notes</label>
+              <textarea id="notes">Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, water-access issues, or hazardous conditions may require revised pricing.</textarea>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">5. Quote status and acceptance</h2>
+          <p class="section-note">Use this after the customer has reviewed the quote. This stays local in the browser for now.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="quoteStatus">Quote status</label>
+              <select id="quoteStatus">
+                <option value="draft">Draft</option>
+                <option value="sent">Sent</option>
+                <option value="accepted">Accepted</option>
+                <option value="declined">Declined</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="acceptanceDate">Acceptance date</label>
+              <input id="acceptanceDate" type="date" />
+            </div>
+            <div class="field">
+              <label for="acceptedBy">Accepted by</label>
+              <input id="acceptedBy" placeholder="Customer name" />
+            </div>
+            <div class="field">
+              <label for="signatureName">Typed signature</label>
+              <input id="signatureName" placeholder="Customer typed signature" />
+            </div>
+            <div class="field full">
+              <label for="approvalNotes">Acceptance / internal notes</label>
+              <textarea id="approvalNotes" placeholder="Optional: approval message, requested changes, or reason declined."></textarea>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="calculateBtn">Calculate Quote</button>
+            <button class="secondary" id="saveQuoteBtn">Save Quote</button>
+            <button class="ghost" id="resetBtn">Reset Example</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Quote result</h2>
+          <p class="section-note">Internal numbers are for the contractor. The customer quote below hides your internal cost structure.</p>
+
+          <div class="result-grid">
+            <div class="metric highlight">
+              <small>Recommended quote</small>
+              <strong id="recommendedPrice">$0.00</strong>
+            </div>
+            <div class="metric success" id="marginBox">
+              <small>Estimated margin</small>
+              <strong id="grossMargin">0.0%</strong>
+            </div>
+            <div class="metric">
+              <small>Internal cost</small>
+              <strong id="internalCost">$0.00</strong>
+            </div>
+            <div class="metric">
+              <small>Estimated job time</small>
+              <strong id="jobHours">0.00 h</strong>
+            </div>
+          </div>
+
+          <div id="warningBox" class="notice info">Enter job details and calculate the quote.</div>
+
+          <div class="line-items">
+            <div class="line"><span>Cleaning time</span><span id="cleaningTime">0.00 h</span></div>
+            <div class="line"><span>Total elapsed time</span><span id="elapsedTime">0.00 h</span></div>
+            <div class="line"><span>Labor cost</span><span id="laborCost">$0.00</span></div>
+            <div class="line"><span>Chemicals/materials</span><span id="chemicalCost">$0.00</span></div>
+            <div class="line"><span>Equipment/fuel</span><span id="equipmentCost">$0.00</span></div>
+            <div class="line"><span>Travel vehicle cost</span><span id="travelCost">$0.00</span></div>
+            <div class="line"><span>Overhead allocation</span><span id="overheadCost">$0.00</span></div>
+            <div class="line"><span>Profit before tax</span><span id="profitAmount">$0.00</span></div>
+            <div class="line"><span>Source-backed market sanity range</span><span id="marketRange">$0.00 - $0.00</span></div>
+            <div class="line"><span>Deposit</span><span id="depositAmount">$0.00</span></div>
+            <div class="line"><span>Balance after deposit</span><span id="balanceAmount">$0.00</span></div>
+          </div>
+
+          <div class="quote-preview" id="quotePreview">
+            <div class="quote-top">
+              <div>
+                <h3 id="quoteCompany">Your Cleaning Company</h3>
+                <p><span id="quoteCompanyContact">hello@example.com · +1 555 000 0000</span></p>
+                <p><span id="quoteCompanyWebsite">www.example.com</span></p>
+              </div>
+              <div class="quote-badge">
+                <small>Total quote</small>
+                <strong id="quoteTotal">$0.00</strong>
+              </div>
+            </div>
+
+            <p><strong>Quote #:</strong> <span id="quoteNo">-</span></p>
+            <p><strong>Valid until:</strong> <span id="quoteValidUntil">-</span></p>
+            <p><strong>Project:</strong> <span id="quoteProject">-</span></p>
+            <p><strong>Customer:</strong> <span id="quoteCustomer">-</span></p>
+            <p><strong>Contact:</strong> <span id="quoteCustomerContact">-</span></p>
+            <p><strong>Job address:</strong> <span id="quoteJobAddress">-</span></p>
+            <p><strong>Service:</strong> <span id="quoteService">-</span></p>
+            <p><strong>Scope:</strong> <span id="quoteScope">-</span></p>
+            <p><strong>Notes:</strong> <span id="quoteNotes">-</span></p>
+
+            <div class="quote-options">
+              <div class="option-card">
+                <h4>Good</h4>
+                <strong id="goodPrice">$0.00</strong>
+                <p>Standard cleaning based on the current job scope.</p>
+              </div>
+              <div class="option-card recommended">
+                <h4>Better · Recommended</h4>
+                <strong id="betterPrice">$0.00</strong>
+                <p>Standard cleaning plus extra detail time and minor spot treatment allowance.</p>
+              </div>
+              <div class="option-card">
+                <h4>Best</h4>
+                <strong id="bestPrice">$0.00</strong>
+                <p>Highest allowance for detail work, tougher stains, and priority service buffer.</p>
+              </div>
+            </div>
+
+            <div class="assumption-box" id="quoteAssumptions">
+              Assumptions will appear here after calculation.
+            </div>
+
+            <div class="approval-box">
+              <h4>Customer approval</h4>
+              <p><span id="quoteStatusBadge" class="status-badge status-draft">Draft</span></p>
+              <p><strong>Accepted by:</strong> <span id="quoteAcceptedBy">-</span></p>
+              <p><strong>Acceptance date:</strong> <span id="quoteAcceptanceDate">-</span></p>
+              <p><strong>Approval notes:</strong> <span id="quoteApprovalNotes">-</span></p>
+              <div class="approval-grid">
+                <div class="signature-line"><strong id="quoteSignatureName">Customer signature</strong><br />Typed signature</div>
+                <div class="signature-line">Date</div>
+                <div class="signature-line">Company representative</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="printBtn">Print / Save PDF</button>
+            <button class="secondary" id="copyQuoteBtn">Copy Quote Text</button>
+            <button class="ghost" id="markSentBtn">Mark Sent</button>
+            <button class="ghost" id="markAcceptedBtn">Mark Accepted</button>
+            <div id="copyStatus" class="copy-status"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="softwashSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Softwash batch mix calculator</h2>
+          <p class="section-note">
+            Dilution math only. Enter your stock sodium hypochlorite strength, target application strength, and final batch volume.
+          </p>
+
+          <div class="notice warn">
+            Safety: Do not mix sodium hypochlorite/bleach with acids, vinegar, ammonia, or unknown cleaners. Follow product labels, PPE requirements, local rules, and site safety procedures.
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="form-grid three">
+            <div class="field">
+              <label for="shStockStrength">Stock SH strength %</label>
+              <input id="shStockStrength" type="number" value="12.5" step="0.1" min="0.1" />
+            </div>
+            <div class="field">
+              <label for="shTargetStrength">Target mix strength %</label>
+              <input id="shTargetStrength" type="number" value="3" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="mixBatchVolume">Final batch volume</label>
+              <input id="mixBatchVolume" type="number" value="20" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="mixUnit">Volume unit</label>
+              <select id="mixUnit">
+                <option value="gal">gallons</option>
+                <option value="L">liters</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="surfactantRate">Surfactant rate</label>
+              <input id="surfactantRate" type="number" value="1" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="surfactantUnit">Surfactant unit</label>
+              <select id="surfactantUnit">
+                <option value="ozPerGal">oz per gallon</option>
+                <option value="mlPerL">mL per liter</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="calculateSoftwashBtn">Calculate Mix</button>
+            <button class="ghost" id="resetSoftwashBtn">Reset Example</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Mix result</h2>
+          <p class="section-note">Based on the dilution balance C1 × V1 = C2 × V2.</p>
+
+          <div class="result-grid">
+            <div class="metric highlight">
+              <small>Stock SH needed</small>
+              <strong id="shNeeded">0</strong>
+            </div>
+            <div class="metric">
+              <small>Water needed</small>
+              <strong id="waterNeeded">0</strong>
+            </div>
+            <div class="metric">
+              <small>Surfactant</small>
+              <strong id="surfactantNeeded">0</strong>
+            </div>
+            <div class="metric">
+              <small>Water : SH ratio</small>
+              <strong id="mixRatio">0 : 1</strong>
+            </div>
+          </div>
+
+          <div id="softwashWarning" class="notice info">Enter values and calculate the mix.</div>
+
+          <div class="line-items">
+            <div class="line"><span>Formula</span><span>C1 × V1 = C2 × V2</span></div>
+            <div class="line"><span>Stock strength</span><span id="shStockOut">0%</span></div>
+            <div class="line"><span>Target strength</span><span id="shTargetOut">0%</span></div>
+            <div class="line"><span>Final batch</span><span id="batchOut">0</span></div>
+            <div class="line"><span>Stock chemical share</span><span id="stockShareOut">0%</span></div>
+          </div>
+
+          <div class="assumption-box">
+            This calculator only handles dilution math. It does not verify whether the target strength is appropriate for a roof, siding, concrete, vegetation risk, runoff control, or local regulation.
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="materialsSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Sealer and polymeric sand calculator</h2>
+          <p class="section-note">
+            Material estimating only. Coverage varies by product, surface porosity, joint width, joint depth, and application method.
+          </p>
+
+          <div class="notice warn">
+            Use this as a planning estimator. Always confirm coverage from the manufacturer label or technical data sheet for the exact sealer or sand product used.
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Sealer estimate</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="sealArea">Area to seal, sq ft</label>
+              <input id="sealArea" type="number" value="1000" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealCoverage">Coverage, sq ft/gallon/coat</label>
+              <input id="sealCoverage" type="number" value="200" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealCoats">Number of coats</label>
+              <input id="sealCoats" type="number" value="2" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealWaste">Waste/porosity allowance %</label>
+              <input id="sealWaste" type="number" value="10" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealCost">Sealer cost per gallon</label>
+              <input id="sealCost" type="number" value="35" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="sealCurrency">Currency symbol</label>
+              <input id="sealCurrency" value="$" />
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Polymeric sand estimate</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="sandArea">Paver area, sq ft</label>
+              <input id="sandArea" type="number" value="500" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="jointType">Joint type</label>
+              <select id="jointType">
+                <option value="narrow">Narrow joints</option>
+                <option value="medium" selected>Medium joints</option>
+                <option value="wide">Wide joints</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sandCoverage">Coverage, sq ft/bag</label>
+              <input id="sandCoverage" type="number" value="50" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sandWaste">Waste allowance %</label>
+              <input id="sandWaste" type="number" value="10" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="sandCost">Sand cost per bag</label>
+              <input id="sandCost" type="number" value="28" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="sandBagSize">Bag size label</label>
+              <input id="sandBagSize" value="50 lb / 22.7 kg" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="calculateMaterialsBtn">Calculate Materials</button>
+            <button class="ghost" id="resetMaterialsBtn">Reset Example</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Material result</h2>
+          <p class="section-note">Use these quantities for planning and quote line items. Confirm with product-specific data sheets before field use.</p>
+
+          <div class="result-grid">
+            <div class="metric highlight">
+              <small>Sealer required</small>
+              <strong id="sealerGallons">0 gal</strong>
+            </div>
+            <div class="metric">
+              <small>Sealer to buy</small>
+              <strong id="sealerBuy">0 gal</strong>
+            </div>
+            <div class="metric highlight">
+              <small>Sand bags required</small>
+              <strong id="sandBags">0 bags</strong>
+            </div>
+            <div class="metric">
+              <small>Total material cost</small>
+              <strong id="materialCost">$0.00</strong>
+            </div>
+          </div>
+
+          <div id="materialsWarning" class="notice info">Enter values and calculate materials.</div>
+
+          <div class="line-items">
+            <div class="line"><span>Sealer coverage basis</span><span id="sealBasisOut">0</span></div>
+            <div class="line"><span>Sealer estimated cost</span><span id="sealCostOut">$0.00</span></div>
+            <div class="line"><span>Sand coverage basis</span><span id="sandBasisOut">0</span></div>
+            <div class="line"><span>Sand estimated cost</span><span id="sandCostOut">$0.00</span></div>
+          </div>
+
+          <div class="assumption-box">
+            Sealer coverage commonly varies around 100–300 sq ft/gallon depending on sealer type, coat, and porosity. Polymeric sand coverage varies strongly with joint width/depth and paver shape; use the product label as the final authority.
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="measureSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Field measurement and unit converter</h2>
+          <p class="section-note">
+            Fast field helper for area measurement, metric/imperial conversion, and price-per-area conversion. Use this to convert a measured job area into the quote calculator.
+          </p>
+
+          <div class="notice info">
+            Conversion basis: 1 ft = 0.3048 m exactly, so 1 sq ft = 0.09290304 sq m. For liquid volume, 1 US gallon = 3.785411784 L.
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Area measurement</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="measureShape">Shape</label>
+              <select id="measureShape">
+                <option value="rectangle">Rectangle / driveway / patio</option>
+                <option value="circle">Circle / round area</option>
+                <option value="manual">Manual area entry</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="measureUnit">Input unit</label>
+              <select id="measureUnit">
+                <option value="ft">feet</option>
+                <option value="m">meters</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="measureQty">Number of same areas</label>
+              <input id="measureQty" type="number" value="1" min="1" step="1" />
+            </div>
+            <div class="field measure-rect">
+              <label for="measureLength">Length</label>
+              <input id="measureLength" type="number" value="40" min="0" step="0.1" />
+            </div>
+            <div class="field measure-rect">
+              <label for="measureWidth">Width</label>
+              <input id="measureWidth" type="number" value="20" min="0" step="0.1" />
+            </div>
+            <div class="field measure-circle hidden">
+              <label for="measureDiameter">Diameter</label>
+              <input id="measureDiameter" type="number" value="25" min="0" step="0.1" />
+            </div>
+            <div class="field measure-manual hidden">
+              <label for="manualArea">Manual area</label>
+              <input id="manualArea" type="number" value="800" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="measureWaste">Allowance / waste %</label>
+              <input id="measureWaste" type="number" value="0" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="measureProductionRate">Production rate, sq ft/hour</label>
+              <input id="measureProductionRate" type="number" value="450" min="1" step="1" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="calculateMeasureBtn">Calculate Measurement</button>
+            <button class="secondary" id="useAreaBtn">Use Area in Quote</button>
+            <button class="ghost" id="resetMeasureBtn">Reset Example</button>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Price and volume conversion</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="pricePerSqFt">Price per sq ft</label>
+              <input id="pricePerSqFt" type="number" value="0.35" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="pricePerSqM">Price per m²</label>
+              <input id="pricePerSqM" type="number" value="0" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="volumeGal">US gallons</label>
+              <input id="volumeGal" type="number" value="5" min="0" step="0.1" />
+            </div>
+            <div class="field">
+              <label for="volumeLiters">Liters</label>
+              <input id="volumeLiters" type="number" value="0" min="0" step="0.1" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Measurement result</h2>
+          <p class="section-note">Use this result for quoting, softwash planning, sealer, or sand estimates.</p>
+
+          <div class="result-grid">
+            <div class="metric highlight">
+              <small>Area</small>
+              <strong id="measureSqFt">0 sq ft</strong>
+            </div>
+            <div class="metric">
+              <small>Area metric</small>
+              <strong id="measureSqM">0 m²</strong>
+            </div>
+            <div class="metric">
+              <small>Estimated cleaning time</small>
+              <strong id="measureHours">0 h</strong>
+            </div>
+            <div class="metric">
+              <small>Converted price</small>
+              <strong id="convertedPrice">0 / m²</strong>
+            </div>
+          </div>
+
+          <div class="line-items">
+            <div class="line"><span>Base area before allowance</span><span id="baseAreaOut">0</span></div>
+            <div class="line"><span>Allowance added</span><span id="allowanceOut">0</span></div>
+            <div class="line"><span>Quantity multiplier</span><span id="qtyOut">1</span></div>
+            <div class="line"><span>Volume conversion</span><span id="volumeOut">0</span></div>
+          </div>
+
+          <div id="measureWarning" class="notice good">Measurement ready.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="savedSection" class="hidden">
+      <div class="card">
+        <h2 class="section-title">Saved quotes</h2>
+        <p class="section-note">
+          Quotes are saved in this browser only. A future paid version could save them to a cloud account.
+        </p>
+        <div class="actions">
+          <button class="secondary" id="exportSavedCsvBtn">Export Saved Quotes CSV</button>
+          <button class="danger-btn" id="clearSavedBtn">Clear Saved Quotes</button>
+        </div>
+        <div class="divider"></div>
+        <div id="savedList" class="saved-list"></div>
+      </div>
+    </section>
+
+
+    <section id="feedbackSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Feedback collector</h2>
+          <p class="section-note">Use this while testing with contractors. Ask what number looks wrong, not whether they “like” the app.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="feedbackName">Tester name / company</label>
+              <input id="feedbackName" placeholder="ABC Exterior Cleaning" />
+            </div>
+            <div class="field">
+              <label for="feedbackRole">Role</label>
+              <select id="feedbackRole">
+                <option>Owner/operator</option>
+                <option>Estimator</option>
+                <option>Crew lead</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="feedbackJobType">Job tested</label>
+              <select id="feedbackJobType">
+                <option>Driveway / concrete flatwork</option>
+                <option>House wash</option>
+                <option>Roof soft wash</option>
+                <option>Deck / fence cleaning</option>
+                <option>Commercial flatwork</option>
+                <option>Softwash mix</option>
+                <option>Sealer / sand</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="feedbackPriceFeel">Quote realism</label>
+              <select id="feedbackPriceFeel">
+                <option>Looks realistic</option>
+                <option>Too low</option>
+                <option>Too high</option>
+                <option>Unsure</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="feedbackWrongNumber">Which number looked wrong?</label>
+              <textarea id="feedbackWrongNumber" placeholder="Example: roof softwash chemical cost too low, production rate too fast..."></textarea>
+            </div>
+            <div class="field full">
+              <label for="feedbackMissingField">Which field is missing?</label>
+              <textarea id="feedbackMissingField" placeholder="Example: water access, pitch, gum removal, post-treatment, minimum charge..."></textarea>
+            </div>
+            <div class="field full">
+              <label for="feedbackPaidFeature">Would they pay for saved presets / branded PDF / cloud quotes?</label>
+              <textarea id="feedbackPaidFeature" placeholder="Record direct wording. Do not summarize too softly."></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="saveFeedbackBtn">Save Feedback</button>
+            <button class="secondary" id="copyFeedbackBtn">Copy Feedback Text</button>
+            <button class="danger-btn" id="clearFeedbackBtn">Clear Feedback</button>
+            <div id="feedbackCopyStatus" class="copy-status"></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Saved feedback</h2>
+          <p class="section-note">Stored only in this browser. Copy/export manually before clearing browser data.</p>
+          <div id="feedbackList" class="feedback-list"></div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <section id="pricingSection" class="hidden">
+      <div class="card">
+        <h2 class="section-title">Pricing and monetization</h2>
+        <p class="section-note">
+          Static GitHub Pages cannot securely verify subscriptions by itself. This version is payment-link ready: create Stripe Payment Links, paste them below, and the buttons will open the payment pages.
+        </p>
+
+        <div class="notice warn">
+          Important: this is not a secure SaaS paywall yet. It is a validation-ready monetization page. Real account gating requires a backend/database later.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="pricing-grid">
+          <div class="price-card">
+            <span class="badge">Free</span>
+            <h3>Free Calculator</h3>
+            <div class="price">$0</div>
+            <ul class="feature-list">
+              <li>Quote/profit calculator</li>
+              <li>Softwash mix calculator</li>
+              <li>Sealer and sand calculators</li>
+              <li>Measurement converter</li>
+            </ul>
+            <button class="ghost" onclick="showTab('calculatorSection')">Use Free Tools</button>
+          </div>
+
+          <div class="price-card featured">
+            <span class="badge">Recommended</span>
+            <h3>Pro Monthly</h3>
+            <div class="price">$19 <small>/ month</small></div>
+            <ul class="feature-list">
+              <li>Branded quote workflow</li>
+              <li>Saved quotes and CSV export</li>
+              <li>Good / Better / Best options</li>
+              <li>Customer acceptance block</li>
+            </ul>
+            <button class="primary" id="buyProMonthlyBtn">Buy Pro Monthly</button>
+          </div>
+
+          <div class="price-card">
+            <span class="badge">One-time</span>
+            <h3>Lifetime Template</h3>
+            <div class="price">$49 <small>one-time</small></div>
+            <ul class="feature-list">
+              <li>One-time access hypothesis</li>
+              <li>Useful for early validation</li>
+              <li>No subscription confusion</li>
+              <li>Good for testing willingness to pay</li>
+            </ul>
+            <button class="secondary" id="buyLifetimeBtn">Buy Lifetime</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Payment link setup</h2>
+        <p class="section-note">Create payment links in Stripe, then paste them here. These are saved only in your browser.</p>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="proMonthlyPaymentLink">Stripe Payment Link - Pro Monthly</label>
+            <input id="proMonthlyPaymentLink" value="https://buy.stripe.com/5kQfZh9BDcpPfVtf06asg00" placeholder="https://buy.stripe.com/..." />
+          </div>
+          <div class="field full">
+            <label for="lifetimePaymentLink">Stripe Payment Link - Lifetime</label>
+            <input id="lifetimePaymentLink" value="https://buy.stripe.com/aFa9AT157exXdNlcRYasg01" placeholder="https://buy.stripe.com/..." />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="savePaymentLinksBtn">Save Payment Links</button>
+          <button class="ghost" id="testProPaymentBtn">Test Pro Link</button>
+          <button class="ghost" id="testLifetimePaymentBtn">Test Lifetime Link</button>
+        </div>
+        <div id="paymentLinkStatus" class="copy-status"></div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Growth setup: Analytics, Search Console, and SEO</h2>
+        <p class="section-note">Use this section to collect the tracking IDs. Because this is a static GitHub Pages app, send me the final IDs and I will generate a production file with them hard-coded into the page source.</p>
+        <div class="notice warn">
+          Important: saving IDs here stores them only in your browser for testing. For real site-wide tracking and Search Console verification, the Google tag and verification meta tag must be placed in the HTML file itself.
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="gaMeasurementId">GA4 Measurement ID</label>
+            <input id="gaMeasurementId" placeholder="Example: G-ABC123XYZ" />
+          </div>
+          <div class="field">
+            <label for="searchConsoleCode">Search Console verification code</label>
+            <input id="searchConsoleCode" placeholder="Only the content value, not the full meta tag" />
+          </div>
+          <div class="field full">
+            <label for="seoPrimaryKeyword">Primary SEO keyword</label>
+            <input id="seoPrimaryKeyword" value="pressure washing quote calculator" />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="saveGrowthBtn">Save Growth Settings</button>
+          <button class="secondary" id="copyGscMetaBtn">Copy Search Console Meta Tag</button>
+          <button class="ghost" id="testTrackingBtn">Send Test Analytics Event</button>
+        </div>
+        <div id="growthStatus" class="copy-status"></div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Local Pro activation for testing</h2>
+        <p class="section-note">Use this only for prototype validation. It does not verify real payment.</p>
+        <div class="form-grid">
+          <div class="field">
+            <label for="buyerEmail">Buyer email</label>
+            <input id="buyerEmail" placeholder="customer@example.com" />
+          </div>
+          <div class="field">
+            <label for="licenseKey">License / order note</label>
+            <input id="licenseKey" placeholder="Example: STRIPE-TEST-001" />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="activateProBtn">Activate Local Pro</button>
+          <button class="danger-btn" id="clearProBtn">Clear Local Pro</button>
+          <span id="proStatus" class="status-pill">Free mode</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contactSection" class="hidden">
+      <div class="grid">
+        <div class="card">
+          <h2 class="section-title">Contact and support</h2>
+          <p class="section-note">Static GitHub Pages cannot send form emails by itself without a hosted form service or backend. This version creates an email draft using mailto.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="contactTo">Support email</label>
+              <input id="contactTo" value="support@example.com" />
+            </div>
+            <div class="field">
+              <label for="contactName">Your name</label>
+              <input id="contactName" placeholder="Name" />
+            </div>
+            <div class="field">
+              <label for="contactEmail">Your email</label>
+              <input id="contactEmail" placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label for="contactTopic">Topic</label>
+              <select id="contactTopic">
+                <option>Pricing feedback</option>
+                <option>Bug report</option>
+                <option>Feature request</option>
+                <option>Payment question</option>
+                <option>Partnership / contractor feedback</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" placeholder="Write the message here..."></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="openEmailBtn">Open Email Draft</button>
+            <button class="secondary" id="copyContactBtn">Copy Message</button>
+            <button class="ghost" id="saveSupportEmailBtn">Save Support Email</button>
+            <div id="contactStatus" class="copy-status"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">What to ask testers</h2>
+          <p class="section-note">Use these questions instead of vague “do you like it?” feedback.</p>
+          <div class="legal-box">
+            <ul class="feature-list">
+              <li>Which number looks wrong?</li>
+              <li>Which field is missing?</li>
+              <li>Would you send the quote PDF to a customer?</li>
+              <li>Would saved presets or branded PDF quotes be worth paying for?</li>
+              <li>Which service type is most valuable: driveway, house wash, roof, commercial, sealing, or sand?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="termsSection" class="hidden">
+      <div class="card methodology">
+        <h2 class="section-title">Terms and disclaimer starter</h2>
+        <div class="notice warn">
+          This is a starter template, not legal advice. Before selling seriously, add the legal pages required for your country and target markets.
+        </div>
+
+        <div class="legal-box">
+          <h3>Terms of use</h3>
+          <p>WashQuoteLab provides estimating tools for pressure-washing and exterior-cleaning businesses. Calculations are estimates only. Users are responsible for checking job scope, local pricing, safety, taxes, labor rates, product labels, and legal requirements before sending a quote or performing work.</p>
+          <p>The app does not guarantee profit, accuracy, safety, compliance, or job acceptance. You must calibrate production rates, chemical costs, labor costs, overhead, and market ranges using your real job history.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Payment and refunds starter</h3>
+          <p>Payments, when enabled, are handled through external payment links such as Stripe Payment Links. The prototype does not process card data directly. Paid access, refunds, cancellations, taxes, and invoices must be handled according to the payment provider setup and your published refund policy.</p>
+          <p>Suggested early refund policy: “If the tool does not help your quoting workflow, contact us within 7 days for a refund.” Adjust this before real sales.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Chemical and safety disclaimer</h3>
+          <p>Softwash calculations are dilution helpers only. They are not chemical safety training. Follow product labels, local regulation, PPE requirements, SDS documents, and surface compatibility checks. Never mix sodium hypochlorite/bleach with acids, vinegar, ammonia, or unknown cleaners.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Contact</h3>
+          <p>For commercial launch, add the correct legal/contact information required in your jurisdiction.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacySection" class="hidden">
+      <div class="card methodology">
+        <h2 class="section-title">Privacy starter</h2>
+        <div class="notice warn">
+          This is a starter privacy notice, not legal advice. Update it before real paid launch, especially if you add analytics, email forms, payment systems, user accounts, or cloud storage.
+        </div>
+
+        <div class="legal-box">
+          <h3>Local browser storage</h3>
+          <p>This static prototype stores saved quotes, feedback, payment-link settings, and local activation data in the user’s browser localStorage. Data is not automatically sent to a server by this static app. Clearing browser data may delete saved information.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Contact and payments</h3>
+          <p>Payment buttons, when configured, open external payment pages such as Stripe Payment Links. WashQuoteLab does not directly process card data in this static prototype.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Future changes</h3>
+          <p>If you add analytics, embedded forms, cloud accounts, payment verification, newsletters, or a backend database later, update this privacy notice before launch and disclose what data is collected, why, where it is stored, and how users can contact you.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="methodologySection" class="hidden">
+      <div class="card methodology">
+        <h2 class="section-title">Methodology and source notes</h2>
+
+        <div>
+          <h3>0. Unit conversion, field measurement, and validation workflow</h3>
+          <p>Version 4 uses standard unit conversion factors: 1 ft = 0.3048 m exactly and 1 sq ft = 0.09290304 sq m. Measurement tools are helpers only; operators should verify irregular areas on site. The feedback tab is deliberately focused on wrong numbers and missing fields, because pricing credibility is the product risk.</p>
+        </div>
+
+        <div class="notice info">
+          This app does not claim one universal pressure washing price. It calculates your internal cost first, then applies your target margin. Public pricing ranges are used only as a sanity check.
+        </div>
+
+        <div>
+          <h3>1. Calculation logic</h3>
+          <p>
+            Direct cost = labor + chemicals/materials + equipment/fuel + travel + special add-on internal cost.
+            Overhead is added as a percentage of direct cost. Required selling price is calculated as internal cost divided by (1 - target margin).
+            The final quote uses the higher of margin-based price and minimum charge, then applies discount and tax.
+          </p>
+        </div>
+
+        <div>
+          <h3>2. Why prices are not universal</h3>
+          <p>
+            Pressure washing pricing changes by location, surface, soil level, access, equipment, labor cost, insurance, overhead, competition, and customer type.
+            A driveway, roof, house wash, and commercial flatwork job should not use one simple square-foot price.
+          </p>
+        </div>
+
+        <div>
+          <h3>3. Source-backed market sanity ranges used in this prototype</h3>
+          <ul class="source-list">
+            <li>Housecall Pro 2026 guide: residential flatwork about $0.15–$0.75/sq ft, driveway cleaning about $100–$300, house washing about $250–$800, commercial flatwork about $0.08–$0.40/sq ft.</li>
+            <li>Angi 2026 driveway guide: professional driveway pressure washing about $0.30–$0.55/sq ft, with material affecting price.</li>
+            <li>Bark pressure-washing pricing guide: common pricing structures include per-square-foot, hourly, and flat project rates; it also notes typical small-job minimum charges.</li>
+            <li>CDC and Washington State Department of Health: bleach/sodium hypochlorite must not be mixed with ammonia, vinegar, acids, or unknown cleaners because toxic chlorine or chloramine gases can be produced.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>4. Important limitation</h3>
+          <p>
+            Production rate is the biggest weak assumption. It depends on machine GPM, nozzle/surface cleaner, hot water, chemicals, operator skill, soil level, rinsing time, drainage, edge work, and access.
+            The app provides editable defaults because no public source can know your exact field productivity.
+          </p>
+        </div>
+
+        <div>
+          <h3>5. Softwash dilution module</h3>
+          <p>
+            The softwash calculator is treated as a dilution calculator only, not safety training. Always follow product labels, PPE requirements, local regulations, and chemical compatibility rules.
+            Do not mix bleach/sodium hypochlorite with acids, vinegar, ammonia, or unknown cleaners.
+          </p>
+        </div>
+
+        <div>
+          <h3>6. Sealer and polymeric sand module</h3>
+          <p>
+            Sealer and sand calculations are material estimators. Technical data sheets show large coverage variation: some paver sealers list around 100–200 sq ft/gallon, others around 200–300 sq ft/gallon or more depending on product and porosity. Polymeric sand coverage varies by joint width, depth, and paver shape.
+          </p>
+        </div>
+
+        <div>
+          <h3>7. Monetization and static-site payment limitation</h3>
+          <p>
+            This prototype uses external payment links because GitHub Pages is static hosting and does not run backend payment verification. Stripe Payment Links can accept payments without code. Real subscriptions, team accounts, protected premium access, and webhook-based license verification require a backend later.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links" aria-label="Footer navigation">
+      <button class="footer-link" data-footer-tab="methodologySection">Methodology</button>
+      <span class="footer-sep">·</span>
+      <button class="footer-link" data-footer-tab="contactSection">Contact</button>
+      <span class="footer-sep">·</span>
+      <button class="footer-link" data-footer-tab="feedbackSection">Feedback</button>
+      <span class="footer-sep">·</span>
+      <button class="footer-link" data-footer-tab="privacySection">Privacy</button>
+      <span class="footer-sep">·</span>
+      <button class="footer-link" data-footer-tab="termsSection">Terms</button>
+    </div>
+  </footer>
+
+  <script>
+    const presets = {
+      driveway: {
+        label: "Driveway / concrete flatwork",
+        method: "Surface cleaner",
+        surface: "Concrete",
+        productionRate: 450,
+        setupHours: 0.5,
+        chemicalRate: 0.02,
+        equipmentRate: 12,
+        minimumCharge: 150,
+        marketLow: 0.30,
+        marketHigh: 0.55,
+        projectLow: 100,
+        projectHigh: 300,
+        source: "Housecall Pro driveway project range + Angi driveway sq ft range"
+      },
+      house: {
+        label: "House wash",
+        method: "Soft wash",
+        surface: "Vinyl siding",
+        productionRate: 650,
+        setupHours: 0.75,
+        chemicalRate: 0.03,
+        equipmentRate: 10,
+        minimumCharge: 250,
+        marketLow: 0.15,
+        marketHigh: 0.35,
+        projectLow: 250,
+        projectHigh: 800,
+        source: "Housecall Pro house washing project range"
+      },
+      roof: {
+        label: "Roof soft wash",
+        method: "Soft wash",
+        surface: "Roof shingles",
+        productionRate: 300,
+        setupHours: 1.0,
+        chemicalRate: 0.08,
+        equipmentRate: 14,
+        minimumCharge: 350,
+        marketLow: 0.30,
+        marketHigh: 0.65,
+        projectLow: 400,
+        projectHigh: 1000,
+        source: "Industry guide range; calibrate locally"
+      },
+      deck: {
+        label: "Deck / fence cleaning",
+        method: "Pressure wash",
+        surface: "Wood deck",
+        productionRate: 250,
+        setupHours: 0.75,
+        chemicalRate: 0.04,
+        equipmentRate: 11,
+        minimumCharge: 200,
+        marketLow: 0.50,
+        marketHigh: 1.50,
+        projectLow: 200,
+        projectHigh: 600,
+        source: "Industry guide range; calibrate locally"
+      },
+      commercial: {
+        label: "Commercial flatwork",
+        method: "Hot-water power wash",
+        surface: "Commercial pavement",
+        productionRate: 900,
+        setupHours: 1.0,
+        chemicalRate: 0.015,
+        equipmentRate: 16,
+        minimumCharge: 300,
+        marketLow: 0.08,
+        marketHigh: 0.40,
+        projectLow: 300,
+        projectHigh: 0,
+        source: "Housecall Pro commercial flatwork sq ft range"
+      }
+    };
+
+    const conditionMultipliers = {
+      light: { label: "Light dirt", time: 0.9, chemical: 0.8 },
+      normal: { label: "Normal dirt", time: 1.0, chemical: 1.0 },
+      heavy: { label: "Heavy algae / grime", time: 1.35, chemical: 1.4 },
+      extreme: { label: "Extreme stains / slow job", time: 1.8, chemical: 2.0 }
+    };
+
+    const accessMultipliers = {
+      easy: { label: "Easy access", time: 1.0 },
+      normal: { label: "Normal access", time: 1.1 },
+      difficult: { label: "Difficult access", time: 1.35 },
+      veryDifficult: { label: "Very difficult / risky", time: 1.65 }
+    };
+
+    const $ = (id) => document.getElementById(id);
+    let latestResult = null;
+
+    function num(id) {
+      const value = parseFloat($(id).value);
+      return Number.isFinite(value) ? value : 0;
+    }
+
+    function text(id) {
+      return ($(id).value || "").trim();
+    }
+
+    function money(value) {
+      const currency = text("currency") || "$";
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${currency}${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function moneyWithCurrency(value, currency) {
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${currency || "$"}${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function pct(value) {
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${safe.toFixed(1)}%`;
+    }
+
+    function hours(value) {
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${safe.toFixed(2)} h`;
+    }
+
+    function todayISO() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function addDaysISO(days) {
+      const date = new Date();
+      date.setDate(date.getDate() + days);
+      return date.toISOString().slice(0, 10);
+    }
+
+    function makeQuoteNumber() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      const h = String(now.getHours()).padStart(2, "0");
+      const min = String(now.getMinutes()).padStart(2, "0");
+      return `WQL-${y}${m}${d}-${h}${min}`;
+    }
+
+    function applyPreset() {
+      const key = $("serviceType").value;
+      const preset = presets[key];
+
+      $("productionRate").value = preset.productionRate;
+      $("setupHours").value = preset.setupHours;
+      $("chemicalRate").value = preset.chemicalRate;
+      $("equipmentRate").value = preset.equipmentRate;
+      $("minimumCharge").value = preset.minimumCharge;
+      $("method").value = preset.method;
+      $("surfaceType").value = preset.surface;
+
+      calculateQuote();
+    }
+
+    function calculateQuote() {
+      const serviceKey = $("serviceType").value;
+      const preset = presets[serviceKey];
+      const condition = conditionMultipliers[$("condition").value];
+      const access = accessMultipliers[$("access").value];
+
+      const area = Math.max(num("area"), 1);
+      const productionRate = Math.max(num("productionRate"), 1);
+      const setupHours = Math.max(num("setupHours"), 0);
+      const crewSize = Math.max(num("crewSize"), 1);
+      const laborRate = Math.max(num("laborRate"), 0);
+      const chemicalRate = Math.max(num("chemicalRate"), 0);
+      const equipmentRate = Math.max(num("equipmentRate"), 0);
+      const travelHours = Math.max(num("travelHours"), 0);
+      const travelMiles = Math.max(num("travelMiles"), 0);
+      const mileRate = Math.max(num("mileRate"), 0);
+      const overheadPct = Math.max(num("overheadPct"), 0) / 100;
+      const targetMarginPct = Math.min(Math.max(num("targetMargin"), 1), 95) / 100;
+      const minimumCharge = Math.max(num("minimumCharge"), 0);
+      const addOnCost = Math.max(num("addOnCost"), 0);
+      const addOnCharge = Math.max(num("addOnCharge"), 0);
+      const taxPct = Math.max(num("taxPct"), 0) / 100;
+      const discount = Math.max(num("discount"), 0);
+      const depositPct = Math.min(Math.max(num("depositPct"), 0), 100) / 100;
+
+      const cleaningTime = (area / productionRate) * condition.time * access.time;
+      const elapsedTime = cleaningTime + setupHours + travelHours;
+
+      const laborCost = elapsedTime * crewSize * laborRate;
+      const chemicalCost = area * chemicalRate * condition.chemical;
+      const equipmentCost = elapsedTime * equipmentRate;
+      const travelCost = travelMiles * mileRate;
+
+      const directCost = laborCost + chemicalCost + equipmentCost + travelCost + addOnCost;
+      const overheadCost = directCost * overheadPct;
+      const internalCost = directCost + overheadCost;
+
+      const marginBasedPrice = internalCost / (1 - targetMarginPct);
+      const subtotalBeforeDiscount = Math.max(marginBasedPrice + addOnCharge, minimumCharge);
+      const subtotalAfterDiscount = Math.max(subtotalBeforeDiscount - discount, 0);
+      const taxAmount = subtotalAfterDiscount * taxPct;
+      const finalPrice = subtotalAfterDiscount + taxAmount;
+
+      const profitBeforeTax = subtotalAfterDiscount - internalCost;
+      const grossMargin = subtotalAfterDiscount > 0 ? (profitBeforeTax / subtotalAfterDiscount) * 100 : 0;
+
+      const depositAmount = finalPrice * depositPct;
+      const balanceAmount = finalPrice - depositAmount;
+
+      const marketLowByArea = area * preset.marketLow;
+      const marketHighByArea = area * preset.marketHigh;
+      const marketLow = Math.max(marketLowByArea, preset.projectLow || 0);
+      const marketHigh = preset.projectHigh ? Math.max(marketHighByArea, preset.projectHigh) : marketHighByArea;
+
+      latestResult = {
+        createdAt: new Date().toISOString(),
+        companyName: text("companyName"),
+        companyEmail: text("companyEmail"),
+        companyPhone: text("companyPhone"),
+        companyWebsite: text("companyWebsite"),
+        quoteNumber: text("quoteNumber"),
+        validUntil: text("validUntil"),
+        projectName: text("projectName"),
+        customerName: text("customerName"),
+        customerEmail: text("customerEmail"),
+        customerPhone: text("customerPhone"),
+        jobAddress: text("jobAddress"),
+        service: preset.label,
+        surfaceType: text("surfaceType"),
+        method: text("method"),
+        area,
+        condition: condition.label,
+        access: access.label,
+        cleaningTime,
+        elapsedTime,
+        laborCost,
+        chemicalCost,
+        equipmentCost,
+        travelCost,
+        overheadCost,
+        internalCost,
+        subtotalAfterDiscount,
+        taxAmount,
+        finalPrice,
+        profitBeforeTax,
+        grossMargin,
+        targetMargin: targetMarginPct * 100,
+        marketLow,
+        marketHigh,
+        marketSource: preset.source,
+        depositAmount,
+        balanceAmount,
+        productionRate,
+        crewSize,
+        notes: text("notes"),
+        currency: text("currency") || "$",
+        quoteStatus: text("quoteStatus") || "draft",
+        acceptanceDate: text("acceptanceDate"),
+        acceptedBy: text("acceptedBy"),
+        signatureName: text("signatureName"),
+        approvalNotes: text("approvalNotes")
+      };
+
+      renderResult(latestResult);
+      return latestResult;
+    }
+
+    function renderResult(result) {
+      $("heroPrice").textContent = money(result.finalPrice);
+      $("recommendedPrice").textContent = money(result.finalPrice);
+      $("grossMargin").textContent = pct(result.grossMargin);
+      $("internalCost").textContent = money(result.internalCost);
+      $("jobHours").textContent = hours(result.elapsedTime);
+
+      $("cleaningTime").textContent = hours(result.cleaningTime);
+      $("elapsedTime").textContent = hours(result.elapsedTime);
+      $("laborCost").textContent = money(result.laborCost);
+      $("chemicalCost").textContent = money(result.chemicalCost);
+      $("equipmentCost").textContent = money(result.equipmentCost);
+      $("travelCost").textContent = money(result.travelCost);
+      $("overheadCost").textContent = money(result.overheadCost);
+      $("profitAmount").textContent = money(result.profitBeforeTax);
+      $("marketRange").textContent = `${money(result.marketLow)} - ${money(result.marketHigh)}`;
+      $("depositAmount").textContent = money(result.depositAmount);
+      $("balanceAmount").textContent = money(result.balanceAmount);
+
+      $("quoteCompany").textContent = result.companyName || "Company";
+      $("quoteCompanyContact").textContent = [result.companyEmail, result.companyPhone].filter(Boolean).join(" · ") || "-";
+      $("quoteCompanyWebsite").textContent = result.companyWebsite || "";
+      $("quoteTotal").textContent = money(result.finalPrice);
+      $("quoteNo").textContent = result.quoteNumber || "-";
+      $("quoteValidUntil").textContent = result.validUntil || "-";
+      $("quoteProject").textContent = result.projectName || "-";
+      $("quoteCustomer").textContent = result.customerName || "-";
+      $("quoteCustomerContact").textContent = [result.customerEmail, result.customerPhone].filter(Boolean).join(" · ") || "-";
+      $("quoteJobAddress").textContent = result.jobAddress || "-";
+      $("quoteService").textContent = `${result.service} · ${result.method}`;
+      $("quoteScope").textContent = `${result.area.toLocaleString()} sq ft · ${result.surfaceType} · ${result.condition} · ${result.access}`;
+      $("quoteNotes").textContent = result.notes || "-";
+
+      const status = result.quoteStatus || "draft";
+      const label = status.charAt(0).toUpperCase() + status.slice(1);
+      const badge = $("quoteStatusBadge");
+      badge.textContent = label;
+      badge.className = `status-badge status-${status}`;
+      $("quoteAcceptedBy").textContent = result.acceptedBy || "-";
+      $("quoteAcceptanceDate").textContent = result.acceptanceDate || "-";
+      $("quoteApprovalNotes").textContent = result.approvalNotes || "-";
+      $("quoteSignatureName").textContent = result.signatureName || "Customer signature";
+
+      const good = result.finalPrice;
+      const better = good * 1.15;
+      const best = good * 1.30;
+      $("goodPrice").textContent = money(good);
+      $("betterPrice").textContent = money(better);
+      $("bestPrice").textContent = money(best);
+
+      $("quoteAssumptions").innerHTML =
+        `<strong>Visible assumptions:</strong> ${result.productionRate.toLocaleString()} sq ft/hour production rate, ` +
+        `${result.crewSize} crew member(s), ${hours(result.elapsedTime)} total estimated job time, ` +
+        `${money(result.internalCost)} internal cost, ${pct(result.targetMargin)} target margin. ` +
+        `Market sanity range: ${money(result.marketLow)} - ${money(result.marketHigh)}. Source note: ${escapeHtml(result.marketSource)}.`;
+
+      const marginBox = $("marginBox");
+      const warningBox = $("warningBox");
+
+      marginBox.className = "metric success";
+      warningBox.className = "notice good";
+
+      if (result.grossMargin < result.targetMargin - 5) {
+        marginBox.className = "metric danger";
+        warningBox.className = "notice bad";
+        warningBox.textContent =
+          `Margin warning: this quote gives about ${pct(result.grossMargin)} margin, below your ${pct(result.targetMargin)} target. Increase price, reduce cost, or revise the scope.`;
+      } else if (result.finalPrice < result.marketLow) {
+        marginBox.className = "metric warning";
+        warningBox.className = "notice warn";
+        warningBox.textContent =
+          `Market sanity warning: this quote is below the source-backed market sanity range. That can be okay, but check area, difficulty, local market, and hidden costs.`;
+      } else if (result.finalPrice > result.marketHigh * 1.25) {
+        marginBox.className = "metric warning";
+        warningBox.className = "notice warn";
+        warningBox.textContent =
+          `High-price warning: this quote is above the source-backed market sanity range. This may be justified for difficult work, but the quote should clearly explain the scope.`;
+      } else {
+        warningBox.textContent =
+          `Quote looks reasonable based on your cost assumptions, target margin, and market sanity range. Still calibrate with real local job history.`;
+      }
+    }
+
+    function saveQuote() {
+      const result = calculateQuote();
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
+      saved.unshift(result);
+      localStorage.setItem("washQuoteLabQuotesV2A", JSON.stringify(saved.slice(0, 50)));
+      renderSavedQuotes();
+      alert("Quote saved in this browser.");
+    }
+
+    function renderSavedQuotes() {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
+      const list = $("savedList");
+
+      if (!saved.length) {
+        list.innerHTML = `<div class="notice warn">No saved quotes yet. Create a quote and click “Save Quote”.</div>`;
+        return;
+      }
+
+      list.innerHTML = saved.map((quote, index) => {
+        const date = new Date(quote.createdAt).toLocaleString();
+        return `
+          <div class="saved-item">
+            <div>
+              <h3>${escapeHtml(quote.projectName || "Untitled Quote")}</h3>
+              <p>${escapeHtml(quote.customerName || "No customer")} · ${escapeHtml(quote.service)} · ${quote.area.toLocaleString()} sq ft · ${date}</p>
+              <p>Final: <strong>${moneyWithCurrency(quote.finalPrice, quote.currency)}</strong> · Margin: <strong>${quote.grossMargin.toFixed(1)}%</strong> · Status: <strong>${escapeHtml(quote.quoteStatus || "draft")}</strong></p>
+            </div>
+            <div class="actions">
+              <button class="ghost" onclick="loadSavedQuote(${index})">Load</button>
+              <button class="danger-btn" onclick="deleteSavedQuote(${index})">Delete</button>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+
+    function loadSavedQuote(index) {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
+      const quote = saved[index];
+      if (!quote) return;
+      ["companyName","companyEmail","companyPhone","companyWebsite","quoteNumber","validUntil","projectName","customerName","customerEmail","customerPhone","jobAddress","notes","quoteStatus","acceptanceDate","acceptedBy","signatureName","approvalNotes"].forEach(id => {
+        if ($(id) && quote[id] !== undefined) $(id).value = quote[id] || "";
+      });
+      if (quote.area) $("area").value = quote.area;
+      if (quote.currency) $("currency").value = quote.currency;
+      calculateQuote();
+      showTab("calculatorSection");
+    }
+
+    function exportSavedQuotesCSV() {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
+      if (!saved.length) { alert("No saved quotes to export."); return; }
+      const headers = ["createdAt","quoteNumber","quoteStatus","projectName","customerName","service","areaSqFt","finalPrice","internalCost","grossMargin","acceptedBy","acceptanceDate"];
+      const rows = saved.map(q => [q.createdAt,q.quoteNumber,q.quoteStatus,q.projectName,q.customerName,q.service,q.area,q.finalPrice,q.internalCost,q.grossMargin,q.acceptedBy,q.acceptanceDate]);
+      const csv = [headers, ...rows].map(row => row.map(value => `"${String(value ?? "").replaceAll('"','""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "washquotelab_saved_quotes.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function deleteSavedQuote(index) {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
+      saved.splice(index, 1);
+      localStorage.setItem("washQuoteLabQuotesV2A", JSON.stringify(saved));
+      renderSavedQuotes();
+    }
+
+    function clearSavedQuotes() {
+      if (!confirm("Delete all saved quotes from this browser?")) return;
+      localStorage.removeItem("washQuoteLabQuotesV2A");
+      renderSavedQuotes();
+    }
+
+    function resetExample() {
+      $("companyName").value = "Your Cleaning Company";
+      $("companyEmail").value = "hello@example.com";
+      $("companyPhone").value = "+1 555 000 0000";
+      $("companyWebsite").value = "www.example.com";
+      $("quoteNumber").value = makeQuoteNumber();
+      $("validUntil").value = addDaysISO(14);
+
+      $("projectName").value = "Driveway cleaning estimate";
+      $("customerName").value = "Sample Customer";
+      $("customerEmail").value = "customer@example.com";
+      $("customerPhone").value = "+1 555 111 1111";
+      $("jobAddress").value = "123 Sample Street";
+
+      $("serviceType").value = "driveway";
+      $("area").value = 800;
+      $("condition").value = "normal";
+      $("access").value = "normal";
+      $("crewSize").value = 1;
+      $("laborRate").value = 35;
+      $("travelHours").value = 0.5;
+      $("travelMiles").value = 12;
+      $("mileRate").value = 0.75;
+      $("overheadPct").value = 15;
+      $("targetMargin").value = 45;
+      $("addOnCost").value = 0;
+      $("addOnCharge").value = 0;
+      $("taxPct").value = 0;
+      $("discount").value = 0;
+      $("depositPct").value = 30;
+      $("currency").value = "$";
+      $("quoteStatus").value = "draft";
+      $("acceptanceDate").value = "";
+      $("acceptedBy").value = "";
+      $("signatureName").value = "";
+      $("approvalNotes").value = "";
+      $("notes").value = "Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, water-access issues, or hazardous conditions may require revised pricing.";
+      applyPreset();
+    }
+
+
+    function softwashUnitLabel(unit) {
+      return unit === "L" ? "L" : "gal";
+    }
+
+    function formatSoftwashVolume(value, unit) {
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${softwashUnitLabel(unit)}`;
+    }
+
+    function resetSoftwashExample() {
+      $("shStockStrength").value = 12.5;
+      $("shTargetStrength").value = 3;
+      $("mixBatchVolume").value = 20;
+      $("mixUnit").value = "gal";
+      $("surfactantRate").value = 1;
+      $("surfactantUnit").value = "ozPerGal";
+      calculateSoftwashMix();
+    }
+
+    function calculateSoftwashMix() {
+      const stock = Math.max(num("shStockStrength"), 0);
+      const target = Math.max(num("shTargetStrength"), 0);
+      const batch = Math.max(num("mixBatchVolume"), 0);
+      const unit = $("mixUnit").value;
+      const surfRate = Math.max(num("surfactantRate"), 0);
+      const surfUnit = $("surfactantUnit").value;
+
+      let shVolume = 0;
+      let waterVolume = 0;
+      let stockShare = 0;
+      let ratioText = "0 : 1";
+      const warningBox = $("softwashWarning");
+      warningBox.className = "notice good";
+
+      if (stock <= 0 || batch <= 0) {
+        warningBox.className = "notice bad";
+        warningBox.textContent = "Enter a stock strength greater than 0 and a final batch volume greater than 0.";
+      } else if (target >= stock) {
+        shVolume = batch;
+        waterVolume = 0;
+        stockShare = 100;
+        warningBox.className = "notice bad";
+        warningBox.textContent = "Target strength must be lower than stock strength. Otherwise this is not a dilution.";
+      } else {
+        shVolume = (target / stock) * batch;
+        waterVolume = batch - shVolume;
+        stockShare = batch > 0 ? (shVolume / batch) * 100 : 0;
+        const waterToStock = shVolume > 0 ? waterVolume / shVolume : 0;
+        ratioText = `${waterToStock.toFixed(2)} : 1`;
+
+        if (target > 6) {
+          warningBox.className = "notice warn";
+          warningBox.textContent = "High target strength warning: verify surface compatibility, product label, vegetation protection, runoff control, PPE, and local rules before use.";
+        } else {
+          warningBox.textContent = "Mix calculation complete. Verify target strength, surface compatibility, product label, PPE, and local rules before field use.";
+        }
+      }
+
+      const surfAmount = batch * surfRate;
+      const surfLabel = surfUnit === "mlPerL" ? "mL" : "oz";
+
+      $("shNeeded").textContent = formatSoftwashVolume(shVolume, unit);
+      $("waterNeeded").textContent = formatSoftwashVolume(waterVolume, unit);
+      $("surfactantNeeded").textContent = `${surfAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${surfLabel}`;
+      $("mixRatio").textContent = ratioText;
+      $("shStockOut").textContent = `${stock.toFixed(2)}%`;
+      $("shTargetOut").textContent = `${target.toFixed(2)}%`;
+      $("batchOut").textContent = formatSoftwashVolume(batch, unit);
+      $("stockShareOut").textContent = `${stockShare.toFixed(1)}%`;
+    }
+
+
+    function materialMoney(value) {
+      const currency = text("sealCurrency") || "$";
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${currency}${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function resetMaterialsExample() {
+      $("sealArea").value = 1000;
+      $("sealCoverage").value = 200;
+      $("sealCoats").value = 2;
+      $("sealWaste").value = 10;
+      $("sealCost").value = 35;
+      $("sealCurrency").value = "$";
+      $("sandArea").value = 500;
+      $("jointType").value = "medium";
+      $("sandCoverage").value = 50;
+      $("sandWaste").value = 10;
+      $("sandCost").value = 28;
+      $("sandBagSize").value = "50 lb / 22.7 kg";
+      calculateMaterials();
+    }
+
+    function applyJointPreset() {
+      const jointType = $("jointType").value;
+      if (jointType === "narrow") $("sandCoverage").value = 75;
+      if (jointType === "medium") $("sandCoverage").value = 50;
+      if (jointType === "wide") $("sandCoverage").value = 25;
+      calculateMaterials();
+    }
+
+    function calculateMaterials() {
+      const sealArea = Math.max(num("sealArea"), 0);
+      const sealCoverage = Math.max(num("sealCoverage"), 1);
+      const sealCoats = Math.max(num("sealCoats"), 1);
+      const sealWaste = Math.max(num("sealWaste"), 0) / 100;
+      const sealCost = Math.max(num("sealCost"), 0);
+
+      const rawGallons = (sealArea * sealCoats) / sealCoverage;
+      const sealerGallons = rawGallons * (1 + sealWaste);
+      const sealerBuy = Math.ceil(sealerGallons * 4) / 4;
+      const sealerCost = sealerBuy * sealCost;
+
+      const sandArea = Math.max(num("sandArea"), 0);
+      const sandCoverage = Math.max(num("sandCoverage"), 1);
+      const sandWaste = Math.max(num("sandWaste"), 0) / 100;
+      const sandCost = Math.max(num("sandCost"), 0);
+      const rawBags = (sandArea / sandCoverage) * (1 + sandWaste);
+      const sandBags = Math.ceil(rawBags);
+      const sandTotal = sandBags * sandCost;
+
+      const total = sealerCost + sandTotal;
+      $("sealerGallons").textContent = `${sealerGallons.toFixed(2)} gal`;
+      $("sealerBuy").textContent = `${sealerBuy.toFixed(2)} gal`;
+      $("sandBags").textContent = `${sandBags} bags`;
+      $("materialCost").textContent = materialMoney(total);
+      $("sealBasisOut").textContent = `${sealArea.toLocaleString()} sq ft × ${sealCoats} coat(s) ÷ ${sealCoverage.toLocaleString()} sq ft/gal + ${(sealWaste*100).toFixed(0)}%`;
+      $("sealCostOut").textContent = materialMoney(sealerCost);
+      $("sandBasisOut").textContent = `${sandArea.toLocaleString()} sq ft ÷ ${sandCoverage.toLocaleString()} sq ft/bag + ${(sandWaste*100).toFixed(0)}% · ${escapeHtml(text("sandBagSize"))}`;
+      $("sandCostOut").textContent = materialMoney(sandTotal);
+
+      const warningBox = $("materialsWarning");
+      warningBox.className = "notice good";
+      if (sealCoverage < 80 || sealCoverage > 450) {
+        warningBox.className = "notice warn";
+        warningBox.textContent = "Sealer coverage looks unusual. Confirm the product label/TDS and surface porosity before quoting.";
+      } else if (sandCoverage < 15 || sandCoverage > 130) {
+        warningBox.className = "notice warn";
+        warningBox.textContent = "Sand coverage looks unusual. Joint width/depth can change bag quantity strongly; verify with product data.";
+      } else {
+        warningBox.textContent = "Material estimate complete. Use manufacturer coverage as final authority before field purchase.";
+      }
+    }
+
+
+    const SQFT_TO_SQM = 0.09290304;
+    const SQM_TO_SQFT = 10.7639104167097;
+    const GAL_TO_L = 3.785411784;
+
+    let latestMeasuredSqFt = 0;
+
+    function setMeasureShapeVisibility() {
+      const shape = $("measureShape").value;
+      document.querySelectorAll(".measure-rect").forEach(el => el.classList.toggle("hidden", shape !== "rectangle"));
+      document.querySelectorAll(".measure-circle").forEach(el => el.classList.toggle("hidden", shape !== "circle"));
+      document.querySelectorAll(".measure-manual").forEach(el => el.classList.toggle("hidden", shape !== "manual"));
+      calculateMeasurement();
+    }
+
+    function areaToSqFt(area, unit) {
+      return unit === "m" ? area * SQM_TO_SQFT : area;
+    }
+
+    function calculateMeasurement() {
+      const shape = $("measureShape").value;
+      const unit = $("measureUnit").value;
+      const qty = Math.max(num("measureQty"), 1);
+      const allowance = Math.max(num("measureWaste"), 0) / 100;
+      const productionRate = Math.max(num("measureProductionRate"), 1);
+
+      let baseAreaInput = 0;
+      if (shape === "rectangle") {
+        baseAreaInput = Math.max(num("measureLength"), 0) * Math.max(num("measureWidth"), 0);
+      } else if (shape === "circle") {
+        const d = Math.max(num("measureDiameter"), 0);
+        baseAreaInput = Math.PI * Math.pow(d / 2, 2);
+      } else {
+        baseAreaInput = Math.max(num("manualArea"), 0);
+      }
+
+      const baseSqFt = areaToSqFt(baseAreaInput, unit) * qty;
+      const allowanceSqFt = baseSqFt * allowance;
+      const totalSqFt = baseSqFt + allowanceSqFt;
+      const totalSqM = totalSqFt * SQFT_TO_SQM;
+      const estimatedHours = totalSqFt / productionRate;
+      latestMeasuredSqFt = totalSqFt;
+
+      const pSqFt = Math.max(num("pricePerSqFt"), 0);
+      const pSqM = pSqFt * SQM_TO_SQFT;
+      $("pricePerSqM").value = pSqM.toFixed(2);
+
+      const gal = Math.max(num("volumeGal"), 0);
+      const liters = gal * GAL_TO_L;
+      $("volumeLiters").value = liters.toFixed(2);
+
+      $("measureSqFt").textContent = `${totalSqFt.toLocaleString(undefined, { maximumFractionDigits: 1 })} sq ft`;
+      $("measureSqM").textContent = `${totalSqM.toLocaleString(undefined, { maximumFractionDigits: 1 })} m²`;
+      $("measureHours").textContent = `${estimatedHours.toFixed(2)} h`;
+      $("convertedPrice").textContent = `${money(pSqM).replace(text("currency") || "$", text("currency") || "$")} / m²`;
+      $("baseAreaOut").textContent = `${baseSqFt.toLocaleString(undefined, { maximumFractionDigits: 1 })} sq ft`;
+      $("allowanceOut").textContent = `${allowanceSqFt.toLocaleString(undefined, { maximumFractionDigits: 1 })} sq ft`;
+      $("qtyOut").textContent = `${qty}`;
+      $("volumeOut").textContent = `${gal.toFixed(2)} gal = ${liters.toFixed(2)} L`;
+
+      const warn = $("measureWarning");
+      warn.className = "notice good";
+      if (totalSqFt <= 0) {
+        warn.className = "notice warn";
+        warn.textContent = "Enter a valid measured area.";
+      } else if (estimatedHours > 12) {
+        warn.className = "notice warn";
+        warn.textContent = "Large job: check crew size, production rate, water access, drainage, and fatigue before quoting.";
+      } else {
+        warn.textContent = "Measurement complete. You can send this area to the quote calculator.";
+      }
+    }
+
+    function updatePriceFromSqM() {
+      const pSqM = Math.max(num("pricePerSqM"), 0);
+      const pSqFt = pSqM / SQM_TO_SQFT;
+      $("pricePerSqFt").value = pSqFt.toFixed(2);
+      calculateMeasurement();
+    }
+
+    function updateVolumeFromLiters() {
+      const liters = Math.max(num("volumeLiters"), 0);
+      const gal = liters / GAL_TO_L;
+      $("volumeGal").value = gal.toFixed(2);
+      calculateMeasurement();
+    }
+
+    function useMeasuredAreaForQuote() {
+      calculateMeasurement();
+      if (latestMeasuredSqFt > 0) {
+        $("area").value = Math.round(latestMeasuredSqFt);
+        calculateQuote();
+        showTab("calculatorSection");
+      }
+    }
+
+    function resetMeasureExample() {
+      $("measureShape").value = "rectangle";
+      $("measureUnit").value = "ft";
+      $("measureQty").value = 1;
+      $("measureLength").value = 40;
+      $("measureWidth").value = 20;
+      $("measureDiameter").value = 25;
+      $("manualArea").value = 800;
+      $("measureWaste").value = 0;
+      $("measureProductionRate").value = 450;
+      $("pricePerSqFt").value = 0.35;
+      $("volumeGal").value = 5;
+      setMeasureShapeVisibility();
+    }
+
+    function buildQuoteText() {
+      const r = latestResult || calculateQuote();
+      return [
+        `${r.companyName || "Company"}`,
+        `${[r.companyEmail, r.companyPhone].filter(Boolean).join(" · ")}`,
+        `Quote #: ${r.quoteNumber || "-"}`,
+        `Valid until: ${r.validUntil || "-"}`,
+        ``,
+        `Project: ${r.projectName || "-"}`,
+        `Customer: ${r.customerName || "-"}`,
+        `Contact: ${[r.customerEmail, r.customerPhone].filter(Boolean).join(" · ") || "-"}`,
+        `Address: ${r.jobAddress || "-"}`,
+        `Service: ${r.service} · ${r.method}`,
+        `Scope: ${r.area.toLocaleString()} sq ft · ${r.surfaceType} · ${r.condition} · ${r.access}`,
+        ``,
+        `Good: ${money(r.goodPrice)}`,
+        `Better / Recommended: ${money(r.betterPrice)}`,
+        `Best: ${money(r.bestPrice)}`,
+        `Total quote: ${money(r.finalPrice)}`,
+        `Deposit: ${money(r.depositAmount)}`,
+        `Balance: ${money(r.balanceAmount)}`,
+        ``,
+        `Notes: ${r.notes || "-"}`,
+        `Status: ${r.quoteStatus || "draft"}`,
+        `Accepted by: ${r.acceptedBy || "-"}`,
+        `Acceptance date: ${r.acceptanceDate || "-"}`,
+        `Typed signature: ${r.signatureName || "-"}`
+      ].join("\n");
+    }
+
+    async function copyQuoteText() {
+      calculateQuote();
+      const status = $("copyStatus");
+      try {
+        await navigator.clipboard.writeText(buildQuoteText());
+        status.textContent = "Quote text copied.";
+      } catch (err) {
+        status.textContent = "Copy failed. Use Print / Save PDF instead.";
+      }
+    }
+
+
+    function markQuoteStatus(status) {
+      $("quoteStatus").value = status;
+      if (status === "accepted" && !text("acceptanceDate")) $("acceptanceDate").value = todayISO();
+      if (status === "accepted" && !text("acceptedBy")) $("acceptedBy").value = text("customerName");
+      if (status === "accepted" && !text("signatureName")) $("signatureName").value = text("customerName");
+      calculateQuote();
+    }
+
+    function buildFeedbackText() {
+      return [
+        `Tester: ${text("feedbackName") || "-"}`,
+        `Role: ${text("feedbackRole") || "-"}`,
+        `Job tested: ${text("feedbackJobType") || "-"}`,
+        `Quote realism: ${text("feedbackPriceFeel") || "-"}`,
+        `Wrong number: ${text("feedbackWrongNumber") || "-"}`,
+        `Missing field: ${text("feedbackMissingField") || "-"}`,
+        `Paid feature comment: ${text("feedbackPaidFeature") || "-"}`
+      ].join("\n");
+    }
+
+    function saveFeedback() {
+      const feedback = {
+        createdAt: new Date().toISOString(),
+        name: text("feedbackName"),
+        role: text("feedbackRole"),
+        jobType: text("feedbackJobType"),
+        priceFeel: text("feedbackPriceFeel"),
+        wrongNumber: text("feedbackWrongNumber"),
+        missingField: text("feedbackMissingField"),
+        paidFeature: text("feedbackPaidFeature")
+      };
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabFeedbackV1") || "[]");
+      saved.unshift(feedback);
+      localStorage.setItem("washQuoteLabFeedbackV1", JSON.stringify(saved.slice(0, 100)));
+      renderFeedback();
+      $("feedbackCopyStatus").textContent = "Feedback saved.";
+    }
+
+    async function copyFeedbackText() {
+      try {
+        await navigator.clipboard.writeText(buildFeedbackText());
+        $("feedbackCopyStatus").textContent = "Feedback text copied.";
+      } catch (err) {
+        $("feedbackCopyStatus").textContent = "Copy failed. Select and copy manually.";
+      }
+    }
+
+    function renderFeedback() {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabFeedbackV1") || "[]");
+      const list = $("feedbackList");
+      if (!list) return;
+      if (!saved.length) {
+        list.innerHTML = `<div class="notice warn">No feedback saved yet.</div>`;
+        return;
+      }
+      list.innerHTML = saved.map(item => `
+        <div class="feedback-item">
+          <strong>${escapeHtml(item.name || "Unnamed tester")} · ${escapeHtml(item.priceFeel || "")}</strong>
+          <p>${escapeHtml(item.role || "-")} · ${escapeHtml(item.jobType || "-")} · ${new Date(item.createdAt).toLocaleString()}</p>
+          <p><strong>Wrong number:</strong> ${escapeHtml(item.wrongNumber || "-")}</p>
+          <p><strong>Missing field:</strong> ${escapeHtml(item.missingField || "-")}</p>
+          <p><strong>Paid feature:</strong> ${escapeHtml(item.paidFeature || "-")}</p>
+        </div>
+      `).join("");
+    }
+
+    function clearFeedback() {
+      if (!confirm("Delete all feedback from this browser?")) return;
+      localStorage.removeItem("washQuoteLabFeedbackV1");
+      renderFeedback();
+      $("feedbackCopyStatus").textContent = "Feedback cleared.";
+    }
+
+
+
+    const WQL_DEFAULT_PAYMENT_LINKS = {
+      proMonthly: "https://buy.stripe.com/5kQfZh9BDcpPfVtf06asg00",
+      lifetime: "https://buy.stripe.com/aFa9AT157exXdNlcRYasg01"
+    };
+
+    function getPaymentLinks() {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabPaymentLinksV1") || "{}");
+      return {
+        proMonthly: saved.proMonthly || WQL_DEFAULT_PAYMENT_LINKS.proMonthly,
+        lifetime: saved.lifetime || WQL_DEFAULT_PAYMENT_LINKS.lifetime
+      };
+    }
+
+    const WQL_PRODUCTION_GA_ID = "REPLACE_WITH_GA4_MEASUREMENT_ID";
+    const WQL_PRODUCTION_GSC_CODE = "REPLACE_WITH_SEARCH_CONSOLE_CODE";
+
+    function getGrowthSettings() {
+      try {
+        return JSON.parse(localStorage.getItem("washQuoteLabGrowthSettingsV1") || "{}");
+      } catch (err) {
+        return {};
+      }
+    }
+
+    function loadGrowthSettings() {
+      const settings = getGrowthSettings();
+      if ($("gaMeasurementId")) $("gaMeasurementId").value = settings.gaMeasurementId || (WQL_PRODUCTION_GA_ID.startsWith("G-") ? WQL_PRODUCTION_GA_ID : "");
+      if ($("searchConsoleCode")) $("searchConsoleCode").value = settings.searchConsoleCode || (WQL_PRODUCTION_GSC_CODE.startsWith("REPLACE") ? "" : WQL_PRODUCTION_GSC_CODE);
+      if ($("seoPrimaryKeyword")) $("seoPrimaryKeyword").value = settings.seoPrimaryKeyword || "pressure washing quote calculator";
+    }
+
+    function saveGrowthSettings() {
+      const settings = {
+        gaMeasurementId: text("gaMeasurementId"),
+        searchConsoleCode: text("searchConsoleCode"),
+        seoPrimaryKeyword: text("seoPrimaryKeyword")
+      };
+      localStorage.setItem("washQuoteLabGrowthSettingsV1", JSON.stringify(settings));
+      $("growthStatus").textContent = "Growth settings saved in this browser. Send me these IDs so I can hard-code them for production.";
+  
+    function routeFromHash() {
+      const hash = window.location.hash.replace('#', '');
+      const validSections = [
+        'calculatorSection','softwashSection','materialsSection','measureSection','pricingSection','savedSection','feedbackSection','methodologySection','contactSection','privacySection','termsSection'
+      ];
+      if (validSections.includes(hash)) {
+        showTab(hash);
+      }
+    }
+    window.addEventListener('hashchange', routeFromHash);
+
+    loadGoogleAnalyticsIfConfigured();
+      trackAppEvent("growth_settings_saved", settings);
+    }
+
+    function copyGscMetaTag() {
+      const code = text("searchConsoleCode");
+      const tag = code ? `<meta name="google-site-verification" content="${code}" />` : '<meta name="google-site-verification" content="PASTE_CODE_HERE" />';
+      navigator.clipboard.writeText(tag).then(() => {
+        $("growthStatus").textContent = "Search Console meta tag copied.";
+      }).catch(() => {
+        $("growthStatus").textContent = tag;
+      });
+    }
+
+    function loadGoogleAnalyticsIfConfigured() {
+      const settings = getGrowthSettings();
+      const id = (WQL_PRODUCTION_GA_ID && WQL_PRODUCTION_GA_ID.startsWith("G-") && !WQL_PRODUCTION_GA_ID.includes("REPLACE"))
+        ? WQL_PRODUCTION_GA_ID
+        : settings.gaMeasurementId;
+
+      if (!id || !/^G-[A-Z0-9]+$/i.test(id) || window.wqlGaLoaded === id) return;
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+      document.head.appendChild(script);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){ dataLayer.push(arguments); };
+      gtag("js", new Date());
+      gtag("config", id, { send_page_view: true });
+      window.wqlGaLoaded = id;
+    }
+
+    function trackAppEvent(name, params = {}) {
+      const payload = { name, params, at: new Date().toISOString(), path: location.pathname, hash: location.hash };
+      const existing = JSON.parse(localStorage.getItem("washQuoteLabEventLogV1") || "[]");
+      existing.unshift(payload);
+      localStorage.setItem("washQuoteLabEventLogV1", JSON.stringify(existing.slice(0, 100)));
+      if (typeof window.gtag === "function") {
+        window.gtag("event", name, params);
+      }
+    }
+
+    function sendTestTrackingEvent() {
+  
+    function routeFromHash() {
+      const hash = window.location.hash.replace('#', '');
+      const validSections = [
+        'calculatorSection','softwashSection','materialsSection','measureSection','pricingSection','savedSection','feedbackSection','methodologySection','contactSection','privacySection','termsSection'
+      ];
+      if (validSections.includes(hash)) {
+        showTab(hash);
+      }
+    }
+    window.addEventListener('hashchange', routeFromHash);
+
+    loadGoogleAnalyticsIfConfigured();
+      trackAppEvent("test_tracking_event", { source: "growth_setup" });
+      $("growthStatus").textContent = "Test event logged. If GA4 is configured in the actual HTML source, it should appear in GA4 Realtime.";
+    }
+
+    function loadPaymentLinks() {
+      const links = getPaymentLinks();
+      if ($("proMonthlyPaymentLink")) $("proMonthlyPaymentLink").value = links.proMonthly || "";
+      if ($("lifetimePaymentLink")) $("lifetimePaymentLink").value = links.lifetime || "";
+    }
+
+    function savePaymentLinks() {
+      const links = {
+        proMonthly: text("proMonthlyPaymentLink"),
+        lifetime: text("lifetimePaymentLink")
+      };
+      localStorage.setItem("washQuoteLabPaymentLinksV1", JSON.stringify(links));
+      $("paymentLinkStatus").textContent = "Payment links saved in this browser.";
+    }
+
+    function openPayment(plan) {
+      const links = getPaymentLinks();
+      const url = plan === "lifetime" ? links.lifetime : links.proMonthly;
+      if (!url || !/^https?:\/\//i.test(url)) {
+        $("paymentLinkStatus").textContent = "No valid payment link configured yet. Paste a Stripe Payment Link first.";
+        showTab("pricingSection");
+        return;
+      }
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    function renderProStatus() {
+      const status = JSON.parse(localStorage.getItem("washQuoteLabProStatusV1") || "null");
+      const el = $("proStatus");
+      if (!el) return;
+      if (status && status.active) {
+        el.textContent = `Local Pro active · ${status.email || "no email"}`;
+        el.className = "status-pill active";
+      } else {
+        el.textContent = "Free mode";
+        el.className = "status-pill";
+      }
+    }
+
+    function activateLocalPro() {
+      const email = text("buyerEmail");
+      const key = text("licenseKey");
+      if (!email || !key) {
+        $("paymentLinkStatus").textContent = "Enter buyer email and license/order note first.";
+        return;
+      }
+      localStorage.setItem("washQuoteLabProStatusV1", JSON.stringify({ active: true, email, key, activatedAt: new Date().toISOString() }));
+      $("paymentLinkStatus").textContent = "Local Pro activated for prototype testing. This is not secure payment verification.";
+      renderProStatus();
+    }
+
+    function clearLocalPro() {
+      localStorage.removeItem("washQuoteLabProStatusV1");
+      $("paymentLinkStatus").textContent = "Local Pro activation cleared.";
+      renderProStatus();
+    }
+
+    function loadSupportEmail() {
+      const saved = localStorage.getItem("washQuoteLabSupportEmailV1");
+      if (saved && $("contactTo")) $("contactTo").value = saved;
+    }
+
+    function saveSupportEmail() {
+      localStorage.setItem("washQuoteLabSupportEmailV1", text("contactTo"));
+      $("contactStatus").textContent = "Support email saved in this browser.";
+    }
+
+    function buildContactMessage() {
+      return [
+        `Name: ${text("contactName") || "-"}`,
+        `Email: ${text("contactEmail") || "-"}`,
+        `Topic: ${text("contactTopic") || "-"}`,
+        "",
+        text("contactMessage") || "-",
+        "",
+        `App: ${location.href}`
+      ].join("\n");
+    }
+
+    function openEmailDraft() {
+      const to = text("contactTo") || "support@example.com";
+      const subject = encodeURIComponent(`WashQuoteLab - ${text("contactTopic") || "Contact"}`);
+      const body = encodeURIComponent(buildContactMessage());
+      window.location.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
+    }
+
+    async function copyContactMessage() {
+      try {
+        await navigator.clipboard.writeText(buildContactMessage());
+        $("contactStatus").textContent = "Contact message copied.";
+      } catch (err) {
+        $("contactStatus").textContent = "Copy failed. Select and copy manually.";
+      }
+    }
+
+    function showTab(sectionId) {
+      ["calculatorSection", "softwashSection", "materialsSection", "measureSection", "pricingSection", "savedSection", "methodologySection", "contactSection", "feedbackSection", "termsSection", "privacySection"].forEach(id => {
+        $(id).classList.toggle("hidden", id !== sectionId);
+      });
+      if ($("landingSection")) $("landingSection").classList.toggle("hidden", sectionId !== "calculatorSection");
+
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.classList.toggle("active", btn.dataset.tab === sectionId);
+      });
+
+      if (sectionId === "savedSection") renderSavedQuotes();
+      if (sectionId === "feedbackSection") renderFeedback();
+      if (sectionId === "pricingSection") { loadPaymentLinks(); renderProStatus(); loadGrowthSettings(); }
+      if (sectionId === "contactSection") loadSupportEmail();
+    }
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    document.querySelectorAll(".tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        trackAppEvent("tab_clicked", { target: btn.dataset.tab });
+        showTab(btn.dataset.tab);
+      });
+    });
+
+    document.querySelectorAll(".footer-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        trackAppEvent("footer_link_clicked", { target: btn.dataset.footerTab });
+        showTab(btn.dataset.footerTab);
+      });
+    });
+
+    $("serviceType").addEventListener("change", applyPreset);
+    $("calculateBtn").addEventListener("click", () => { calculateQuote(); trackAppEvent("quote_calculated", { service: $("serviceType").value }); });
+    $("saveQuoteBtn").addEventListener("click", () => { saveQuote(); trackAppEvent("quote_saved", { service: $("serviceType").value }); });
+    $("resetBtn").addEventListener("click", resetExample);
+    $("printBtn").addEventListener("click", () => {
+      calculateQuote();
+      trackAppEvent("quote_print_pdf_clicked", { service: $("serviceType").value });
+      window.print();
+    });
+    $("copyQuoteBtn").addEventListener("click", copyQuoteText);
+    $("markSentBtn").addEventListener("click", () => markQuoteStatus("sent"));
+    $("markAcceptedBtn").addEventListener("click", () => markQuoteStatus("accepted"));
+    $("exportSavedCsvBtn").addEventListener("click", exportSavedQuotesCSV);
+    $("clearSavedBtn").addEventListener("click", clearSavedQuotes);
+    $("saveFeedbackBtn").addEventListener("click", saveFeedback);
+    $("copyFeedbackBtn").addEventListener("click", copyFeedbackText);
+    $("clearFeedbackBtn").addEventListener("click", clearFeedback);
+    $("savePaymentLinksBtn").addEventListener("click", savePaymentLinks);
+    $("saveGrowthBtn").addEventListener("click", saveGrowthSettings);
+    $("copyGscMetaBtn").addEventListener("click", copyGscMetaTag);
+    $("testTrackingBtn").addEventListener("click", sendTestTrackingEvent);
+    $("buyProMonthlyBtn").addEventListener("click", () => { trackAppEvent("buy_pro_monthly_clicked"); openPayment("proMonthly"); });
+    $("buyLifetimeBtn").addEventListener("click", () => { trackAppEvent("buy_lifetime_clicked"); openPayment("lifetime"); });
+    $("testProPaymentBtn").addEventListener("click", () => openPayment("proMonthly"));
+    $("testLifetimePaymentBtn").addEventListener("click", () => openPayment("lifetime"));
+    $("activateProBtn").addEventListener("click", activateLocalPro);
+    $("clearProBtn").addEventListener("click", clearLocalPro);
+    $("openEmailBtn").addEventListener("click", openEmailDraft);
+    $("copyContactBtn").addEventListener("click", copyContactMessage);
+    $("saveSupportEmailBtn").addEventListener("click", saveSupportEmail);
+    $("calculateSoftwashBtn").addEventListener("click", () => { calculateSoftwashMix(); trackAppEvent("softwash_calculated"); });
+    $("resetSoftwashBtn").addEventListener("click", resetSoftwashExample);
+    $("calculateMaterialsBtn").addEventListener("click", () => { calculateMaterials(); trackAppEvent("materials_calculated"); });
+    $("resetMaterialsBtn").addEventListener("click", resetMaterialsExample);
+    $("jointType").addEventListener("change", applyJointPreset);
+
+    document.querySelectorAll("input, select, textarea").forEach(el => {
+      el.addEventListener("input", calculateQuote);
+      el.addEventListener("change", calculateQuote);
+    });
+
+    ["sealArea","sealCoverage","sealCoats","sealWaste","sealCost","sealCurrency","sandArea","sandCoverage","sandWaste","sandCost","sandBagSize"].forEach(id => {
+      $(id).addEventListener("input", calculateMaterials);
+      $(id).addEventListener("change", calculateMaterials);
+    });
+
+    ["measureShape","measureUnit","measureQty","measureLength","measureWidth","measureDiameter","manualArea","measureWaste","measureProductionRate","pricePerSqFt","volumeGal"].forEach(id => {
+      $(id).addEventListener("input", calculateMeasurement);
+      $(id).addEventListener("change", calculateMeasurement);
+    });
+    $("pricePerSqM").addEventListener("input", updatePriceFromSqM);
+    $("pricePerSqM").addEventListener("change", updatePriceFromSqM);
+    $("volumeLiters").addEventListener("input", updateVolumeFromLiters);
+    $("volumeLiters").addEventListener("change", updateVolumeFromLiters);
+    $("measureShape").addEventListener("change", setMeasureShapeVisibility);
+    $("calculateMeasureBtn").addEventListener("click", () => { calculateMeasurement(); trackAppEvent("measure_calculated"); });
+    $("useAreaBtn").addEventListener("click", useMeasuredAreaForQuote);
+    $("resetMeasureBtn").addEventListener("click", resetMeasureExample);
+
+
+    function routeFromHash() {
+      const hash = window.location.hash.replace('#', '');
+      const validSections = [
+        'calculatorSection','softwashSection','materialsSection','measureSection','pricingSection','savedSection','feedbackSection','methodologySection','contactSection','privacySection','termsSection'
+      ];
+      if (validSections.includes(hash)) {
+        showTab(hash);
+      }
+    }
+    window.addEventListener('hashchange', routeFromHash);
+
+    loadGoogleAnalyticsIfConfigured();
+    resetExample();
+    resetSoftwashExample();
+    resetMaterialsExample();
+    resetMeasureExample();
+    renderSavedQuotes();
+    renderFeedback();
+    loadPaymentLinks();
+    renderProStatus();
+    loadSupportEmail();
+    routeFromHash();
+  </script>
+</body>
+</html>

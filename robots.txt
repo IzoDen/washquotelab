@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://izoden.github.io/washquotelab/sitemap.xml
