@@ -1,9 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-6824YHJX6G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-6824YHJX6G');
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WashQuoteLab V4 - Pressure Washing Business Toolkit</title>
+  <title>Pressure Washing Price Calculator | WashQuoteLab</title>
+  <meta name="description" content="Free pressure washing price calculator and quote builder for contractors. Estimate driveway, house wash, roof softwash, labor, chemicals, travel, overhead, profit margin, sealer, sand, and customer quotes." />
+  <meta name="robots" content="index, follow" />
+  <meta property="og:title" content="Pressure Washing Price Calculator | WashQuoteLab" />
+  <meta property="og:description" content="Create pressure washing price estimates and customer quotes, check profit margin, calculate softwash mix, and estimate sealer or polymeric sand materials." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://izoden.github.io/washquotelab/" />
+  <!-- Google Search Console: replace the content value with the code Google gives you, or send me the code and I will generate a new file. -->
+  <meta name="google-site-verification" content="REPLACE_WITH_SEARCH_CONSOLE_CODE" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Pressure Washing Price Calculator by WashQuoteLab",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "description": "Pressure washing price calculator and quote builder for contractors with softwash, sealer, sand, measurement, margin and PDF quote tools.",
+    "offers": [
+      {"@type":"Offer","name":"Free Calculator","price":"0","priceCurrency":"USD"},
+      {"@type":"Offer","name":"Pro Monthly","price":"19","priceCurrency":"USD"},
+      {"@type":"Offer","name":"Lifetime Template","price":"49","priceCurrency":"USD"}
+    ]
+  }
+  </script>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -500,10 +532,38 @@
     }
 
     footer {
-      color: var(--muted);
       text-align: center;
-      padding: 32px 16px;
+      padding: 28px 16px 36px;
       border-top: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .footer-link {
+      appearance: none;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      color: #1f4e7a;
+      text-decoration: underline;
+      cursor: pointer;
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .footer-sep {
+      color: #64748b;
+      user-select: none;
     }
 
     @media (max-width: 920px) {
@@ -515,7 +575,7 @@
     }
 
     @media print {
-      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #materialsSection, #measureSection, #feedbackSection, #methodologySection, .notice {
+      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #materialsSection, #measureSection, #feedbackSection, #methodologySection, #pricingSection, #contactSection, #feedbackSection, #termsSection, #privacySection, .notice {
         display: none !important;
       }
       body { background: white; }
@@ -628,15 +688,83 @@
       }
     }
 
+
+    .brand-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: rgba(255,255,255,0.88);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .landing-grid {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .landing-copy h2 {
+      margin: 0 0 10px;
+      font-size: clamp(26px, 4vw, 42px);
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+    }
+
+    .landing-copy p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 15px;
+    }
+
+    .landing-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 16px 0 0;
+    }
+
+    .landing-point {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fbfcff;
+    }
+
+    .landing-point strong { display: block; margin-bottom: 5px; }
+    .landing-point span { color: var(--muted); font-size: 13px; line-height: 1.45; }
+
+    .landing-mini {
+      background: linear-gradient(135deg, #eff6ff, #ecfdf3);
+      border: 1px solid #b9d7ff;
+      border-radius: var(--radius);
+      padding: 18px;
+    }
+
+    .landing-mini h3 { margin: 0 0 8px; font-size: 20px; }
+    .landing-mini p { color: var(--muted); line-height: 1.55; }
+
+    @media (max-width: 920px) {
+      .landing-grid, .landing-points { grid-template-columns: 1fr; }
+    }
+
   </style>
 </head>
 <body>
   <header>
     <div class="container hero">
       <div>
-        <h1>WashQuoteLab</h1>
+        <div class="brand-kicker">WashQuoteLab · Contractor quoting toolkit</div>
+        <h1>Pressure Washing Price Calculator</h1>
         <p>
-          Pressure washing quote, profit, softwash dilution, materials, measurement, customer approval, monetization, contact, and legal starter toolkit for contractors. Version 4 is payment-link ready.
+          Estimate pressure washing prices, job costs, profit margin, softwash mix, sealer, sand, measurements, and professional customer quotes from one mobile-friendly web app.
         </p>
       </div>
       <div class="hero-card">
@@ -653,19 +781,44 @@
       <button class="tab-btn" data-tab="materialsSection">Sealer & Sand</button>
       <button class="tab-btn" data-tab="measureSection">Measure</button>
       <button class="tab-btn" data-tab="pricingSection">Pricing</button>
-      <button class="tab-btn" data-tab="contactSection">Contact</button>
-      <button class="tab-btn" data-tab="feedbackSection">Feedback</button>
       <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
-      <button class="tab-btn" data-tab="methodologySection">Methodology</button>
-      <button class="tab-btn" data-tab="termsSection">Terms</button>
     </div>
   </nav>
 
   <main class="container">
+    <section class="card" id="landingSection" style="margin-bottom: 22px;">
+      <div class="landing-grid">
+        <div class="landing-copy">
+          <h2>Pressure Washing Price Calculator and Quote Builder</h2>
+          <p>Use WashQuoteLab to calculate driveway cleaning, house wash, roof softwash, commercial flatwork, sealer, sand, and customer quote prices from visible assumptions. The app estimates real contractor cost first, then checks market sanity ranges.</p>
+          <div class="actions">
+            <button class="primary" onclick="showTab('calculatorSection')">Create a Pressure Washing Quote</button>
+            <button class="secondary" onclick="showTab('softwashSection')">Calculate Softwash Mix</button>
+            <button class="ghost" onclick="showTab('pricingSection')">View Pricing</button>
+          </div>
+          <div class="landing-points">
+            <div class="landing-point"><strong>Price jobs faster</strong><span>Area, soil level, access, production rate, crew, travel, overhead, tax, discount, and margin.</span></div>
+            <div class="landing-point"><strong>Avoid underpricing</strong><span>Internal cost, recommended quote, gross profit, margin warning, and market sanity range.</span></div>
+            <div class="landing-point"><strong>Send cleaner quotes</strong><span>Customer-ready quote preview, PDF print flow, approval status, and signature block.</span></div>
+            <div class="landing-point"><strong>Estimate materials</strong><span>Softwash dilution, sealer coverage, polymeric sand, measurement and unit conversion helpers.</span></div>
+          </div>
+        </div>
+        <div class="landing-mini">
+          <h3>Who this is for</h3>
+          <p>Pressure washing contractors, softwash operators, exterior cleaning businesses, and small service companies that need transparent job pricing instead of hidden generic square-foot guesses.</p>
+          <div class="result-grid">
+            <div class="metric"><small>Main keyword</small><strong>Price Calculator</strong></div>
+            <div class="metric"><small>Business output</small><strong>Customer Quote</strong></div>
+            <div class="metric"><small>Pricing logic</small><strong>Cost + Margin</strong></div>
+            <div class="metric"><small>Brand</small><strong>WashQuoteLab</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section id="calculatorSection">
       <div class="grid">
         <div class="card input-card">
-          <h2 class="section-title">1. Business and quote details</h2>
+          <h2 class="section-title">1. Pressure washing quote details</h2>
           <p class="section-note">These fields make the customer quote look more professional when printed or saved as PDF.</p>
 
           <div class="form-grid">
@@ -1513,11 +1666,11 @@
         <div class="form-grid">
           <div class="field full">
             <label for="proMonthlyPaymentLink">Stripe Payment Link - Pro Monthly</label>
-            <input id="proMonthlyPaymentLink" placeholder="https://buy.stripe.com/..." />
+            <input id="proMonthlyPaymentLink" value="https://buy.stripe.com/5kQfZh9BDcpPfVtf06asg00" placeholder="https://buy.stripe.com/..." />
           </div>
           <div class="field full">
             <label for="lifetimePaymentLink">Stripe Payment Link - Lifetime</label>
-            <input id="lifetimePaymentLink" placeholder="https://buy.stripe.com/..." />
+            <input id="lifetimePaymentLink" value="https://buy.stripe.com/aFa9AT157exXdNlcRYasg01" placeholder="https://buy.stripe.com/..." />
           </div>
         </div>
         <div class="actions">
@@ -1526,6 +1679,34 @@
           <button class="ghost" id="testLifetimePaymentBtn">Test Lifetime Link</button>
         </div>
         <div id="paymentLinkStatus" class="copy-status"></div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Growth setup: Analytics, Search Console, and SEO</h2>
+        <p class="section-note">Use this section to collect the tracking IDs. Because this is a static GitHub Pages app, send me the final IDs and I will generate a production file with them hard-coded into the page source.</p>
+        <div class="notice warn">
+          Important: saving IDs here stores them only in your browser for testing. For real site-wide tracking and Search Console verification, the Google tag and verification meta tag must be placed in the HTML file itself.
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label for="gaMeasurementId">GA4 Measurement ID</label>
+            <input id="gaMeasurementId" placeholder="Example: G-ABC123XYZ" />
+          </div>
+          <div class="field">
+            <label for="searchConsoleCode">Search Console verification code</label>
+            <input id="searchConsoleCode" placeholder="Only the content value, not the full meta tag" />
+          </div>
+          <div class="field full">
+            <label for="seoPrimaryKeyword">Primary SEO keyword</label>
+            <input id="seoPrimaryKeyword" value="pressure washing quote calculator" />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="saveGrowthBtn">Save Growth Settings</button>
+          <button class="secondary" id="copyGscMetaBtn">Copy Search Console Meta Tag</button>
+          <button class="ghost" id="testTrackingBtn">Send Test Analytics Event</button>
+        </div>
+        <div id="growthStatus" class="copy-status"></div>
 
         <div class="divider"></div>
 
@@ -1608,9 +1789,9 @@
 
     <section id="termsSection" class="hidden">
       <div class="card methodology">
-        <h2 class="section-title">Terms, privacy, and disclaimer starter</h2>
+        <h2 class="section-title">Terms and disclaimer starter</h2>
         <div class="notice warn">
-          This is a starter template, not legal advice. Before selling seriously, have terms/privacy reviewed for your country, tax situation, and target markets.
+          This is a starter template, not legal advice. Before selling seriously, add the legal pages required for your country and target markets.
         </div>
 
         <div class="legal-box">
@@ -1626,19 +1807,37 @@
         </div>
 
         <div class="legal-box">
-          <h3>Privacy starter</h3>
-          <p>This static prototype stores saved quotes, feedback, payment-link settings, and local activation data in the user’s browser localStorage. Data is not automatically sent to a server by this static app. Clearing browser data may delete saved information.</p>
-          <p>If you add analytics, contact forms, payment systems, or cloud accounts later, update this privacy notice before launch.</p>
-        </div>
-
-        <div class="legal-box">
           <h3>Chemical and safety disclaimer</h3>
           <p>Softwash calculations are dilution helpers only. They are not chemical safety training. Follow product labels, local regulation, PPE requirements, SDS documents, and surface compatibility checks. Never mix sodium hypochlorite/bleach with acids, vinegar, ammonia, or unknown cleaners.</p>
         </div>
 
         <div class="legal-box">
           <h3>Contact</h3>
-          <p>For support, feedback, or refund questions, use the Contact tab and configure your real support email before publishing commercially.</p>
+          <p>For commercial launch, add the correct legal/contact information required in your jurisdiction.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacySection" class="hidden">
+      <div class="card methodology">
+        <h2 class="section-title">Privacy starter</h2>
+        <div class="notice warn">
+          This is a starter privacy notice, not legal advice. Update it before real paid launch, especially if you add analytics, email forms, payment systems, user accounts, or cloud storage.
+        </div>
+
+        <div class="legal-box">
+          <h3>Local browser storage</h3>
+          <p>This static prototype stores saved quotes, feedback, payment-link settings, and local activation data in the user’s browser localStorage. Data is not automatically sent to a server by this static app. Clearing browser data may delete saved information.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Contact and payments</h3>
+          <p>Payment buttons, when configured, open external payment pages such as Stripe Payment Links. WashQuoteLab does not directly process card data in this static prototype.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Future changes</h3>
+          <p>If you add analytics, embedded forms, cloud accounts, payment verification, newsletters, or a backend database later, update this privacy notice before launch and disclose what data is collected, why, where it is stored, and how users can contact you.</p>
         </div>
       </div>
     </section>
@@ -1717,7 +1916,9 @@
   </main>
 
   <footer>
-    WashQuoteLab V4 · Estimate only · Payment-link ready · Calibrate with your real job history
+    <div class="footer-links" aria-label="Footer navigation">
+      <button class="footer-link" data-footer-tab="methodologySection">Methodology</button>
+    </div>
   </footer>
 
   <script>
@@ -2565,8 +2766,91 @@
 
 
 
+    const WQL_DEFAULT_PAYMENT_LINKS = {
+      proMonthly: "https://buy.stripe.com/5kQfZh9BDcpPfVtf06asg00",
+      lifetime: "https://buy.stripe.com/aFa9AT157exXdNlcRYasg01"
+    };
+
     function getPaymentLinks() {
-      return JSON.parse(localStorage.getItem("washQuoteLabPaymentLinksV1") || "{}");
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabPaymentLinksV1") || "{}");
+      return {
+        proMonthly: saved.proMonthly || WQL_DEFAULT_PAYMENT_LINKS.proMonthly,
+        lifetime: saved.lifetime || WQL_DEFAULT_PAYMENT_LINKS.lifetime
+      };
+    }
+
+    const WQL_PRODUCTION_GA_ID = "REPLACE_WITH_GA4_MEASUREMENT_ID";
+    const WQL_PRODUCTION_GSC_CODE = "REPLACE_WITH_SEARCH_CONSOLE_CODE";
+
+    function getGrowthSettings() {
+      try {
+        return JSON.parse(localStorage.getItem("washQuoteLabGrowthSettingsV1") || "{}");
+      } catch (err) {
+        return {};
+      }
+    }
+
+    function loadGrowthSettings() {
+      const settings = getGrowthSettings();
+      if ($("gaMeasurementId")) $("gaMeasurementId").value = settings.gaMeasurementId || (WQL_PRODUCTION_GA_ID.startsWith("G-") ? WQL_PRODUCTION_GA_ID : "");
+      if ($("searchConsoleCode")) $("searchConsoleCode").value = settings.searchConsoleCode || (WQL_PRODUCTION_GSC_CODE.startsWith("REPLACE") ? "" : WQL_PRODUCTION_GSC_CODE);
+      if ($("seoPrimaryKeyword")) $("seoPrimaryKeyword").value = settings.seoPrimaryKeyword || "pressure washing quote calculator";
+    }
+
+    function saveGrowthSettings() {
+      const settings = {
+        gaMeasurementId: text("gaMeasurementId"),
+        searchConsoleCode: text("searchConsoleCode"),
+        seoPrimaryKeyword: text("seoPrimaryKeyword")
+      };
+      localStorage.setItem("washQuoteLabGrowthSettingsV1", JSON.stringify(settings));
+      $("growthStatus").textContent = "Growth settings saved in this browser. Send me these IDs so I can hard-code them for production.";
+      loadGoogleAnalyticsIfConfigured();
+      trackAppEvent("growth_settings_saved", settings);
+    }
+
+    function copyGscMetaTag() {
+      const code = text("searchConsoleCode");
+      const tag = code ? `<meta name="google-site-verification" content="${code}" />` : '<meta name="google-site-verification" content="PASTE_CODE_HERE" />';
+      navigator.clipboard.writeText(tag).then(() => {
+        $("growthStatus").textContent = "Search Console meta tag copied.";
+      }).catch(() => {
+        $("growthStatus").textContent = tag;
+      });
+    }
+
+    function loadGoogleAnalyticsIfConfigured() {
+      const settings = getGrowthSettings();
+      const id = (WQL_PRODUCTION_GA_ID && WQL_PRODUCTION_GA_ID.startsWith("G-") && !WQL_PRODUCTION_GA_ID.includes("REPLACE"))
+        ? WQL_PRODUCTION_GA_ID
+        : settings.gaMeasurementId;
+
+      if (!id || !/^G-[A-Z0-9]+$/i.test(id) || window.wqlGaLoaded === id) return;
+      const script = document.createElement("script");
+      script.async = true;
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(id)}`;
+      document.head.appendChild(script);
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function(){ dataLayer.push(arguments); };
+      gtag("js", new Date());
+      gtag("config", id, { send_page_view: true });
+      window.wqlGaLoaded = id;
+    }
+
+    function trackAppEvent(name, params = {}) {
+      const payload = { name, params, at: new Date().toISOString(), path: location.pathname, hash: location.hash };
+      const existing = JSON.parse(localStorage.getItem("washQuoteLabEventLogV1") || "[]");
+      existing.unshift(payload);
+      localStorage.setItem("washQuoteLabEventLogV1", JSON.stringify(existing.slice(0, 100)));
+      if (typeof window.gtag === "function") {
+        window.gtag("event", name, params);
+      }
+    }
+
+    function sendTestTrackingEvent() {
+      loadGoogleAnalyticsIfConfigured();
+      trackAppEvent("test_tracking_event", { source: "growth_setup" });
+      $("growthStatus").textContent = "Test event logged. If GA4 is configured in the actual HTML source, it should appear in GA4 Realtime.";
     }
 
     function loadPaymentLinks() {
@@ -2665,9 +2949,10 @@
     }
 
     function showTab(sectionId) {
-      ["calculatorSection", "softwashSection", "materialsSection", "measureSection", "pricingSection", "contactSection", "feedbackSection", "savedSection", "methodologySection", "termsSection"].forEach(id => {
+      ["calculatorSection", "softwashSection", "materialsSection", "measureSection", "pricingSection", "savedSection", "methodologySection", "contactSection", "feedbackSection", "termsSection", "privacySection"].forEach(id => {
         $(id).classList.toggle("hidden", id !== sectionId);
       });
+      if ($("landingSection")) $("landingSection").classList.toggle("hidden", sectionId !== "calculatorSection");
 
       document.querySelectorAll(".tab-btn").forEach(btn => {
         btn.classList.toggle("active", btn.dataset.tab === sectionId);
@@ -2675,7 +2960,7 @@
 
       if (sectionId === "savedSection") renderSavedQuotes();
       if (sectionId === "feedbackSection") renderFeedback();
-      if (sectionId === "pricingSection") { loadPaymentLinks(); renderProStatus(); }
+      if (sectionId === "pricingSection") { loadPaymentLinks(); renderProStatus(); loadGrowthSettings(); }
       if (sectionId === "contactSection") loadSupportEmail();
     }
 
@@ -2689,15 +2974,26 @@
     }
 
     document.querySelectorAll(".tab-btn").forEach(btn => {
-      btn.addEventListener("click", () => showTab(btn.dataset.tab));
+      btn.addEventListener("click", () => {
+        trackAppEvent("tab_clicked", { target: btn.dataset.tab });
+        showTab(btn.dataset.tab);
+      });
+    });
+
+    document.querySelectorAll(".footer-link").forEach(btn => {
+      btn.addEventListener("click", () => {
+        trackAppEvent("footer_link_clicked", { target: btn.dataset.footerTab });
+        showTab(btn.dataset.footerTab);
+      });
     });
 
     $("serviceType").addEventListener("change", applyPreset);
-    $("calculateBtn").addEventListener("click", calculateQuote);
-    $("saveQuoteBtn").addEventListener("click", saveQuote);
+    $("calculateBtn").addEventListener("click", () => { calculateQuote(); trackAppEvent("quote_calculated", { service: $("serviceType").value }); });
+    $("saveQuoteBtn").addEventListener("click", () => { saveQuote(); trackAppEvent("quote_saved", { service: $("serviceType").value }); });
     $("resetBtn").addEventListener("click", resetExample);
     $("printBtn").addEventListener("click", () => {
       calculateQuote();
+      trackAppEvent("quote_print_pdf_clicked", { service: $("serviceType").value });
       window.print();
     });
     $("copyQuoteBtn").addEventListener("click", copyQuoteText);
@@ -2709,8 +3005,11 @@
     $("copyFeedbackBtn").addEventListener("click", copyFeedbackText);
     $("clearFeedbackBtn").addEventListener("click", clearFeedback);
     $("savePaymentLinksBtn").addEventListener("click", savePaymentLinks);
-    $("buyProMonthlyBtn").addEventListener("click", () => openPayment("proMonthly"));
-    $("buyLifetimeBtn").addEventListener("click", () => openPayment("lifetime"));
+    $("saveGrowthBtn").addEventListener("click", saveGrowthSettings);
+    $("copyGscMetaBtn").addEventListener("click", copyGscMetaTag);
+    $("testTrackingBtn").addEventListener("click", sendTestTrackingEvent);
+    $("buyProMonthlyBtn").addEventListener("click", () => { trackAppEvent("buy_pro_monthly_clicked"); openPayment("proMonthly"); });
+    $("buyLifetimeBtn").addEventListener("click", () => { trackAppEvent("buy_lifetime_clicked"); openPayment("lifetime"); });
     $("testProPaymentBtn").addEventListener("click", () => openPayment("proMonthly"));
     $("testLifetimePaymentBtn").addEventListener("click", () => openPayment("lifetime"));
     $("activateProBtn").addEventListener("click", activateLocalPro);
@@ -2718,9 +3017,9 @@
     $("openEmailBtn").addEventListener("click", openEmailDraft);
     $("copyContactBtn").addEventListener("click", copyContactMessage);
     $("saveSupportEmailBtn").addEventListener("click", saveSupportEmail);
-    $("calculateSoftwashBtn").addEventListener("click", calculateSoftwashMix);
+    $("calculateSoftwashBtn").addEventListener("click", () => { calculateSoftwashMix(); trackAppEvent("softwash_calculated"); });
     $("resetSoftwashBtn").addEventListener("click", resetSoftwashExample);
-    $("calculateMaterialsBtn").addEventListener("click", calculateMaterials);
+    $("calculateMaterialsBtn").addEventListener("click", () => { calculateMaterials(); trackAppEvent("materials_calculated"); });
     $("resetMaterialsBtn").addEventListener("click", resetMaterialsExample);
     $("jointType").addEventListener("change", applyJointPreset);
 
@@ -2743,10 +3042,11 @@
     $("volumeLiters").addEventListener("input", updateVolumeFromLiters);
     $("volumeLiters").addEventListener("change", updateVolumeFromLiters);
     $("measureShape").addEventListener("change", setMeasureShapeVisibility);
-    $("calculateMeasureBtn").addEventListener("click", calculateMeasurement);
+    $("calculateMeasureBtn").addEventListener("click", () => { calculateMeasurement(); trackAppEvent("measure_calculated"); });
     $("useAreaBtn").addEventListener("click", useMeasuredAreaForQuote);
     $("resetMeasureBtn").addEventListener("click", resetMeasureExample);
 
+    loadGoogleAnalyticsIfConfigured();
     resetExample();
     resetSoftwashExample();
     resetMaterialsExample();
