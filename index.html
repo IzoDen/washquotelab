@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WashQuoteLab - Pressure Washing Quote Calculator</title>
+  <title>WashQuoteLab V2A - Pressure Washing Quote & Profit Calculator</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -19,13 +19,12 @@
       --success-bg: #ecfdf3;
       --warning: #b54708;
       --warning-bg: #fffaeb;
+      --blue-bg: #eff6ff;
       --shadow: 0 12px 30px rgba(24, 32, 47, 0.08);
       --radius: 18px;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -37,7 +36,7 @@
     header {
       background: linear-gradient(135deg, #0f172a, #123b7a);
       color: white;
-      padding: 36px 20px;
+      padding: 34px 20px;
     }
 
     .container {
@@ -54,16 +53,16 @@
 
     .hero h1 {
       margin: 0 0 10px;
-      font-size: clamp(32px, 5vw, 56px);
+      font-size: clamp(30px, 5vw, 54px);
       line-height: 1.05;
       letter-spacing: -0.04em;
     }
 
     .hero p {
       margin: 0;
-      max-width: 720px;
-      color: rgba(255, 255, 255, 0.82);
-      font-size: 18px;
+      max-width: 760px;
+      color: rgba(255, 255, 255, 0.84);
+      font-size: 17px;
       line-height: 1.55;
     }
 
@@ -77,8 +76,9 @@
 
     .hero-card strong {
       display: block;
-      font-size: 32px;
+      font-size: 34px;
       margin-bottom: 6px;
+      letter-spacing: -0.04em;
     }
 
     .hero-card span {
@@ -118,9 +118,7 @@
       color: white;
     }
 
-    main {
-      padding: 28px 0 60px;
-    }
+    main { padding: 28px 0 60px; }
 
     .grid {
       display: grid;
@@ -156,9 +154,7 @@
       gap: 14px;
     }
 
-    .form-grid.three {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
+    .form-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
     .field {
       display: flex;
@@ -166,9 +162,7 @@
       gap: 7px;
     }
 
-    .field.full {
-      grid-column: 1 / -1;
-    }
+    .field.full { grid-column: 1 / -1; }
 
     label {
       font-size: 13px;
@@ -219,30 +213,11 @@
       font: inherit;
     }
 
-    .primary {
-      background: var(--primary);
-      color: white;
-    }
-
-    .primary:hover {
-      background: var(--primary-dark);
-    }
-
-    .secondary {
-      background: #eef4ff;
-      color: #175cd3;
-    }
-
-    .ghost {
-      background: white;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .danger {
-      background: var(--danger-bg);
-      color: var(--danger);
-    }
+    .primary { background: var(--primary); color: white; }
+    .primary:hover { background: var(--primary-dark); }
+    .secondary { background: #eef4ff; color: #175cd3; }
+    .ghost { background: white; color: var(--text); border: 1px solid var(--border); }
+    .danger-btn { background: var(--danger-bg); color: var(--danger); }
 
     .result-grid {
       display: grid;
@@ -273,25 +248,24 @@
       letter-spacing: -0.03em;
     }
 
-    .metric.highlight {
-      background: #eff6ff;
-      border-color: #b9d7ff;
+    .metric.highlight { background: var(--blue-bg); border-color: #b9d7ff; }
+    .metric.success { background: var(--success-bg); border-color: #abefc6; }
+    .metric.warning { background: var(--warning-bg); border-color: #fedf89; }
+    .metric.danger { background: var(--danger-bg); border-color: #fecdca; }
+
+    .notice {
+      margin-top: 16px;
+      padding: 14px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.45;
+      border: 1px solid var(--border);
     }
 
-    .metric.success {
-      background: var(--success-bg);
-      border-color: #abefc6;
-    }
-
-    .metric.warning {
-      background: var(--warning-bg);
-      border-color: #fedf89;
-    }
-
-    .metric.danger {
-      background: var(--danger-bg);
-      border-color: #fecdca;
-    }
+    .notice.good { color: var(--success); background: var(--success-bg); border-color: #abefc6; }
+    .notice.warn { color: var(--warning); background: var(--warning-bg); border-color: #fedf89; }
+    .notice.bad { color: var(--danger); background: var(--danger-bg); border-color: #fecdca; }
+    .notice.info { color: #175cd3; background: #eff6ff; border-color: #b9d7ff; }
 
     .line-items {
       margin-top: 18px;
@@ -309,44 +283,9 @@
       font-size: 14px;
     }
 
-    .line:last-child {
-      border-bottom: 0;
-    }
-
-    .line span:first-child {
-      color: var(--muted);
-    }
-
-    .line span:last-child {
-      font-weight: 800;
-    }
-
-    .notice {
-      margin-top: 16px;
-      padding: 14px;
-      border-radius: 16px;
-      font-size: 14px;
-      line-height: 1.45;
-      border: 1px solid var(--border);
-    }
-
-    .notice.good {
-      color: var(--success);
-      background: var(--success-bg);
-      border-color: #abefc6;
-    }
-
-    .notice.warn {
-      color: var(--warning);
-      background: var(--warning-bg);
-      border-color: #fedf89;
-    }
-
-    .notice.bad {
-      color: var(--danger);
-      background: var(--danger-bg);
-      border-color: #fecdca;
-    }
+    .line:last-child { border-bottom: 0; }
+    .line span:first-child { color: var(--muted); }
+    .line span:last-child { font-weight: 800; text-align: right; }
 
     .quote-preview {
       background: white;
@@ -356,36 +295,92 @@
       margin-top: 18px;
     }
 
-    .quote-preview h3 {
+    .quote-top {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+
+    .quote-top h3 {
       margin: 0 0 6px;
-      font-size: 24px;
+      font-size: 26px;
+      letter-spacing: -0.03em;
     }
 
-    .quote-preview p {
+    .quote-top p, .quote-preview p {
+      margin: 4px 0;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.45;
     }
 
-    .quote-total {
-      margin-top: 16px;
+    .quote-badge {
       background: #0f172a;
       color: white;
-      border-radius: 16px;
-      padding: 18px;
-      display: flex;
-      justify-content: space-between;
-      gap: 16px;
-      align-items: center;
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: right;
+      min-width: 160px;
     }
 
-    .quote-total span {
-      color: rgba(255, 255, 255, 0.75);
+    .quote-badge small {
+      display: block;
+      color: rgba(255,255,255,.72);
       font-weight: 700;
     }
 
-    .quote-total strong {
-      font-size: 34px;
+    .quote-badge strong {
+      font-size: 26px;
       letter-spacing: -0.04em;
+    }
+
+    .quote-options {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .option-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      background: #fbfcff;
+    }
+
+    .option-card.recommended {
+      background: var(--blue-bg);
+      border-color: #b9d7ff;
+    }
+
+    .option-card h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+    }
+
+    .option-card strong {
+      display: block;
+      font-size: 23px;
+      margin-bottom: 6px;
+      letter-spacing: -0.03em;
+    }
+
+    .option-card p {
+      font-size: 13px;
+      margin: 0;
+    }
+
+    .assumption-box {
+      background: #fbfcff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
     }
 
     .saved-list {
@@ -404,34 +399,26 @@
       align-items: center;
     }
 
-    .saved-item h3 {
-      margin: 0 0 4px;
-    }
-
-    .saved-item p {
-      margin: 0;
-      color: var(--muted);
-      line-height: 1.45;
-    }
+    .saved-item h3 { margin: 0 0 4px; }
+    .saved-item p { margin: 0; color: var(--muted); line-height: 1.45; }
 
     .methodology {
       display: grid;
       gap: 16px;
     }
 
-    .methodology h3 {
-      margin: 0 0 6px;
-    }
-
-    .methodology p {
-      margin: 0;
+    .methodology h3 { margin: 0 0 6px; }
+    .methodology p, .methodology li {
       color: var(--muted);
       line-height: 1.6;
     }
 
-    .hidden {
-      display: none;
+    .source-list {
+      padding-left: 18px;
+      margin: 10px 0 0;
     }
+
+    .hidden { display: none; }
 
     footer {
       color: var(--muted);
@@ -441,44 +428,25 @@
     }
 
     @media (max-width: 920px) {
-      .hero, .grid {
+      .hero, .grid { grid-template-columns: 1fr; }
+      .form-grid, .form-grid.three, .result-grid, .quote-options, .quote-top {
         grid-template-columns: 1fr;
       }
-
-      .form-grid, .form-grid.three, .result-grid {
-        grid-template-columns: 1fr;
-      }
+      .quote-badge { text-align: left; }
     }
 
     @media print {
-      header, nav, .input-card, .actions, footer, #savedSection, #methodologySection {
+      header, nav, .input-card, .actions, footer, #savedSection, #methodologySection, .notice {
         display: none !important;
       }
-
-      body {
-        background: white;
-      }
-
-      main {
-        padding: 0;
-      }
-
-      .container {
-        width: 100%;
-      }
-
-      .grid {
-        display: block;
-      }
-
-      .card {
-        box-shadow: none;
-        border: none;
-      }
-
-      .quote-preview {
-        border: none;
-      }
+      body { background: white; }
+      main { padding: 0; }
+      .container { width: 100%; }
+      .grid { display: block; }
+      .card { box-shadow: none; border: none; padding: 0; }
+      .quote-preview { border: none; margin-top: 0; padding: 0; }
+      .line-items, .result-grid { display: none; }
+      .assumption-box { page-break-inside: avoid; }
     }
   </style>
 </head>
@@ -488,13 +456,12 @@
       <div>
         <h1>WashQuoteLab</h1>
         <p>
-          Pressure washing quote and profit calculator for contractors. Estimate labor,
-          chemicals, travel, overhead, margin, and final customer price before you underquote the job.
+          Pressure washing quote and profit calculator for contractors. Version 2A adds source-backed market sanity ranges, visible assumptions, quote details, and a cleaner customer quote.
         </p>
       </div>
       <div class="hero-card">
-        <strong id="heroPrice">$0</strong>
-        <span>Current recommended quote based on your job inputs.</span>
+        <strong id="heroPrice">$0.00</strong>
+        <span>Recommended customer quote based on your own cost assumptions and target margin.</span>
       </div>
     </div>
   </header>
@@ -511,23 +478,68 @@
     <section id="calculatorSection">
       <div class="grid">
         <div class="card input-card">
-          <h2 class="section-title">Create a job quote</h2>
-          <p class="section-note">
-            Start with service presets, then adjust the assumptions. The app is designed to protect margin,
-            not just calculate square-foot pricing.
-          </p>
+          <h2 class="section-title">1. Business and quote details</h2>
+          <p class="section-note">These fields make the customer quote look more professional when printed or saved as PDF.</p>
 
+          <div class="form-grid">
+            <div class="field">
+              <label for="companyName">Company name</label>
+              <input id="companyName" value="Your Cleaning Company" />
+            </div>
+            <div class="field">
+              <label for="companyEmail">Company email</label>
+              <input id="companyEmail" value="hello@example.com" />
+            </div>
+            <div class="field">
+              <label for="companyPhone">Company phone</label>
+              <input id="companyPhone" value="+1 555 000 0000" />
+            </div>
+            <div class="field">
+              <label for="companyWebsite">Company website</label>
+              <input id="companyWebsite" value="www.example.com" />
+            </div>
+            <div class="field">
+              <label for="quoteNumber">Quote number</label>
+              <input id="quoteNumber" />
+            </div>
+            <div class="field">
+              <label for="validUntil">Quote valid until</label>
+              <input id="validUntil" type="date" />
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">2. Customer and project</h2>
           <div class="form-grid">
             <div class="field">
               <label for="projectName">Project name</label>
               <input id="projectName" value="Driveway cleaning estimate" />
             </div>
-
             <div class="field">
               <label for="customerName">Customer name</label>
               <input id="customerName" value="Sample Customer" />
             </div>
+            <div class="field">
+              <label for="customerEmail">Customer email</label>
+              <input id="customerEmail" value="customer@example.com" />
+            </div>
+            <div class="field">
+              <label for="customerPhone">Customer phone</label>
+              <input id="customerPhone" value="+1 555 111 1111" />
+            </div>
+            <div class="field full">
+              <label for="jobAddress">Job address</label>
+              <input id="jobAddress" value="123 Sample Street" />
+            </div>
+          </div>
 
+          <div class="divider"></div>
+
+          <h2 class="section-title">3. Job scope</h2>
+          <p class="section-note">Choose a service preset, then adjust area, difficulty, access, and method.</p>
+
+          <div class="form-grid">
             <div class="field">
               <label for="serviceType">Service type</label>
               <select id="serviceType">
@@ -592,9 +604,9 @@
 
           <div class="divider"></div>
 
-          <h2 class="section-title">Cost assumptions</h2>
+          <h2 class="section-title">4. Cost assumptions</h2>
           <p class="section-note">
-            These defaults are only a starting point. A contractor should tune them based on real job history.
+            This is the heart of the app. Market ranges are only a sanity check. Your quote should be driven by your costs, speed, overhead, and target margin.
           </p>
 
           <div class="form-grid three">
@@ -602,87 +614,70 @@
               <label for="productionRate">Production rate, sq ft/hour</label>
               <input id="productionRate" type="number" value="450" min="1" />
             </div>
-
             <div class="field">
               <label for="setupHours">Setup/cleanup hours</label>
               <input id="setupHours" type="number" value="0.5" step="0.1" min="0" />
             </div>
-
             <div class="field">
               <label for="crewSize">Crew size</label>
               <input id="crewSize" type="number" value="1" step="1" min="1" />
             </div>
-
             <div class="field">
               <label for="laborRate">Labor cost per person/hour</label>
               <input id="laborRate" type="number" value="35" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="chemicalRate">Chemical/material cost per sq ft</label>
               <input id="chemicalRate" type="number" value="0.02" step="0.01" min="0" />
             </div>
-
             <div class="field">
               <label for="equipmentRate">Equipment/fuel cost per hour</label>
               <input id="equipmentRate" type="number" value="12" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="travelHours">Travel time, hours</label>
               <input id="travelHours" type="number" value="0.5" step="0.1" min="0" />
             </div>
-
             <div class="field">
               <label for="travelMiles">Travel distance, miles</label>
               <input id="travelMiles" type="number" value="12" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="mileRate">Vehicle cost per mile</label>
               <input id="mileRate" type="number" value="0.75" step="0.01" min="0" />
             </div>
-
             <div class="field">
               <label for="overheadPct">Overhead %</label>
               <input id="overheadPct" type="number" value="15" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="targetMargin">Target gross margin %</label>
               <input id="targetMargin" type="number" value="45" step="1" min="1" max="95" />
             </div>
-
             <div class="field">
               <label for="minimumCharge">Minimum job charge</label>
               <input id="minimumCharge" type="number" value="150" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="addOnCost">Special add-on internal cost</label>
               <input id="addOnCost" type="number" value="0" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="addOnCharge">Special add-on customer charge</label>
               <input id="addOnCharge" type="number" value="0" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="taxPct">Tax %</label>
               <input id="taxPct" type="number" value="0" step="0.1" min="0" />
             </div>
-
             <div class="field">
               <label for="discount">Discount amount</label>
               <input id="discount" type="number" value="0" step="1" min="0" />
             </div>
-
             <div class="field">
               <label for="depositPct">Deposit %</label>
               <input id="depositPct" type="number" value="30" step="1" min="0" max="100" />
             </div>
-
             <div class="field">
               <label for="currency">Currency symbol</label>
               <input id="currency" value="$" />
@@ -690,7 +685,7 @@
 
             <div class="field full">
               <label for="notes">Customer-facing notes</label>
-              <textarea id="notes">Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, or water-access issues may require revised pricing.</textarea>
+              <textarea id="notes">Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, water-access issues, or hazardous conditions may require revised pricing.</textarea>
             </div>
           </div>
 
@@ -703,67 +698,86 @@
 
         <div class="card">
           <h2 class="section-title">Quote result</h2>
-          <p class="section-note">
-            Internal cost is shown for the contractor. The customer quote below is cleaner and hides your cost structure.
-          </p>
+          <p class="section-note">Internal numbers are for the contractor. The customer quote below hides your internal cost structure.</p>
 
           <div class="result-grid">
             <div class="metric highlight">
               <small>Recommended quote</small>
-              <strong id="recommendedPrice">$0</strong>
+              <strong id="recommendedPrice">$0.00</strong>
             </div>
-
             <div class="metric success" id="marginBox">
               <small>Estimated margin</small>
-              <strong id="grossMargin">0%</strong>
+              <strong id="grossMargin">0.0%</strong>
             </div>
-
             <div class="metric">
               <small>Internal cost</small>
-              <strong id="internalCost">$0</strong>
+              <strong id="internalCost">$0.00</strong>
             </div>
-
             <div class="metric">
               <small>Estimated job time</small>
-              <strong id="jobHours">0 h</strong>
+              <strong id="jobHours">0.00 h</strong>
             </div>
           </div>
 
-          <div id="warningBox" class="notice good">
-            Enter job details and calculate the quote.
-          </div>
+          <div id="warningBox" class="notice info">Enter job details and calculate the quote.</div>
 
           <div class="line-items">
-            <div class="line"><span>Cleaning time</span><span id="cleaningTime">0 h</span></div>
-            <div class="line"><span>Total elapsed time</span><span id="elapsedTime">0 h</span></div>
-            <div class="line"><span>Labor cost</span><span id="laborCost">$0</span></div>
-            <div class="line"><span>Chemicals/materials</span><span id="chemicalCost">$0</span></div>
-            <div class="line"><span>Equipment/fuel</span><span id="equipmentCost">$0</span></div>
-            <div class="line"><span>Travel vehicle cost</span><span id="travelCost">$0</span></div>
-            <div class="line"><span>Overhead allocation</span><span id="overheadCost">$0</span></div>
-            <div class="line"><span>Profit before tax</span><span id="profitAmount">$0</span></div>
-            <div class="line"><span>Market sanity range</span><span id="marketRange">$0 - $0</span></div>
-            <div class="line"><span>Deposit</span><span id="depositAmount">$0</span></div>
-            <div class="line"><span>Balance after deposit</span><span id="balanceAmount">$0</span></div>
+            <div class="line"><span>Cleaning time</span><span id="cleaningTime">0.00 h</span></div>
+            <div class="line"><span>Total elapsed time</span><span id="elapsedTime">0.00 h</span></div>
+            <div class="line"><span>Labor cost</span><span id="laborCost">$0.00</span></div>
+            <div class="line"><span>Chemicals/materials</span><span id="chemicalCost">$0.00</span></div>
+            <div class="line"><span>Equipment/fuel</span><span id="equipmentCost">$0.00</span></div>
+            <div class="line"><span>Travel vehicle cost</span><span id="travelCost">$0.00</span></div>
+            <div class="line"><span>Overhead allocation</span><span id="overheadCost">$0.00</span></div>
+            <div class="line"><span>Profit before tax</span><span id="profitAmount">$0.00</span></div>
+            <div class="line"><span>Source-backed market sanity range</span><span id="marketRange">$0.00 - $0.00</span></div>
+            <div class="line"><span>Deposit</span><span id="depositAmount">$0.00</span></div>
+            <div class="line"><span>Balance after deposit</span><span id="balanceAmount">$0.00</span></div>
           </div>
 
           <div class="quote-preview" id="quotePreview">
-            <h3>Customer Quote</h3>
+            <div class="quote-top">
+              <div>
+                <h3 id="quoteCompany">Your Cleaning Company</h3>
+                <p><span id="quoteCompanyContact">hello@example.com · +1 555 000 0000</span></p>
+                <p><span id="quoteCompanyWebsite">www.example.com</span></p>
+              </div>
+              <div class="quote-badge">
+                <small>Total quote</small>
+                <strong id="quoteTotal">$0.00</strong>
+              </div>
+            </div>
+
+            <p><strong>Quote #:</strong> <span id="quoteNo">-</span></p>
+            <p><strong>Valid until:</strong> <span id="quoteValidUntil">-</span></p>
             <p><strong>Project:</strong> <span id="quoteProject">-</span></p>
             <p><strong>Customer:</strong> <span id="quoteCustomer">-</span></p>
+            <p><strong>Contact:</strong> <span id="quoteCustomerContact">-</span></p>
+            <p><strong>Job address:</strong> <span id="quoteJobAddress">-</span></p>
             <p><strong>Service:</strong> <span id="quoteService">-</span></p>
             <p><strong>Scope:</strong> <span id="quoteScope">-</span></p>
             <p><strong>Notes:</strong> <span id="quoteNotes">-</span></p>
 
-            <div class="quote-total">
-              <div>
-                <span>Total customer price</span>
-                <strong id="quoteTotal">$0</strong>
+            <div class="quote-options">
+              <div class="option-card">
+                <h4>Good</h4>
+                <strong id="goodPrice">$0.00</strong>
+                <p>Standard cleaning based on the current job scope.</p>
               </div>
-              <div>
-                <span>Deposit</span>
-                <strong id="quoteDeposit">$0</strong>
+              <div class="option-card recommended">
+                <h4>Better · Recommended</h4>
+                <strong id="betterPrice">$0.00</strong>
+                <p>Standard cleaning plus extra detail time and minor spot treatment allowance.</p>
               </div>
+              <div class="option-card">
+                <h4>Best</h4>
+                <strong id="bestPrice">$0.00</strong>
+                <p>Highest allowance for detail work, tougher stains, and priority service buffer.</p>
+              </div>
+            </div>
+
+            <div class="assumption-box" id="quoteAssumptions">
+              Assumptions will appear here after calculation.
             </div>
           </div>
 
@@ -778,10 +792,10 @@
       <div class="card">
         <h2 class="section-title">Saved quotes</h2>
         <p class="section-note">
-          For this prototype, quotes are saved in your browser only. A real SaaS version would save them to a database.
+          Quotes are saved in this browser only. A future paid version could save them to a cloud account.
         </p>
         <div class="actions">
-          <button class="danger" id="clearSavedBtn">Clear Saved Quotes</button>
+          <button class="danger-btn" id="clearSavedBtn">Clear Saved Quotes</button>
         </div>
         <div class="divider"></div>
         <div id="savedList" class="saved-list"></div>
@@ -790,39 +804,52 @@
 
     <section id="methodologySection" class="hidden">
       <div class="card methodology">
-        <h2 class="section-title">Methodology</h2>
+        <h2 class="section-title">Methodology and source notes</h2>
+
+        <div class="notice info">
+          This app does not claim one universal pressure washing price. It calculates your internal cost first, then applies your target margin. Public pricing ranges are used only as a sanity check.
+        </div>
 
         <div>
-          <h3>1. The app estimates cost first, then price.</h3>
+          <h3>1. Calculation logic</h3>
           <p>
-            A weak calculator only multiplies area by a price per square foot. This app estimates cleaning time,
-            labor cost, chemicals, equipment/fuel, travel, overhead, and add-on cost. Then it calculates the price
-            required to protect your target margin.
+            Direct cost = labor + chemicals/materials + equipment/fuel + travel + special add-on internal cost.
+            Overhead is added as a percentage of direct cost. Required selling price is calculated as internal cost divided by (1 - target margin).
+            The final quote uses the higher of margin-based price and minimum charge, then applies discount and tax.
           </p>
         </div>
 
         <div>
-          <h3>2. Production rate is the key assumption.</h3>
+          <h3>2. Why prices are not universal</h3>
           <p>
-            Different machines, surfaces, dirt levels, and crew experience change how many square feet can be cleaned
-            per hour. Instead of asking for machine details first, the MVP uses service presets and lets the contractor
-            adjust production rate directly.
+            Pressure washing pricing changes by location, surface, soil level, access, equipment, labor cost, insurance, overhead, competition, and customer type.
+            A driveway, roof, house wash, and commercial flatwork job should not use one simple square-foot price.
           </p>
         </div>
 
         <div>
-          <h3>3. Minimum charge prevents bad small jobs.</h3>
+          <h3>3. Source-backed market sanity ranges used in this prototype</h3>
+          <ul class="source-list">
+            <li>Housecall Pro 2026 guide: residential flatwork about $0.15–$0.75/sq ft, driveway cleaning about $100–$300, house washing about $250–$800, commercial flatwork about $0.08–$0.40/sq ft.</li>
+            <li>Angi 2026 driveway guide: professional driveway pressure washing about $0.30–$0.55/sq ft, with material affecting price.</li>
+            <li>Bark pressure-washing pricing guide: common pricing structures include per-square-foot, hourly, and flat project rates; it also notes typical small-job minimum charges.</li>
+            <li>CDC and Washington State Department of Health: bleach/sodium hypochlorite must not be mixed with ammonia, vinegar, acids, or unknown cleaners because toxic chlorine or chloramine gases can be produced.</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>4. Important limitation</h3>
           <p>
-            Some jobs are too small to price only by area. The app compares the margin-based quote with your minimum
-            charge and uses the higher value.
+            Production rate is the biggest weak assumption. It depends on machine GPM, nozzle/surface cleaner, hot water, chemicals, operator skill, soil level, rinsing time, drainage, edge work, and access.
+            The app provides editable defaults because no public source can know your exact field productivity.
           </p>
         </div>
 
         <div>
-          <h3>4. Market range is only a sanity check.</h3>
+          <h3>5. Safety note for future softwash module</h3>
           <p>
-            The market range is not the final truth. Local competition, job risk, equipment, insurance, positioning,
-            and customer expectations vary. Your own cost and margin should decide the quote.
+            A future softwash calculator should be treated as a dilution calculator only, not safety training. Always follow product labels, PPE requirements, local regulations, and chemical compatibility rules.
+            Do not mix bleach/sodium hypochlorite with acids, vinegar, ammonia, or unknown cleaners.
           </p>
         </div>
       </div>
@@ -830,7 +857,7 @@
   </main>
 
   <footer>
-    WashQuoteLab MVP · Prototype for pressure washing quote and profit calculation
+    WashQuoteLab V2A · Estimate only · Calibrate with your real job history
   </footer>
 
   <script>
@@ -838,57 +865,77 @@
       driveway: {
         label: "Driveway / concrete flatwork",
         method: "Surface cleaner",
+        surface: "Concrete",
         productionRate: 450,
         setupHours: 0.5,
         chemicalRate: 0.02,
         equipmentRate: 12,
         minimumCharge: 150,
-        marketLow: 0.12,
-        marketHigh: 0.35
+        marketLow: 0.30,
+        marketHigh: 0.55,
+        projectLow: 100,
+        projectHigh: 300,
+        source: "Housecall Pro driveway project range + Angi driveway sq ft range"
       },
       house: {
         label: "House wash",
         method: "Soft wash",
+        surface: "Vinyl siding",
         productionRate: 650,
         setupHours: 0.75,
         chemicalRate: 0.03,
         equipmentRate: 10,
         minimumCharge: 250,
         marketLow: 0.15,
-        marketHigh: 0.35
+        marketHigh: 0.35,
+        projectLow: 250,
+        projectHigh: 800,
+        source: "Housecall Pro house washing project range"
       },
       roof: {
         label: "Roof soft wash",
         method: "Soft wash",
+        surface: "Roof shingles",
         productionRate: 300,
         setupHours: 1.0,
         chemicalRate: 0.08,
         equipmentRate: 14,
         minimumCharge: 350,
         marketLow: 0.30,
-        marketHigh: 0.65
+        marketHigh: 0.65,
+        projectLow: 400,
+        projectHigh: 1000,
+        source: "Industry guide range; calibrate locally"
       },
       deck: {
         label: "Deck / fence cleaning",
         method: "Pressure wash",
+        surface: "Wood deck",
         productionRate: 250,
         setupHours: 0.75,
         chemicalRate: 0.04,
         equipmentRate: 11,
         minimumCharge: 200,
-        marketLow: 0.25,
-        marketHigh: 0.75
+        marketLow: 0.50,
+        marketHigh: 1.50,
+        projectLow: 200,
+        projectHigh: 600,
+        source: "Industry guide range; calibrate locally"
       },
       commercial: {
         label: "Commercial flatwork",
         method: "Hot-water power wash",
+        surface: "Commercial pavement",
         productionRate: 900,
         setupHours: 1.0,
         chemicalRate: 0.015,
         equipmentRate: 16,
         minimumCharge: 300,
         marketLow: 0.08,
-        marketHigh: 0.18
+        marketHigh: 0.40,
+        projectLow: 300,
+        projectHigh: 0,
+        source: "Housecall Pro commercial flatwork sq ft range"
       }
     };
 
@@ -907,7 +954,6 @@
     };
 
     const $ = (id) => document.getElementById(id);
-
     let latestResult = null;
 
     function num(id) {
@@ -916,16 +962,18 @@
     }
 
     function text(id) {
-      return $(id).value.trim();
+      return ($(id).value || "").trim();
     }
 
     function money(value) {
       const currency = text("currency") || "$";
       const safe = Number.isFinite(value) ? value : 0;
-      return `${currency}${safe.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}`;
+      return `${currency}${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function moneyWithCurrency(value, currency) {
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${currency || "$"}${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
     }
 
     function pct(value) {
@@ -938,6 +986,26 @@
       return `${safe.toFixed(2)} h`;
     }
 
+    function todayISO() {
+      return new Date().toISOString().slice(0, 10);
+    }
+
+    function addDaysISO(days) {
+      const date = new Date();
+      date.setDate(date.getDate() + days);
+      return date.toISOString().slice(0, 10);
+    }
+
+    function makeQuoteNumber() {
+      const now = new Date();
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, "0");
+      const d = String(now.getDate()).padStart(2, "0");
+      const h = String(now.getHours()).padStart(2, "0");
+      const min = String(now.getMinutes()).padStart(2, "0");
+      return `WQL-${y}${m}${d}-${h}${min}`;
+    }
+
     function applyPreset() {
       const key = $("serviceType").value;
       const preset = presets[key];
@@ -948,6 +1016,7 @@
       $("equipmentRate").value = preset.equipmentRate;
       $("minimumCharge").value = preset.minimumCharge;
       $("method").value = preset.method;
+      $("surfaceType").value = preset.surface;
 
       calculateQuote();
     }
@@ -1001,13 +1070,24 @@
       const depositAmount = finalPrice * depositPct;
       const balanceAmount = finalPrice - depositAmount;
 
-      const marketLow = area * preset.marketLow;
-      const marketHigh = area * preset.marketHigh;
+      const marketLowByArea = area * preset.marketLow;
+      const marketHighByArea = area * preset.marketHigh;
+      const marketLow = Math.max(marketLowByArea, preset.projectLow || 0);
+      const marketHigh = preset.projectHigh ? Math.max(marketHighByArea, preset.projectHigh) : marketHighByArea;
 
       latestResult = {
         createdAt: new Date().toISOString(),
+        companyName: text("companyName"),
+        companyEmail: text("companyEmail"),
+        companyPhone: text("companyPhone"),
+        companyWebsite: text("companyWebsite"),
+        quoteNumber: text("quoteNumber"),
+        validUntil: text("validUntil"),
         projectName: text("projectName"),
         customerName: text("customerName"),
+        customerEmail: text("customerEmail"),
+        customerPhone: text("customerPhone"),
+        jobAddress: text("jobAddress"),
         service: preset.label,
         surfaceType: text("surfaceType"),
         method: text("method"),
@@ -1030,9 +1110,13 @@
         targetMargin: targetMarginPct * 100,
         marketLow,
         marketHigh,
+        marketSource: preset.source,
         depositAmount,
         balanceAmount,
-        notes: text("notes")
+        productionRate,
+        crewSize,
+        notes: text("notes"),
+        currency: text("currency") || "$"
       };
 
       renderResult(latestResult);
@@ -1058,14 +1142,32 @@
       $("depositAmount").textContent = money(result.depositAmount);
       $("balanceAmount").textContent = money(result.balanceAmount);
 
+      $("quoteCompany").textContent = result.companyName || "Company";
+      $("quoteCompanyContact").textContent = [result.companyEmail, result.companyPhone].filter(Boolean).join(" · ") || "-";
+      $("quoteCompanyWebsite").textContent = result.companyWebsite || "";
+      $("quoteTotal").textContent = money(result.finalPrice);
+      $("quoteNo").textContent = result.quoteNumber || "-";
+      $("quoteValidUntil").textContent = result.validUntil || "-";
       $("quoteProject").textContent = result.projectName || "-";
       $("quoteCustomer").textContent = result.customerName || "-";
+      $("quoteCustomerContact").textContent = [result.customerEmail, result.customerPhone].filter(Boolean).join(" · ") || "-";
+      $("quoteJobAddress").textContent = result.jobAddress || "-";
       $("quoteService").textContent = `${result.service} · ${result.method}`;
-      $("quoteScope").textContent =
-        `${result.area.toLocaleString()} sq ft · ${result.surfaceType} · ${result.condition} · ${result.access}`;
+      $("quoteScope").textContent = `${result.area.toLocaleString()} sq ft · ${result.surfaceType} · ${result.condition} · ${result.access}`;
       $("quoteNotes").textContent = result.notes || "-";
-      $("quoteTotal").textContent = money(result.finalPrice);
-      $("quoteDeposit").textContent = money(result.depositAmount);
+
+      const good = result.finalPrice;
+      const better = good * 1.15;
+      const best = good * 1.30;
+      $("goodPrice").textContent = money(good);
+      $("betterPrice").textContent = money(better);
+      $("bestPrice").textContent = money(best);
+
+      $("quoteAssumptions").innerHTML =
+        `<strong>Visible assumptions:</strong> ${result.productionRate.toLocaleString()} sq ft/hour production rate, ` +
+        `${result.crewSize} crew member(s), ${hours(result.elapsedTime)} total estimated job time, ` +
+        `${money(result.internalCost)} internal cost, ${pct(result.targetMargin)} target margin. ` +
+        `Market sanity range: ${money(result.marketLow)} - ${money(result.marketHigh)}. Source note: ${escapeHtml(result.marketSource)}.`;
 
       const marginBox = $("marginBox");
       const warningBox = $("warningBox");
@@ -1077,42 +1179,38 @@
         marginBox.className = "metric danger";
         warningBox.className = "notice bad";
         warningBox.textContent =
-          `Margin warning: this quote gives about ${pct(result.grossMargin)} margin, below your ${pct(result.targetMargin)} target. Raise the price or reduce cost.`;
+          `Margin warning: this quote gives about ${pct(result.grossMargin)} margin, below your ${pct(result.targetMargin)} target. Increase price, reduce cost, or revise the scope.`;
       } else if (result.finalPrice < result.marketLow) {
         marginBox.className = "metric warning";
         warningBox.className = "notice warn";
         warningBox.textContent =
-          `Market sanity warning: this quote is below the preset market range for this service. That can be okay, but check your area, scope, and assumptions.`;
-      } else if (result.finalPrice > result.marketHigh * 1.5) {
+          `Market sanity warning: this quote is below the source-backed market sanity range. That can be okay, but check area, difficulty, local market, and hidden costs.`;
+      } else if (result.finalPrice > result.marketHigh * 1.25) {
         marginBox.className = "metric warning";
         warningBox.className = "notice warn";
         warningBox.textContent =
-          `High-price warning: your quote is much higher than the preset market sanity range. This may be justified for difficult work, but explain the scope clearly.`;
+          `High-price warning: this quote is above the source-backed market sanity range. This may be justified for difficult work, but the quote should clearly explain the scope.`;
       } else {
         warningBox.textContent =
-          `Quote looks reasonable based on your cost and target margin. Always confirm local prices, job risk, and customer expectations before sending.`;
+          `Quote looks reasonable based on your cost assumptions, target margin, and market sanity range. Still calibrate with real local job history.`;
       }
     }
 
     function saveQuote() {
       const result = calculateQuote();
-      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotes") || "[]");
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
       saved.unshift(result);
-      localStorage.setItem("washQuoteLabQuotes", JSON.stringify(saved.slice(0, 50)));
+      localStorage.setItem("washQuoteLabQuotesV2A", JSON.stringify(saved.slice(0, 50)));
       renderSavedQuotes();
       alert("Quote saved in this browser.");
     }
 
     function renderSavedQuotes() {
-      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotes") || "[]");
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
       const list = $("savedList");
 
       if (!saved.length) {
-        list.innerHTML = `
-          <div class="notice warn">
-            No saved quotes yet. Create a quote and click “Save Quote”.
-          </div>
-        `;
+        list.innerHTML = `<div class="notice warn">No saved quotes yet. Create a quote and click “Save Quote”.</div>`;
         return;
       }
 
@@ -1122,67 +1220,45 @@
           <div class="saved-item">
             <div>
               <h3>${escapeHtml(quote.projectName || "Untitled Quote")}</h3>
-              <p>
-                ${escapeHtml(quote.customerName || "No customer")} ·
-                ${escapeHtml(quote.service)} ·
-                ${quote.area.toLocaleString()} sq ft ·
-                ${date}
-              </p>
-              <p>
-                Final: <strong>${moneyStatic(quote.finalPrice)}</strong> ·
-                Margin: <strong>${quote.grossMargin.toFixed(1)}%</strong>
-              </p>
+              <p>${escapeHtml(quote.customerName || "No customer")} · ${escapeHtml(quote.service)} · ${quote.area.toLocaleString()} sq ft · ${date}</p>
+              <p>Final: <strong>${moneyWithCurrency(quote.finalPrice, quote.currency)}</strong> · Margin: <strong>${quote.grossMargin.toFixed(1)}%</strong></p>
             </div>
             <div class="actions">
-              <button class="ghost" onclick="loadSavedQuote(${index})">Load</button>
-              <button class="danger" onclick="deleteSavedQuote(${index})">Delete</button>
+              <button class="danger-btn" onclick="deleteSavedQuote(${index})">Delete</button>
             </div>
           </div>
         `;
       }).join("");
     }
 
-    function moneyStatic(value) {
-      const currency = text("currency") || "$";
-      const safe = Number.isFinite(value) ? value : 0;
-      return `${currency}${safe.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      })}`;
-    }
-
-    function loadSavedQuote(index) {
-      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotes") || "[]");
-      const quote = saved[index];
-      if (!quote) return;
-
-      $("projectName").value = quote.projectName || "";
-      $("customerName").value = quote.customerName || "";
-      $("area").value = quote.area || 0;
-      $("notes").value = quote.notes || "";
-
-      calculateQuote();
-      showTab("calculatorSection");
-    }
-
     function deleteSavedQuote(index) {
-      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotes") || "[]");
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
       saved.splice(index, 1);
-      localStorage.setItem("washQuoteLabQuotes", JSON.stringify(saved));
+      localStorage.setItem("washQuoteLabQuotesV2A", JSON.stringify(saved));
       renderSavedQuotes();
     }
 
     function clearSavedQuotes() {
       if (!confirm("Delete all saved quotes from this browser?")) return;
-      localStorage.removeItem("washQuoteLabQuotes");
+      localStorage.removeItem("washQuoteLabQuotesV2A");
       renderSavedQuotes();
     }
 
     function resetExample() {
+      $("companyName").value = "Your Cleaning Company";
+      $("companyEmail").value = "hello@example.com";
+      $("companyPhone").value = "+1 555 000 0000";
+      $("companyWebsite").value = "www.example.com";
+      $("quoteNumber").value = makeQuoteNumber();
+      $("validUntil").value = addDaysISO(14);
+
       $("projectName").value = "Driveway cleaning estimate";
       $("customerName").value = "Sample Customer";
+      $("customerEmail").value = "customer@example.com";
+      $("customerPhone").value = "+1 555 111 1111";
+      $("jobAddress").value = "123 Sample Street";
+
       $("serviceType").value = "driveway";
-      $("surfaceType").value = "Concrete";
       $("area").value = 800;
       $("condition").value = "normal";
       $("access").value = "normal";
@@ -1199,8 +1275,7 @@
       $("discount").value = 0;
       $("depositPct").value = 30;
       $("currency").value = "$";
-      $("notes").value =
-        "Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, or water-access issues may require revised pricing.";
+      $("notes").value = "Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, water-access issues, or hazardous conditions may require revised pricing.";
       applyPreset();
     }
 
@@ -1213,9 +1288,7 @@
         btn.classList.toggle("active", btn.dataset.tab === sectionId);
       });
 
-      if (sectionId === "savedSection") {
-        renderSavedQuotes();
-      }
+      if (sectionId === "savedSection") renderSavedQuotes();
     }
 
     function escapeHtml(value) {
