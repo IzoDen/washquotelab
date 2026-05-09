@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WashQuoteLab V2D - Pressure Washing Quote, Softwash, Materials & Measurement Calculator</title>
+  <title>WashQuoteLab V3 - Pressure Washing Quote, Acceptance, Feedback & Field Calculator</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -402,6 +402,67 @@
     .saved-item h3 { margin: 0 0 4px; }
     .saved-item p { margin: 0; color: var(--muted); line-height: 1.45; }
 
+
+
+    .approval-box {
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fbfcff;
+    }
+
+    .approval-box h4 { margin: 0 0 8px; font-size: 16px; }
+    .approval-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .signature-line {
+      border-top: 1px solid #98a2b3;
+      padding-top: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 38px;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+
+    .status-draft { color: #175cd3; background: #eff6ff; border-color: #b9d7ff; }
+    .status-sent { color: #b54708; background: var(--warning-bg); border-color: #fedf89; }
+    .status-accepted { color: var(--success); background: var(--success-bg); border-color: #abefc6; }
+    .status-declined { color: var(--danger); background: var(--danger-bg); border-color: #fecdca; }
+
+    .feedback-list {
+      display: grid;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .feedback-item {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: white;
+      padding: 14px;
+    }
+
+    .feedback-item strong { display: block; margin-bottom: 4px; }
+    .feedback-item p { margin: 3px 0; color: var(--muted); line-height: 1.45; }
+
     .methodology {
       display: grid;
       gap: 16px;
@@ -435,6 +496,7 @@
 
     @media (max-width: 920px) {
       .mini-grid { grid-template-columns: 1fr 1fr; }
+      .approval-grid { grid-template-columns: 1fr; }
     }
 
     footer {
@@ -453,7 +515,7 @@
     }
 
     @media print {
-      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #materialsSection, #methodologySection, .notice {
+      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #materialsSection, #measureSection, #feedbackSection, #methodologySection, .notice {
         display: none !important;
       }
       body { background: white; }
@@ -473,7 +535,7 @@
       <div>
         <h1>WashQuoteLab</h1>
         <p>
-          Pressure washing quote, profit, softwash dilution, sealer, and polymeric sand calculator for contractors. Version 2D adds field measurement, metric/imperial conversion, and copy-ready customer quote text.
+          Pressure washing quote, profit, softwash dilution, materials, measurement, customer approval, and feedback toolkit for contractors. Version 3 combines the next upgrades into one faster release.
         </p>
       </div>
       <div class="hero-card">
@@ -490,6 +552,7 @@
       <button class="tab-btn" data-tab="softwashSection">Softwash Mix</button>
       <button class="tab-btn" data-tab="materialsSection">Sealer & Sand</button>
       <button class="tab-btn" data-tab="measureSection">Measure</button>
+      <button class="tab-btn" data-tab="feedbackSection">Feedback</button>
       <button class="tab-btn" data-tab="methodologySection">Methodology</button>
     </div>
   </nav>
@@ -709,6 +772,38 @@
             </div>
           </div>
 
+          <div class="divider"></div>
+
+          <h2 class="section-title">5. Quote status and acceptance</h2>
+          <p class="section-note">Use this after the customer has reviewed the quote. This stays local in the browser for now.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="quoteStatus">Quote status</label>
+              <select id="quoteStatus">
+                <option value="draft">Draft</option>
+                <option value="sent">Sent</option>
+                <option value="accepted">Accepted</option>
+                <option value="declined">Declined</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="acceptanceDate">Acceptance date</label>
+              <input id="acceptanceDate" type="date" />
+            </div>
+            <div class="field">
+              <label for="acceptedBy">Accepted by</label>
+              <input id="acceptedBy" placeholder="Customer name" />
+            </div>
+            <div class="field">
+              <label for="signatureName">Typed signature</label>
+              <input id="signatureName" placeholder="Customer typed signature" />
+            </div>
+            <div class="field full">
+              <label for="approvalNotes">Acceptance / internal notes</label>
+              <textarea id="approvalNotes" placeholder="Optional: approval message, requested changes, or reason declined."></textarea>
+            </div>
+          </div>
+
           <div class="actions">
             <button class="primary" id="calculateBtn">Calculate Quote</button>
             <button class="secondary" id="saveQuoteBtn">Save Quote</button>
@@ -799,11 +894,26 @@
             <div class="assumption-box" id="quoteAssumptions">
               Assumptions will appear here after calculation.
             </div>
+
+            <div class="approval-box">
+              <h4>Customer approval</h4>
+              <p><span id="quoteStatusBadge" class="status-badge status-draft">Draft</span></p>
+              <p><strong>Accepted by:</strong> <span id="quoteAcceptedBy">-</span></p>
+              <p><strong>Acceptance date:</strong> <span id="quoteAcceptanceDate">-</span></p>
+              <p><strong>Approval notes:</strong> <span id="quoteApprovalNotes">-</span></p>
+              <div class="approval-grid">
+                <div class="signature-line"><strong id="quoteSignatureName">Customer signature</strong><br />Typed signature</div>
+                <div class="signature-line">Date</div>
+                <div class="signature-line">Company representative</div>
+              </div>
+            </div>
           </div>
 
           <div class="actions">
             <button class="primary" id="printBtn">Print / Save PDF</button>
             <button class="secondary" id="copyQuoteBtn">Copy Quote Text</button>
+            <button class="ghost" id="markSentBtn">Mark Sent</button>
+            <button class="ghost" id="markAcceptedBtn">Mark Accepted</button>
             <div id="copyStatus" class="copy-status"></div>
           </div>
         </div>
@@ -1159,10 +1269,80 @@
           Quotes are saved in this browser only. A future paid version could save them to a cloud account.
         </p>
         <div class="actions">
+          <button class="secondary" id="exportSavedCsvBtn">Export Saved Quotes CSV</button>
           <button class="danger-btn" id="clearSavedBtn">Clear Saved Quotes</button>
         </div>
         <div class="divider"></div>
         <div id="savedList" class="saved-list"></div>
+      </div>
+    </section>
+
+
+    <section id="feedbackSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Feedback collector</h2>
+          <p class="section-note">Use this while testing with contractors. Ask what number looks wrong, not whether they “like” the app.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="feedbackName">Tester name / company</label>
+              <input id="feedbackName" placeholder="ABC Exterior Cleaning" />
+            </div>
+            <div class="field">
+              <label for="feedbackRole">Role</label>
+              <select id="feedbackRole">
+                <option>Owner/operator</option>
+                <option>Estimator</option>
+                <option>Crew lead</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="feedbackJobType">Job tested</label>
+              <select id="feedbackJobType">
+                <option>Driveway / concrete flatwork</option>
+                <option>House wash</option>
+                <option>Roof soft wash</option>
+                <option>Deck / fence cleaning</option>
+                <option>Commercial flatwork</option>
+                <option>Softwash mix</option>
+                <option>Sealer / sand</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="feedbackPriceFeel">Quote realism</label>
+              <select id="feedbackPriceFeel">
+                <option>Looks realistic</option>
+                <option>Too low</option>
+                <option>Too high</option>
+                <option>Unsure</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="feedbackWrongNumber">Which number looked wrong?</label>
+              <textarea id="feedbackWrongNumber" placeholder="Example: roof softwash chemical cost too low, production rate too fast..."></textarea>
+            </div>
+            <div class="field full">
+              <label for="feedbackMissingField">Which field is missing?</label>
+              <textarea id="feedbackMissingField" placeholder="Example: water access, pitch, gum removal, post-treatment, minimum charge..."></textarea>
+            </div>
+            <div class="field full">
+              <label for="feedbackPaidFeature">Would they pay for saved presets / branded PDF / cloud quotes?</label>
+              <textarea id="feedbackPaidFeature" placeholder="Record direct wording. Do not summarize too softly."></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="saveFeedbackBtn">Save Feedback</button>
+            <button class="secondary" id="copyFeedbackBtn">Copy Feedback Text</button>
+            <button class="danger-btn" id="clearFeedbackBtn">Clear Feedback</button>
+            <div id="feedbackCopyStatus" class="copy-status"></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2 class="section-title">Saved feedback</h2>
+          <p class="section-note">Stored only in this browser. Copy/export manually before clearing browser data.</p>
+          <div id="feedbackList" class="feedback-list"></div>
+        </div>
       </div>
     </section>
 
@@ -1171,8 +1351,8 @@
         <h2 class="section-title">Methodology and source notes</h2>
 
         <div>
-          <h3>0. Unit conversion and field measurement</h3>
-          <p>Version 2D uses standard unit conversion factors: 1 ft = 0.3048 m exactly and 1 sq ft = 0.09290304 sq m. Measurement tools are helpers only; operators should verify irregular areas on site.</p>
+          <h3>0. Unit conversion, field measurement, and validation workflow</h3>
+          <p>Version 3 uses standard unit conversion factors: 1 ft = 0.3048 m exactly and 1 sq ft = 0.09290304 sq m. Measurement tools are helpers only; operators should verify irregular areas on site. The feedback tab is deliberately focused on wrong numbers and missing fields, because pricing credibility is the product risk.</p>
         </div>
 
         <div class="notice info">
@@ -1492,7 +1672,12 @@
         productionRate,
         crewSize,
         notes: text("notes"),
-        currency: text("currency") || "$"
+        currency: text("currency") || "$",
+        quoteStatus: text("quoteStatus") || "draft",
+        acceptanceDate: text("acceptanceDate"),
+        acceptedBy: text("acceptedBy"),
+        signatureName: text("signatureName"),
+        approvalNotes: text("approvalNotes")
       };
 
       renderResult(latestResult);
@@ -1531,6 +1716,16 @@
       $("quoteService").textContent = `${result.service} · ${result.method}`;
       $("quoteScope").textContent = `${result.area.toLocaleString()} sq ft · ${result.surfaceType} · ${result.condition} · ${result.access}`;
       $("quoteNotes").textContent = result.notes || "-";
+
+      const status = result.quoteStatus || "draft";
+      const label = status.charAt(0).toUpperCase() + status.slice(1);
+      const badge = $("quoteStatusBadge");
+      badge.textContent = label;
+      badge.className = `status-badge status-${status}`;
+      $("quoteAcceptedBy").textContent = result.acceptedBy || "-";
+      $("quoteAcceptanceDate").textContent = result.acceptanceDate || "-";
+      $("quoteApprovalNotes").textContent = result.approvalNotes || "-";
+      $("quoteSignatureName").textContent = result.signatureName || "Customer signature";
 
       const good = result.finalPrice;
       const better = good * 1.15;
@@ -1597,14 +1792,46 @@
             <div>
               <h3>${escapeHtml(quote.projectName || "Untitled Quote")}</h3>
               <p>${escapeHtml(quote.customerName || "No customer")} · ${escapeHtml(quote.service)} · ${quote.area.toLocaleString()} sq ft · ${date}</p>
-              <p>Final: <strong>${moneyWithCurrency(quote.finalPrice, quote.currency)}</strong> · Margin: <strong>${quote.grossMargin.toFixed(1)}%</strong></p>
+              <p>Final: <strong>${moneyWithCurrency(quote.finalPrice, quote.currency)}</strong> · Margin: <strong>${quote.grossMargin.toFixed(1)}%</strong> · Status: <strong>${escapeHtml(quote.quoteStatus || "draft")}</strong></p>
             </div>
             <div class="actions">
+              <button class="ghost" onclick="loadSavedQuote(${index})">Load</button>
               <button class="danger-btn" onclick="deleteSavedQuote(${index})">Delete</button>
             </div>
           </div>
         `;
       }).join("");
+    }
+
+
+    function loadSavedQuote(index) {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
+      const quote = saved[index];
+      if (!quote) return;
+      ["companyName","companyEmail","companyPhone","companyWebsite","quoteNumber","validUntil","projectName","customerName","customerEmail","customerPhone","jobAddress","notes","quoteStatus","acceptanceDate","acceptedBy","signatureName","approvalNotes"].forEach(id => {
+        if ($(id) && quote[id] !== undefined) $(id).value = quote[id] || "";
+      });
+      if (quote.area) $("area").value = quote.area;
+      if (quote.currency) $("currency").value = quote.currency;
+      calculateQuote();
+      showTab("calculatorSection");
+    }
+
+    function exportSavedQuotesCSV() {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabQuotesV2A") || "[]");
+      if (!saved.length) { alert("No saved quotes to export."); return; }
+      const headers = ["createdAt","quoteNumber","quoteStatus","projectName","customerName","service","areaSqFt","finalPrice","internalCost","grossMargin","acceptedBy","acceptanceDate"];
+      const rows = saved.map(q => [q.createdAt,q.quoteNumber,q.quoteStatus,q.projectName,q.customerName,q.service,q.area,q.finalPrice,q.internalCost,q.grossMargin,q.acceptedBy,q.acceptanceDate]);
+      const csv = [headers, ...rows].map(row => row.map(value => `"${String(value ?? "").replaceAll('"','""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "washquotelab_saved_quotes.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
     }
 
     function deleteSavedQuote(index) {
@@ -1651,6 +1878,11 @@
       $("discount").value = 0;
       $("depositPct").value = 30;
       $("currency").value = "$";
+      $("quoteStatus").value = "draft";
+      $("acceptanceDate").value = "";
+      $("acceptedBy").value = "";
+      $("signatureName").value = "";
+      $("approvalNotes").value = "";
       $("notes").value = "Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, water-access issues, or hazardous conditions may require revised pricing.";
       applyPreset();
     }
@@ -1934,7 +2166,11 @@
         `Deposit: ${money(r.depositAmount)}`,
         `Balance: ${money(r.balanceAmount)}`,
         ``,
-        `Notes: ${r.notes || "-"}`
+        `Notes: ${r.notes || "-"}`,
+        `Status: ${r.quoteStatus || "draft"}`,
+        `Accepted by: ${r.acceptedBy || "-"}`,
+        `Acceptance date: ${r.acceptanceDate || "-"}`,
+        `Typed signature: ${r.signatureName || "-"}`
       ].join("\n");
     }
 
@@ -1949,8 +2185,82 @@
       }
     }
 
+
+    function markQuoteStatus(status) {
+      $("quoteStatus").value = status;
+      if (status === "accepted" && !text("acceptanceDate")) $("acceptanceDate").value = todayISO();
+      if (status === "accepted" && !text("acceptedBy")) $("acceptedBy").value = text("customerName");
+      if (status === "accepted" && !text("signatureName")) $("signatureName").value = text("customerName");
+      calculateQuote();
+    }
+
+    function buildFeedbackText() {
+      return [
+        `Tester: ${text("feedbackName") || "-"}`,
+        `Role: ${text("feedbackRole") || "-"}`,
+        `Job tested: ${text("feedbackJobType") || "-"}`,
+        `Quote realism: ${text("feedbackPriceFeel") || "-"}`,
+        `Wrong number: ${text("feedbackWrongNumber") || "-"}`,
+        `Missing field: ${text("feedbackMissingField") || "-"}`,
+        `Paid feature comment: ${text("feedbackPaidFeature") || "-"}`
+      ].join("\n");
+    }
+
+    function saveFeedback() {
+      const feedback = {
+        createdAt: new Date().toISOString(),
+        name: text("feedbackName"),
+        role: text("feedbackRole"),
+        jobType: text("feedbackJobType"),
+        priceFeel: text("feedbackPriceFeel"),
+        wrongNumber: text("feedbackWrongNumber"),
+        missingField: text("feedbackMissingField"),
+        paidFeature: text("feedbackPaidFeature")
+      };
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabFeedbackV1") || "[]");
+      saved.unshift(feedback);
+      localStorage.setItem("washQuoteLabFeedbackV1", JSON.stringify(saved.slice(0, 100)));
+      renderFeedback();
+      $("feedbackCopyStatus").textContent = "Feedback saved.";
+    }
+
+    async function copyFeedbackText() {
+      try {
+        await navigator.clipboard.writeText(buildFeedbackText());
+        $("feedbackCopyStatus").textContent = "Feedback text copied.";
+      } catch (err) {
+        $("feedbackCopyStatus").textContent = "Copy failed. Select and copy manually.";
+      }
+    }
+
+    function renderFeedback() {
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabFeedbackV1") || "[]");
+      const list = $("feedbackList");
+      if (!list) return;
+      if (!saved.length) {
+        list.innerHTML = `<div class="notice warn">No feedback saved yet.</div>`;
+        return;
+      }
+      list.innerHTML = saved.map(item => `
+        <div class="feedback-item">
+          <strong>${escapeHtml(item.name || "Unnamed tester")} · ${escapeHtml(item.priceFeel || "")}</strong>
+          <p>${escapeHtml(item.role || "-")} · ${escapeHtml(item.jobType || "-")} · ${new Date(item.createdAt).toLocaleString()}</p>
+          <p><strong>Wrong number:</strong> ${escapeHtml(item.wrongNumber || "-")}</p>
+          <p><strong>Missing field:</strong> ${escapeHtml(item.missingField || "-")}</p>
+          <p><strong>Paid feature:</strong> ${escapeHtml(item.paidFeature || "-")}</p>
+        </div>
+      `).join("");
+    }
+
+    function clearFeedback() {
+      if (!confirm("Delete all feedback from this browser?")) return;
+      localStorage.removeItem("washQuoteLabFeedbackV1");
+      renderFeedback();
+      $("feedbackCopyStatus").textContent = "Feedback cleared.";
+    }
+
     function showTab(sectionId) {
-      ["calculatorSection", "savedSection", "softwashSection", "materialsSection", "measureSection", "methodologySection"].forEach(id => {
+      ["calculatorSection", "savedSection", "softwashSection", "materialsSection", "measureSection", "feedbackSection", "methodologySection"].forEach(id => {
         $(id).classList.toggle("hidden", id !== sectionId);
       });
 
@@ -1959,6 +2269,7 @@
       });
 
       if (sectionId === "savedSection") renderSavedQuotes();
+      if (sectionId === "feedbackSection") renderFeedback();
     }
 
     function escapeHtml(value) {
@@ -1983,7 +2294,13 @@
       window.print();
     });
     $("copyQuoteBtn").addEventListener("click", copyQuoteText);
+    $("markSentBtn").addEventListener("click", () => markQuoteStatus("sent"));
+    $("markAcceptedBtn").addEventListener("click", () => markQuoteStatus("accepted"));
+    $("exportSavedCsvBtn").addEventListener("click", exportSavedQuotesCSV);
     $("clearSavedBtn").addEventListener("click", clearSavedQuotes);
+    $("saveFeedbackBtn").addEventListener("click", saveFeedback);
+    $("copyFeedbackBtn").addEventListener("click", copyFeedbackText);
+    $("clearFeedbackBtn").addEventListener("click", clearFeedback);
     $("calculateSoftwashBtn").addEventListener("click", calculateSoftwashMix);
     $("resetSoftwashBtn").addEventListener("click", resetSoftwashExample);
     $("calculateMaterialsBtn").addEventListener("click", calculateMaterials);
@@ -2018,6 +2335,7 @@
     resetMaterialsExample();
     resetMeasureExample();
     renderSavedQuotes();
+    renderFeedback();
   </script>
 </body>
 </html>
