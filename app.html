@@ -2955,8 +2955,6 @@
       }
     }
 
-    function sendTestTrackingEvent() {
-  
     function routeFromHash() {
       const hash = window.location.hash.replace('#', '');
       const validSections = [
@@ -2964,13 +2962,15 @@
       ];
       if (validSections.includes(hash)) {
         showTab(hash);
+        trackAppEvent("section_opened", { section: hash, source: "url_hash" });
       }
     }
     window.addEventListener('hashchange', routeFromHash);
 
-    loadGoogleAnalyticsIfConfigured();
+    function sendTestTrackingEvent() {
+      loadGoogleAnalyticsIfConfigured();
       trackAppEvent("test_tracking_event", { source: "growth_setup" });
-      $("growthStatus").textContent = "Test event logged. If GA4 is configured in the actual HTML source, it should appear in GA4 Realtime.";
+      $("growthStatus").textContent = "Test event logged. Check GA4 Realtime and Admin > Events.";
     }
 
     function loadPaymentLinks() {
@@ -3116,12 +3116,12 @@
       trackAppEvent("quote_print_pdf_clicked", { service: $("serviceType").value });
       window.print();
     });
-    $("copyQuoteBtn").addEventListener("click", copyQuoteText);
-    $("markSentBtn").addEventListener("click", () => markQuoteStatus("sent"));
-    $("markAcceptedBtn").addEventListener("click", () => markQuoteStatus("accepted"));
-    $("exportSavedCsvBtn").addEventListener("click", exportSavedQuotesCSV);
+    $("copyQuoteBtn").addEventListener("click", () => { copyQuoteText(); trackAppEvent("quote_text_copied", { service: $("serviceType").value }); });
+    $("markSentBtn").addEventListener("click", () => { markQuoteStatus("sent"); trackAppEvent("quote_marked_sent", { service: $("serviceType").value }); });
+    $("markAcceptedBtn").addEventListener("click", () => { markQuoteStatus("accepted"); trackAppEvent("quote_marked_accepted", { service: $("serviceType").value }); });
+    $("exportSavedCsvBtn").addEventListener("click", () => { exportSavedQuotesCSV(); trackAppEvent("saved_quotes_exported_csv"); });
     $("clearSavedBtn").addEventListener("click", clearSavedQuotes);
-    $("saveFeedbackBtn").addEventListener("click", saveFeedback);
+    $("saveFeedbackBtn").addEventListener("click", () => { saveFeedback(); trackAppEvent("feedback_saved"); });
     $("copyFeedbackBtn").addEventListener("click", copyFeedbackText);
     $("clearFeedbackBtn").addEventListener("click", clearFeedback);
     $("savePaymentLinksBtn").addEventListener("click", savePaymentLinks);
@@ -3181,6 +3181,7 @@
     loadGoogleAnalyticsIfConfigured();
     markRequiredFields();
     initSampleDefaultMap();
+    routeFromHash();
     resetExample();
     resetSoftwashExample();
     resetMaterialsExample();
