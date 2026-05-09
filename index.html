@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WashQuoteLab V2B - Pressure Washing Quote, Profit & Softwash Calculator</title>
+  <title>WashQuoteLab V2C - Pressure Washing Quote, Softwash, Sealer & Sand Calculator</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -436,7 +436,7 @@
     }
 
     @media print {
-      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #methodologySection, .notice {
+      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #materialsSection, #methodologySection, .notice {
         display: none !important;
       }
       body { background: white; }
@@ -456,7 +456,7 @@
       <div>
         <h1>WashQuoteLab</h1>
         <p>
-          Pressure washing quote, profit, and softwash dilution calculator for contractors. Version 2B adds a transparent softwash batch mix module with safety warnings.
+          Pressure washing quote, profit, softwash dilution, sealer, and polymeric sand calculator for contractors. Version 2C adds material estimators with editable coverage assumptions.
         </p>
       </div>
       <div class="hero-card">
@@ -471,6 +471,7 @@
       <button class="tab-btn active" data-tab="calculatorSection">New Quote</button>
       <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
       <button class="tab-btn" data-tab="softwashSection">Softwash Mix</button>
+      <button class="tab-btn" data-tab="materialsSection">Sealer & Sand</button>
       <button class="tab-btn" data-tab="methodologySection">Methodology</button>
     </div>
   </nav>
@@ -883,6 +884,128 @@
       </div>
     </section>
 
+
+    <section id="materialsSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Sealer and polymeric sand calculator</h2>
+          <p class="section-note">
+            Material estimating only. Coverage varies by product, surface porosity, joint width, joint depth, and application method.
+          </p>
+
+          <div class="notice warn">
+            Use this as a planning estimator. Always confirm coverage from the manufacturer label or technical data sheet for the exact sealer or sand product used.
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Sealer estimate</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="sealArea">Area to seal, sq ft</label>
+              <input id="sealArea" type="number" value="1000" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealCoverage">Coverage, sq ft/gallon/coat</label>
+              <input id="sealCoverage" type="number" value="200" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealCoats">Number of coats</label>
+              <input id="sealCoats" type="number" value="2" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealWaste">Waste/porosity allowance %</label>
+              <input id="sealWaste" type="number" value="10" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="sealCost">Sealer cost per gallon</label>
+              <input id="sealCost" type="number" value="35" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="sealCurrency">Currency symbol</label>
+              <input id="sealCurrency" value="$" />
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Polymeric sand estimate</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="sandArea">Paver area, sq ft</label>
+              <input id="sandArea" type="number" value="500" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="jointType">Joint type</label>
+              <select id="jointType">
+                <option value="narrow">Narrow joints</option>
+                <option value="medium" selected>Medium joints</option>
+                <option value="wide">Wide joints</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="sandCoverage">Coverage, sq ft/bag</label>
+              <input id="sandCoverage" type="number" value="50" min="1" step="1" />
+            </div>
+            <div class="field">
+              <label for="sandWaste">Waste allowance %</label>
+              <input id="sandWaste" type="number" value="10" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="sandCost">Sand cost per bag</label>
+              <input id="sandCost" type="number" value="28" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="sandBagSize">Bag size label</label>
+              <input id="sandBagSize" value="50 lb / 22.7 kg" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="calculateMaterialsBtn">Calculate Materials</button>
+            <button class="ghost" id="resetMaterialsBtn">Reset Example</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Material result</h2>
+          <p class="section-note">Use these quantities for planning and quote line items. Confirm with product-specific data sheets before field use.</p>
+
+          <div class="result-grid">
+            <div class="metric highlight">
+              <small>Sealer required</small>
+              <strong id="sealerGallons">0 gal</strong>
+            </div>
+            <div class="metric">
+              <small>Sealer to buy</small>
+              <strong id="sealerBuy">0 gal</strong>
+            </div>
+            <div class="metric highlight">
+              <small>Sand bags required</small>
+              <strong id="sandBags">0 bags</strong>
+            </div>
+            <div class="metric">
+              <small>Total material cost</small>
+              <strong id="materialCost">$0.00</strong>
+            </div>
+          </div>
+
+          <div id="materialsWarning" class="notice info">Enter values and calculate materials.</div>
+
+          <div class="line-items">
+            <div class="line"><span>Sealer coverage basis</span><span id="sealBasisOut">0</span></div>
+            <div class="line"><span>Sealer estimated cost</span><span id="sealCostOut">$0.00</span></div>
+            <div class="line"><span>Sand coverage basis</span><span id="sandBasisOut">0</span></div>
+            <div class="line"><span>Sand estimated cost</span><span id="sandCostOut">$0.00</span></div>
+          </div>
+
+          <div class="assumption-box">
+            Sealer coverage commonly varies around 100–300 sq ft/gallon depending on sealer type, coat, and porosity. Polymeric sand coverage varies strongly with joint width/depth and paver shape; use the product label as the final authority.
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="savedSection" class="hidden">
       <div class="card">
         <h2 class="section-title">Saved quotes</h2>
@@ -947,12 +1070,19 @@
             Do not mix bleach/sodium hypochlorite with acids, vinegar, ammonia, or unknown cleaners.
           </p>
         </div>
+
+        <div>
+          <h3>6. Sealer and polymeric sand module</h3>
+          <p>
+            Sealer and sand calculations are material estimators. Technical data sheets show large coverage variation: some paver sealers list around 100–200 sq ft/gallon, others around 200–300 sq ft/gallon or more depending on product and porosity. Polymeric sand coverage varies by joint width, depth, and paver shape.
+          </p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    WashQuoteLab V2B · Estimate only · Calibrate with your real job history
+    WashQuoteLab V2C · Estimate only · Calibrate with your real job history
   </footer>
 
   <script>
@@ -1446,8 +1576,82 @@
       $("stockShareOut").textContent = `${stockShare.toFixed(1)}%`;
     }
 
+
+    function materialMoney(value) {
+      const currency = text("sealCurrency") || "$";
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${currency}${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+
+    function resetMaterialsExample() {
+      $("sealArea").value = 1000;
+      $("sealCoverage").value = 200;
+      $("sealCoats").value = 2;
+      $("sealWaste").value = 10;
+      $("sealCost").value = 35;
+      $("sealCurrency").value = "$";
+      $("sandArea").value = 500;
+      $("jointType").value = "medium";
+      $("sandCoverage").value = 50;
+      $("sandWaste").value = 10;
+      $("sandCost").value = 28;
+      $("sandBagSize").value = "50 lb / 22.7 kg";
+      calculateMaterials();
+    }
+
+    function applyJointPreset() {
+      const jointType = $("jointType").value;
+      if (jointType === "narrow") $("sandCoverage").value = 75;
+      if (jointType === "medium") $("sandCoverage").value = 50;
+      if (jointType === "wide") $("sandCoverage").value = 25;
+      calculateMaterials();
+    }
+
+    function calculateMaterials() {
+      const sealArea = Math.max(num("sealArea"), 0);
+      const sealCoverage = Math.max(num("sealCoverage"), 1);
+      const sealCoats = Math.max(num("sealCoats"), 1);
+      const sealWaste = Math.max(num("sealWaste"), 0) / 100;
+      const sealCost = Math.max(num("sealCost"), 0);
+
+      const rawGallons = (sealArea * sealCoats) / sealCoverage;
+      const sealerGallons = rawGallons * (1 + sealWaste);
+      const sealerBuy = Math.ceil(sealerGallons * 4) / 4;
+      const sealerCost = sealerBuy * sealCost;
+
+      const sandArea = Math.max(num("sandArea"), 0);
+      const sandCoverage = Math.max(num("sandCoverage"), 1);
+      const sandWaste = Math.max(num("sandWaste"), 0) / 100;
+      const sandCost = Math.max(num("sandCost"), 0);
+      const rawBags = (sandArea / sandCoverage) * (1 + sandWaste);
+      const sandBags = Math.ceil(rawBags);
+      const sandTotal = sandBags * sandCost;
+
+      const total = sealerCost + sandTotal;
+      $("sealerGallons").textContent = `${sealerGallons.toFixed(2)} gal`;
+      $("sealerBuy").textContent = `${sealerBuy.toFixed(2)} gal`;
+      $("sandBags").textContent = `${sandBags} bags`;
+      $("materialCost").textContent = materialMoney(total);
+      $("sealBasisOut").textContent = `${sealArea.toLocaleString()} sq ft × ${sealCoats} coat(s) ÷ ${sealCoverage.toLocaleString()} sq ft/gal + ${(sealWaste*100).toFixed(0)}%`;
+      $("sealCostOut").textContent = materialMoney(sealerCost);
+      $("sandBasisOut").textContent = `${sandArea.toLocaleString()} sq ft ÷ ${sandCoverage.toLocaleString()} sq ft/bag + ${(sandWaste*100).toFixed(0)}% · ${escapeHtml(text("sandBagSize"))}`;
+      $("sandCostOut").textContent = materialMoney(sandTotal);
+
+      const warningBox = $("materialsWarning");
+      warningBox.className = "notice good";
+      if (sealCoverage < 80 || sealCoverage > 450) {
+        warningBox.className = "notice warn";
+        warningBox.textContent = "Sealer coverage looks unusual. Confirm the product label/TDS and surface porosity before quoting.";
+      } else if (sandCoverage < 15 || sandCoverage > 130) {
+        warningBox.className = "notice warn";
+        warningBox.textContent = "Sand coverage looks unusual. Joint width/depth can change bag quantity strongly; verify with product data.";
+      } else {
+        warningBox.textContent = "Material estimate complete. Use manufacturer coverage as final authority before field purchase.";
+      }
+    }
+
     function showTab(sectionId) {
-      ["calculatorSection", "savedSection", "softwashSection", "methodologySection"].forEach(id => {
+      ["calculatorSection", "savedSection", "softwashSection", "materialsSection", "methodologySection"].forEach(id => {
         $(id).classList.toggle("hidden", id !== sectionId);
       });
 
@@ -1482,14 +1686,23 @@
     $("clearSavedBtn").addEventListener("click", clearSavedQuotes);
     $("calculateSoftwashBtn").addEventListener("click", calculateSoftwashMix);
     $("resetSoftwashBtn").addEventListener("click", resetSoftwashExample);
+    $("calculateMaterialsBtn").addEventListener("click", calculateMaterials);
+    $("resetMaterialsBtn").addEventListener("click", resetMaterialsExample);
+    $("jointType").addEventListener("change", applyJointPreset);
 
     document.querySelectorAll("input, select, textarea").forEach(el => {
       el.addEventListener("input", calculateQuote);
       el.addEventListener("change", calculateQuote);
     });
 
+    ["sealArea","sealCoverage","sealCoats","sealWaste","sealCost","sealCurrency","sandArea","sandCoverage","sandWaste","sandCost","sandBagSize"].forEach(id => {
+      $(id).addEventListener("input", calculateMaterials);
+      $(id).addEventListener("change", calculateMaterials);
+    });
+
     resetExample();
     resetSoftwashExample();
+    resetMaterialsExample();
     renderSavedQuotes();
   </script>
 </body>
