@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WashQuoteLab V3 - Pressure Washing Quote, Acceptance, Feedback & Field Calculator</title>
+  <title>WashQuoteLab V4 - Pressure Washing Business Toolkit</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -527,6 +527,107 @@
       .line-items, .result-grid { display: none; }
       .assumption-box { page-break-inside: avoid; }
     }
+
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .price-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 18px;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .price-card.featured {
+      border-color: #8bb8ff;
+      box-shadow: 0 10px 30px rgba(18, 102, 241, 0.12);
+      background: #f8fbff;
+    }
+
+    .price-card h3 {
+      margin: 0;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .price {
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -0.04em;
+    }
+
+    .price small {
+      font-size: 14px;
+      color: var(--muted);
+      letter-spacing: 0;
+      font-weight: 800;
+    }
+
+    .feature-list {
+      margin: 0;
+      padding-left: 20px;
+      color: #344054;
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-flex;
+      width: fit-content;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      background: #eef4ff;
+      color: #175cd3;
+      border: 1px solid #c7d7fe;
+    }
+
+    .status-pill {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 13px;
+      font-weight: 900;
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid #fedf89;
+    }
+
+    .status-pill.active {
+      background: var(--success-bg);
+      color: var(--success);
+      border-color: #abefc6;
+    }
+
+    .legal-box {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px;
+      background: #fbfcff;
+    }
+
+    .legal-box h3 {
+      margin: 0 0 8px;
+    }
+
+    .legal-box p, .legal-box li {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 920px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -535,7 +636,7 @@
       <div>
         <h1>WashQuoteLab</h1>
         <p>
-          Pressure washing quote, profit, softwash dilution, materials, measurement, customer approval, and feedback toolkit for contractors. Version 3 combines the next upgrades into one faster release.
+          Pressure washing quote, profit, softwash dilution, materials, measurement, customer approval, monetization, contact, and legal starter toolkit for contractors. Version 4 is payment-link ready.
         </p>
       </div>
       <div class="hero-card">
@@ -548,12 +649,15 @@
   <nav>
     <div class="container tabs">
       <button class="tab-btn active" data-tab="calculatorSection">New Quote</button>
-      <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
       <button class="tab-btn" data-tab="softwashSection">Softwash Mix</button>
       <button class="tab-btn" data-tab="materialsSection">Sealer & Sand</button>
       <button class="tab-btn" data-tab="measureSection">Measure</button>
+      <button class="tab-btn" data-tab="pricingSection">Pricing</button>
+      <button class="tab-btn" data-tab="contactSection">Contact</button>
       <button class="tab-btn" data-tab="feedbackSection">Feedback</button>
+      <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
       <button class="tab-btn" data-tab="methodologySection">Methodology</button>
+      <button class="tab-btn" data-tab="termsSection">Terms</button>
     </div>
   </nav>
 
@@ -1346,13 +1450,206 @@
       </div>
     </section>
 
+
+
+    <section id="pricingSection" class="hidden">
+      <div class="card">
+        <h2 class="section-title">Pricing and monetization</h2>
+        <p class="section-note">
+          Static GitHub Pages cannot securely verify subscriptions by itself. This version is payment-link ready: create Stripe Payment Links, paste them below, and the buttons will open the payment pages.
+        </p>
+
+        <div class="notice warn">
+          Important: this is not a secure SaaS paywall yet. It is a validation-ready monetization page. Real account gating requires a backend/database later.
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="pricing-grid">
+          <div class="price-card">
+            <span class="badge">Free</span>
+            <h3>Free Calculator</h3>
+            <div class="price">$0</div>
+            <ul class="feature-list">
+              <li>Quote/profit calculator</li>
+              <li>Softwash mix calculator</li>
+              <li>Sealer and sand calculators</li>
+              <li>Measurement converter</li>
+            </ul>
+            <button class="ghost" onclick="showTab('calculatorSection')">Use Free Tools</button>
+          </div>
+
+          <div class="price-card featured">
+            <span class="badge">Recommended</span>
+            <h3>Pro Monthly</h3>
+            <div class="price">$19 <small>/ month</small></div>
+            <ul class="feature-list">
+              <li>Branded quote workflow</li>
+              <li>Saved quotes and CSV export</li>
+              <li>Good / Better / Best options</li>
+              <li>Customer acceptance block</li>
+            </ul>
+            <button class="primary" id="buyProMonthlyBtn">Buy Pro Monthly</button>
+          </div>
+
+          <div class="price-card">
+            <span class="badge">One-time</span>
+            <h3>Lifetime Template</h3>
+            <div class="price">$49 <small>one-time</small></div>
+            <ul class="feature-list">
+              <li>One-time access hypothesis</li>
+              <li>Useful for early validation</li>
+              <li>No subscription confusion</li>
+              <li>Good for testing willingness to pay</li>
+            </ul>
+            <button class="secondary" id="buyLifetimeBtn">Buy Lifetime</button>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Payment link setup</h2>
+        <p class="section-note">Create payment links in Stripe, then paste them here. These are saved only in your browser.</p>
+        <div class="form-grid">
+          <div class="field full">
+            <label for="proMonthlyPaymentLink">Stripe Payment Link - Pro Monthly</label>
+            <input id="proMonthlyPaymentLink" placeholder="https://buy.stripe.com/..." />
+          </div>
+          <div class="field full">
+            <label for="lifetimePaymentLink">Stripe Payment Link - Lifetime</label>
+            <input id="lifetimePaymentLink" placeholder="https://buy.stripe.com/..." />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="savePaymentLinksBtn">Save Payment Links</button>
+          <button class="ghost" id="testProPaymentBtn">Test Pro Link</button>
+          <button class="ghost" id="testLifetimePaymentBtn">Test Lifetime Link</button>
+        </div>
+        <div id="paymentLinkStatus" class="copy-status"></div>
+
+        <div class="divider"></div>
+
+        <h2 class="section-title">Local Pro activation for testing</h2>
+        <p class="section-note">Use this only for prototype validation. It does not verify real payment.</p>
+        <div class="form-grid">
+          <div class="field">
+            <label for="buyerEmail">Buyer email</label>
+            <input id="buyerEmail" placeholder="customer@example.com" />
+          </div>
+          <div class="field">
+            <label for="licenseKey">License / order note</label>
+            <input id="licenseKey" placeholder="Example: STRIPE-TEST-001" />
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" id="activateProBtn">Activate Local Pro</button>
+          <button class="danger-btn" id="clearProBtn">Clear Local Pro</button>
+          <span id="proStatus" class="status-pill">Free mode</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="contactSection" class="hidden">
+      <div class="grid">
+        <div class="card">
+          <h2 class="section-title">Contact and support</h2>
+          <p class="section-note">Static GitHub Pages cannot send form emails by itself without a hosted form service or backend. This version creates an email draft using mailto.</p>
+          <div class="form-grid">
+            <div class="field">
+              <label for="contactTo">Support email</label>
+              <input id="contactTo" value="support@example.com" />
+            </div>
+            <div class="field">
+              <label for="contactName">Your name</label>
+              <input id="contactName" placeholder="Name" />
+            </div>
+            <div class="field">
+              <label for="contactEmail">Your email</label>
+              <input id="contactEmail" placeholder="you@example.com" />
+            </div>
+            <div class="field">
+              <label for="contactTopic">Topic</label>
+              <select id="contactTopic">
+                <option>Pricing feedback</option>
+                <option>Bug report</option>
+                <option>Feature request</option>
+                <option>Payment question</option>
+                <option>Partnership / contractor feedback</option>
+              </select>
+            </div>
+            <div class="field full">
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" placeholder="Write the message here..."></textarea>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="primary" id="openEmailBtn">Open Email Draft</button>
+            <button class="secondary" id="copyContactBtn">Copy Message</button>
+            <button class="ghost" id="saveSupportEmailBtn">Save Support Email</button>
+            <div id="contactStatus" class="copy-status"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">What to ask testers</h2>
+          <p class="section-note">Use these questions instead of vague “do you like it?” feedback.</p>
+          <div class="legal-box">
+            <ul class="feature-list">
+              <li>Which number looks wrong?</li>
+              <li>Which field is missing?</li>
+              <li>Would you send the quote PDF to a customer?</li>
+              <li>Would saved presets or branded PDF quotes be worth paying for?</li>
+              <li>Which service type is most valuable: driveway, house wash, roof, commercial, sealing, or sand?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="termsSection" class="hidden">
+      <div class="card methodology">
+        <h2 class="section-title">Terms, privacy, and disclaimer starter</h2>
+        <div class="notice warn">
+          This is a starter template, not legal advice. Before selling seriously, have terms/privacy reviewed for your country, tax situation, and target markets.
+        </div>
+
+        <div class="legal-box">
+          <h3>Terms of use</h3>
+          <p>WashQuoteLab provides estimating tools for pressure-washing and exterior-cleaning businesses. Calculations are estimates only. Users are responsible for checking job scope, local pricing, safety, taxes, labor rates, product labels, and legal requirements before sending a quote or performing work.</p>
+          <p>The app does not guarantee profit, accuracy, safety, compliance, or job acceptance. You must calibrate production rates, chemical costs, labor costs, overhead, and market ranges using your real job history.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Payment and refunds starter</h3>
+          <p>Payments, when enabled, are handled through external payment links such as Stripe Payment Links. The prototype does not process card data directly. Paid access, refunds, cancellations, taxes, and invoices must be handled according to the payment provider setup and your published refund policy.</p>
+          <p>Suggested early refund policy: “If the tool does not help your quoting workflow, contact us within 7 days for a refund.” Adjust this before real sales.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Privacy starter</h3>
+          <p>This static prototype stores saved quotes, feedback, payment-link settings, and local activation data in the user’s browser localStorage. Data is not automatically sent to a server by this static app. Clearing browser data may delete saved information.</p>
+          <p>If you add analytics, contact forms, payment systems, or cloud accounts later, update this privacy notice before launch.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Chemical and safety disclaimer</h3>
+          <p>Softwash calculations are dilution helpers only. They are not chemical safety training. Follow product labels, local regulation, PPE requirements, SDS documents, and surface compatibility checks. Never mix sodium hypochlorite/bleach with acids, vinegar, ammonia, or unknown cleaners.</p>
+        </div>
+
+        <div class="legal-box">
+          <h3>Contact</h3>
+          <p>For support, feedback, or refund questions, use the Contact tab and configure your real support email before publishing commercially.</p>
+        </div>
+      </div>
+    </section>
+
     <section id="methodologySection" class="hidden">
       <div class="card methodology">
         <h2 class="section-title">Methodology and source notes</h2>
 
         <div>
           <h3>0. Unit conversion, field measurement, and validation workflow</h3>
-          <p>Version 3 uses standard unit conversion factors: 1 ft = 0.3048 m exactly and 1 sq ft = 0.09290304 sq m. Measurement tools are helpers only; operators should verify irregular areas on site. The feedback tab is deliberately focused on wrong numbers and missing fields, because pricing credibility is the product risk.</p>
+          <p>Version 4 uses standard unit conversion factors: 1 ft = 0.3048 m exactly and 1 sq ft = 0.09290304 sq m. Measurement tools are helpers only; operators should verify irregular areas on site. The feedback tab is deliberately focused on wrong numbers and missing fields, because pricing credibility is the product risk.</p>
         </div>
 
         <div class="notice info">
@@ -1408,12 +1705,19 @@
             Sealer and sand calculations are material estimators. Technical data sheets show large coverage variation: some paver sealers list around 100–200 sq ft/gallon, others around 200–300 sq ft/gallon or more depending on product and porosity. Polymeric sand coverage varies by joint width, depth, and paver shape.
           </p>
         </div>
+
+        <div>
+          <h3>7. Monetization and static-site payment limitation</h3>
+          <p>
+            This prototype uses external payment links because GitHub Pages is static hosting and does not run backend payment verification. Stripe Payment Links can accept payments without code. Real subscriptions, team accounts, protected premium access, and webhook-based license verification require a backend later.
+          </p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer>
-    WashQuoteLab V2D · Estimate only · Calibrate with your real job history
+    WashQuoteLab V4 · Estimate only · Payment-link ready · Calibrate with your real job history
   </footer>
 
   <script>
@@ -2259,8 +2563,109 @@
       $("feedbackCopyStatus").textContent = "Feedback cleared.";
     }
 
+
+
+    function getPaymentLinks() {
+      return JSON.parse(localStorage.getItem("washQuoteLabPaymentLinksV1") || "{}");
+    }
+
+    function loadPaymentLinks() {
+      const links = getPaymentLinks();
+      if ($("proMonthlyPaymentLink")) $("proMonthlyPaymentLink").value = links.proMonthly || "";
+      if ($("lifetimePaymentLink")) $("lifetimePaymentLink").value = links.lifetime || "";
+    }
+
+    function savePaymentLinks() {
+      const links = {
+        proMonthly: text("proMonthlyPaymentLink"),
+        lifetime: text("lifetimePaymentLink")
+      };
+      localStorage.setItem("washQuoteLabPaymentLinksV1", JSON.stringify(links));
+      $("paymentLinkStatus").textContent = "Payment links saved in this browser.";
+    }
+
+    function openPayment(plan) {
+      const links = getPaymentLinks();
+      const url = plan === "lifetime" ? links.lifetime : links.proMonthly;
+      if (!url || !/^https?:\/\//i.test(url)) {
+        $("paymentLinkStatus").textContent = "No valid payment link configured yet. Paste a Stripe Payment Link first.";
+        showTab("pricingSection");
+        return;
+      }
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    function renderProStatus() {
+      const status = JSON.parse(localStorage.getItem("washQuoteLabProStatusV1") || "null");
+      const el = $("proStatus");
+      if (!el) return;
+      if (status && status.active) {
+        el.textContent = `Local Pro active · ${status.email || "no email"}`;
+        el.className = "status-pill active";
+      } else {
+        el.textContent = "Free mode";
+        el.className = "status-pill";
+      }
+    }
+
+    function activateLocalPro() {
+      const email = text("buyerEmail");
+      const key = text("licenseKey");
+      if (!email || !key) {
+        $("paymentLinkStatus").textContent = "Enter buyer email and license/order note first.";
+        return;
+      }
+      localStorage.setItem("washQuoteLabProStatusV1", JSON.stringify({ active: true, email, key, activatedAt: new Date().toISOString() }));
+      $("paymentLinkStatus").textContent = "Local Pro activated for prototype testing. This is not secure payment verification.";
+      renderProStatus();
+    }
+
+    function clearLocalPro() {
+      localStorage.removeItem("washQuoteLabProStatusV1");
+      $("paymentLinkStatus").textContent = "Local Pro activation cleared.";
+      renderProStatus();
+    }
+
+    function loadSupportEmail() {
+      const saved = localStorage.getItem("washQuoteLabSupportEmailV1");
+      if (saved && $("contactTo")) $("contactTo").value = saved;
+    }
+
+    function saveSupportEmail() {
+      localStorage.setItem("washQuoteLabSupportEmailV1", text("contactTo"));
+      $("contactStatus").textContent = "Support email saved in this browser.";
+    }
+
+    function buildContactMessage() {
+      return [
+        `Name: ${text("contactName") || "-"}`,
+        `Email: ${text("contactEmail") || "-"}`,
+        `Topic: ${text("contactTopic") || "-"}`,
+        "",
+        text("contactMessage") || "-",
+        "",
+        `App: ${location.href}`
+      ].join("\n");
+    }
+
+    function openEmailDraft() {
+      const to = text("contactTo") || "support@example.com";
+      const subject = encodeURIComponent(`WashQuoteLab - ${text("contactTopic") || "Contact"}`);
+      const body = encodeURIComponent(buildContactMessage());
+      window.location.href = `mailto:${encodeURIComponent(to)}?subject=${subject}&body=${body}`;
+    }
+
+    async function copyContactMessage() {
+      try {
+        await navigator.clipboard.writeText(buildContactMessage());
+        $("contactStatus").textContent = "Contact message copied.";
+      } catch (err) {
+        $("contactStatus").textContent = "Copy failed. Select and copy manually.";
+      }
+    }
+
     function showTab(sectionId) {
-      ["calculatorSection", "savedSection", "softwashSection", "materialsSection", "measureSection", "feedbackSection", "methodologySection"].forEach(id => {
+      ["calculatorSection", "softwashSection", "materialsSection", "measureSection", "pricingSection", "contactSection", "feedbackSection", "savedSection", "methodologySection", "termsSection"].forEach(id => {
         $(id).classList.toggle("hidden", id !== sectionId);
       });
 
@@ -2270,6 +2675,8 @@
 
       if (sectionId === "savedSection") renderSavedQuotes();
       if (sectionId === "feedbackSection") renderFeedback();
+      if (sectionId === "pricingSection") { loadPaymentLinks(); renderProStatus(); }
+      if (sectionId === "contactSection") loadSupportEmail();
     }
 
     function escapeHtml(value) {
@@ -2301,6 +2708,16 @@
     $("saveFeedbackBtn").addEventListener("click", saveFeedback);
     $("copyFeedbackBtn").addEventListener("click", copyFeedbackText);
     $("clearFeedbackBtn").addEventListener("click", clearFeedback);
+    $("savePaymentLinksBtn").addEventListener("click", savePaymentLinks);
+    $("buyProMonthlyBtn").addEventListener("click", () => openPayment("proMonthly"));
+    $("buyLifetimeBtn").addEventListener("click", () => openPayment("lifetime"));
+    $("testProPaymentBtn").addEventListener("click", () => openPayment("proMonthly"));
+    $("testLifetimePaymentBtn").addEventListener("click", () => openPayment("lifetime"));
+    $("activateProBtn").addEventListener("click", activateLocalPro);
+    $("clearProBtn").addEventListener("click", clearLocalPro);
+    $("openEmailBtn").addEventListener("click", openEmailDraft);
+    $("copyContactBtn").addEventListener("click", copyContactMessage);
+    $("saveSupportEmailBtn").addEventListener("click", saveSupportEmail);
     $("calculateSoftwashBtn").addEventListener("click", calculateSoftwashMix);
     $("resetSoftwashBtn").addEventListener("click", resetSoftwashExample);
     $("calculateMaterialsBtn").addEventListener("click", calculateMaterials);
@@ -2336,6 +2753,9 @@
     resetMeasureExample();
     renderSavedQuotes();
     renderFeedback();
+    loadPaymentLinks();
+    renderProStatus();
+    loadSupportEmail();
   </script>
 </body>
 </html>
