@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WashQuoteLab V2C - Pressure Washing Quote, Softwash, Sealer & Sand Calculator</title>
+  <title>WashQuoteLab V2D - Pressure Washing Quote, Softwash, Materials & Measurement Calculator</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -420,6 +420,23 @@
 
     .hidden { display: none; }
 
+    .copy-status {
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--success);
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    @media (max-width: 920px) {
+      .mini-grid { grid-template-columns: 1fr 1fr; }
+    }
+
     footer {
       color: var(--muted);
       text-align: center;
@@ -456,7 +473,7 @@
       <div>
         <h1>WashQuoteLab</h1>
         <p>
-          Pressure washing quote, profit, softwash dilution, sealer, and polymeric sand calculator for contractors. Version 2C adds material estimators with editable coverage assumptions.
+          Pressure washing quote, profit, softwash dilution, sealer, and polymeric sand calculator for contractors. Version 2D adds field measurement, metric/imperial conversion, and copy-ready customer quote text.
         </p>
       </div>
       <div class="hero-card">
@@ -472,6 +489,7 @@
       <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
       <button class="tab-btn" data-tab="softwashSection">Softwash Mix</button>
       <button class="tab-btn" data-tab="materialsSection">Sealer & Sand</button>
+      <button class="tab-btn" data-tab="measureSection">Measure</button>
       <button class="tab-btn" data-tab="methodologySection">Methodology</button>
     </div>
   </nav>
@@ -785,6 +803,8 @@
 
           <div class="actions">
             <button class="primary" id="printBtn">Print / Save PDF</button>
+            <button class="secondary" id="copyQuoteBtn">Copy Quote Text</button>
+            <div id="copyStatus" class="copy-status"></div>
           </div>
         </div>
       </div>
@@ -1006,6 +1026,132 @@
       </div>
     </section>
 
+
+    <section id="measureSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Field measurement and unit converter</h2>
+          <p class="section-note">
+            Fast field helper for area measurement, metric/imperial conversion, and price-per-area conversion. Use this to convert a measured job area into the quote calculator.
+          </p>
+
+          <div class="notice info">
+            Conversion basis: 1 ft = 0.3048 m exactly, so 1 sq ft = 0.09290304 sq m. For liquid volume, 1 US gallon = 3.785411784 L.
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Area measurement</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="measureShape">Shape</label>
+              <select id="measureShape">
+                <option value="rectangle">Rectangle / driveway / patio</option>
+                <option value="circle">Circle / round area</option>
+                <option value="manual">Manual area entry</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="measureUnit">Input unit</label>
+              <select id="measureUnit">
+                <option value="ft">feet</option>
+                <option value="m">meters</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="measureQty">Number of same areas</label>
+              <input id="measureQty" type="number" value="1" min="1" step="1" />
+            </div>
+            <div class="field measure-rect">
+              <label for="measureLength">Length</label>
+              <input id="measureLength" type="number" value="40" min="0" step="0.1" />
+            </div>
+            <div class="field measure-rect">
+              <label for="measureWidth">Width</label>
+              <input id="measureWidth" type="number" value="20" min="0" step="0.1" />
+            </div>
+            <div class="field measure-circle hidden">
+              <label for="measureDiameter">Diameter</label>
+              <input id="measureDiameter" type="number" value="25" min="0" step="0.1" />
+            </div>
+            <div class="field measure-manual hidden">
+              <label for="manualArea">Manual area</label>
+              <input id="manualArea" type="number" value="800" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="measureWaste">Allowance / waste %</label>
+              <input id="measureWaste" type="number" value="0" min="0" step="1" />
+            </div>
+            <div class="field">
+              <label for="measureProductionRate">Production rate, sq ft/hour</label>
+              <input id="measureProductionRate" type="number" value="450" min="1" step="1" />
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="calculateMeasureBtn">Calculate Measurement</button>
+            <button class="secondary" id="useAreaBtn">Use Area in Quote</button>
+            <button class="ghost" id="resetMeasureBtn">Reset Example</button>
+          </div>
+
+          <div class="divider"></div>
+
+          <h2 class="section-title">Price and volume conversion</h2>
+          <div class="form-grid three">
+            <div class="field">
+              <label for="pricePerSqFt">Price per sq ft</label>
+              <input id="pricePerSqFt" type="number" value="0.35" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="pricePerSqM">Price per m²</label>
+              <input id="pricePerSqM" type="number" value="0" min="0" step="0.01" />
+            </div>
+            <div class="field">
+              <label for="volumeGal">US gallons</label>
+              <input id="volumeGal" type="number" value="5" min="0" step="0.1" />
+            </div>
+            <div class="field">
+              <label for="volumeLiters">Liters</label>
+              <input id="volumeLiters" type="number" value="0" min="0" step="0.1" />
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Measurement result</h2>
+          <p class="section-note">Use this result for quoting, softwash planning, sealer, or sand estimates.</p>
+
+          <div class="result-grid">
+            <div class="metric highlight">
+              <small>Area</small>
+              <strong id="measureSqFt">0 sq ft</strong>
+            </div>
+            <div class="metric">
+              <small>Area metric</small>
+              <strong id="measureSqM">0 m²</strong>
+            </div>
+            <div class="metric">
+              <small>Estimated cleaning time</small>
+              <strong id="measureHours">0 h</strong>
+            </div>
+            <div class="metric">
+              <small>Converted price</small>
+              <strong id="convertedPrice">0 / m²</strong>
+            </div>
+          </div>
+
+          <div class="line-items">
+            <div class="line"><span>Base area before allowance</span><span id="baseAreaOut">0</span></div>
+            <div class="line"><span>Allowance added</span><span id="allowanceOut">0</span></div>
+            <div class="line"><span>Quantity multiplier</span><span id="qtyOut">1</span></div>
+            <div class="line"><span>Volume conversion</span><span id="volumeOut">0</span></div>
+          </div>
+
+          <div id="measureWarning" class="notice good">Measurement ready.</div>
+        </div>
+      </div>
+    </section>
+
     <section id="savedSection" class="hidden">
       <div class="card">
         <h2 class="section-title">Saved quotes</h2>
@@ -1023,6 +1169,11 @@
     <section id="methodologySection" class="hidden">
       <div class="card methodology">
         <h2 class="section-title">Methodology and source notes</h2>
+
+        <div>
+          <h3>0. Unit conversion and field measurement</h3>
+          <p>Version 2D uses standard unit conversion factors: 1 ft = 0.3048 m exactly and 1 sq ft = 0.09290304 sq m. Measurement tools are helpers only; operators should verify irregular areas on site.</p>
+        </div>
 
         <div class="notice info">
           This app does not claim one universal pressure washing price. It calculates your internal cost first, then applies your target margin. Public pricing ranges are used only as a sanity check.
@@ -1082,7 +1233,7 @@
   </main>
 
   <footer>
-    WashQuoteLab V2C · Estimate only · Calibrate with your real job history
+    WashQuoteLab V2D · Estimate only · Calibrate with your real job history
   </footer>
 
   <script>
@@ -1650,8 +1801,156 @@
       }
     }
 
+
+    const SQFT_TO_SQM = 0.09290304;
+    const SQM_TO_SQFT = 10.7639104167097;
+    const GAL_TO_L = 3.785411784;
+
+    let latestMeasuredSqFt = 0;
+
+    function setMeasureShapeVisibility() {
+      const shape = $("measureShape").value;
+      document.querySelectorAll(".measure-rect").forEach(el => el.classList.toggle("hidden", shape !== "rectangle"));
+      document.querySelectorAll(".measure-circle").forEach(el => el.classList.toggle("hidden", shape !== "circle"));
+      document.querySelectorAll(".measure-manual").forEach(el => el.classList.toggle("hidden", shape !== "manual"));
+      calculateMeasurement();
+    }
+
+    function areaToSqFt(area, unit) {
+      return unit === "m" ? area * SQM_TO_SQFT : area;
+    }
+
+    function calculateMeasurement() {
+      const shape = $("measureShape").value;
+      const unit = $("measureUnit").value;
+      const qty = Math.max(num("measureQty"), 1);
+      const allowance = Math.max(num("measureWaste"), 0) / 100;
+      const productionRate = Math.max(num("measureProductionRate"), 1);
+
+      let baseAreaInput = 0;
+      if (shape === "rectangle") {
+        baseAreaInput = Math.max(num("measureLength"), 0) * Math.max(num("measureWidth"), 0);
+      } else if (shape === "circle") {
+        const d = Math.max(num("measureDiameter"), 0);
+        baseAreaInput = Math.PI * Math.pow(d / 2, 2);
+      } else {
+        baseAreaInput = Math.max(num("manualArea"), 0);
+      }
+
+      const baseSqFt = areaToSqFt(baseAreaInput, unit) * qty;
+      const allowanceSqFt = baseSqFt * allowance;
+      const totalSqFt = baseSqFt + allowanceSqFt;
+      const totalSqM = totalSqFt * SQFT_TO_SQM;
+      const estimatedHours = totalSqFt / productionRate;
+      latestMeasuredSqFt = totalSqFt;
+
+      const pSqFt = Math.max(num("pricePerSqFt"), 0);
+      const pSqM = pSqFt * SQM_TO_SQFT;
+      $("pricePerSqM").value = pSqM.toFixed(2);
+
+      const gal = Math.max(num("volumeGal"), 0);
+      const liters = gal * GAL_TO_L;
+      $("volumeLiters").value = liters.toFixed(2);
+
+      $("measureSqFt").textContent = `${totalSqFt.toLocaleString(undefined, { maximumFractionDigits: 1 })} sq ft`;
+      $("measureSqM").textContent = `${totalSqM.toLocaleString(undefined, { maximumFractionDigits: 1 })} m²`;
+      $("measureHours").textContent = `${estimatedHours.toFixed(2)} h`;
+      $("convertedPrice").textContent = `${money(pSqM).replace(text("currency") || "$", text("currency") || "$")} / m²`;
+      $("baseAreaOut").textContent = `${baseSqFt.toLocaleString(undefined, { maximumFractionDigits: 1 })} sq ft`;
+      $("allowanceOut").textContent = `${allowanceSqFt.toLocaleString(undefined, { maximumFractionDigits: 1 })} sq ft`;
+      $("qtyOut").textContent = `${qty}`;
+      $("volumeOut").textContent = `${gal.toFixed(2)} gal = ${liters.toFixed(2)} L`;
+
+      const warn = $("measureWarning");
+      warn.className = "notice good";
+      if (totalSqFt <= 0) {
+        warn.className = "notice warn";
+        warn.textContent = "Enter a valid measured area.";
+      } else if (estimatedHours > 12) {
+        warn.className = "notice warn";
+        warn.textContent = "Large job: check crew size, production rate, water access, drainage, and fatigue before quoting.";
+      } else {
+        warn.textContent = "Measurement complete. You can send this area to the quote calculator.";
+      }
+    }
+
+    function updatePriceFromSqM() {
+      const pSqM = Math.max(num("pricePerSqM"), 0);
+      const pSqFt = pSqM / SQM_TO_SQFT;
+      $("pricePerSqFt").value = pSqFt.toFixed(2);
+      calculateMeasurement();
+    }
+
+    function updateVolumeFromLiters() {
+      const liters = Math.max(num("volumeLiters"), 0);
+      const gal = liters / GAL_TO_L;
+      $("volumeGal").value = gal.toFixed(2);
+      calculateMeasurement();
+    }
+
+    function useMeasuredAreaForQuote() {
+      calculateMeasurement();
+      if (latestMeasuredSqFt > 0) {
+        $("area").value = Math.round(latestMeasuredSqFt);
+        calculateQuote();
+        showTab("calculatorSection");
+      }
+    }
+
+    function resetMeasureExample() {
+      $("measureShape").value = "rectangle";
+      $("measureUnit").value = "ft";
+      $("measureQty").value = 1;
+      $("measureLength").value = 40;
+      $("measureWidth").value = 20;
+      $("measureDiameter").value = 25;
+      $("manualArea").value = 800;
+      $("measureWaste").value = 0;
+      $("measureProductionRate").value = 450;
+      $("pricePerSqFt").value = 0.35;
+      $("volumeGal").value = 5;
+      setMeasureShapeVisibility();
+    }
+
+    function buildQuoteText() {
+      const r = latestResult || calculateQuote();
+      return [
+        `${r.companyName || "Company"}`,
+        `${[r.companyEmail, r.companyPhone].filter(Boolean).join(" · ")}`,
+        `Quote #: ${r.quoteNumber || "-"}`,
+        `Valid until: ${r.validUntil || "-"}`,
+        ``,
+        `Project: ${r.projectName || "-"}`,
+        `Customer: ${r.customerName || "-"}`,
+        `Contact: ${[r.customerEmail, r.customerPhone].filter(Boolean).join(" · ") || "-"}`,
+        `Address: ${r.jobAddress || "-"}`,
+        `Service: ${r.service} · ${r.method}`,
+        `Scope: ${r.area.toLocaleString()} sq ft · ${r.surfaceType} · ${r.condition} · ${r.access}`,
+        ``,
+        `Good: ${money(r.goodPrice)}`,
+        `Better / Recommended: ${money(r.betterPrice)}`,
+        `Best: ${money(r.bestPrice)}`,
+        `Total quote: ${money(r.finalPrice)}`,
+        `Deposit: ${money(r.depositAmount)}`,
+        `Balance: ${money(r.balanceAmount)}`,
+        ``,
+        `Notes: ${r.notes || "-"}`
+      ].join("\n");
+    }
+
+    async function copyQuoteText() {
+      calculateQuote();
+      const status = $("copyStatus");
+      try {
+        await navigator.clipboard.writeText(buildQuoteText());
+        status.textContent = "Quote text copied.";
+      } catch (err) {
+        status.textContent = "Copy failed. Use Print / Save PDF instead.";
+      }
+    }
+
     function showTab(sectionId) {
-      ["calculatorSection", "savedSection", "softwashSection", "materialsSection", "methodologySection"].forEach(id => {
+      ["calculatorSection", "savedSection", "softwashSection", "materialsSection", "measureSection", "methodologySection"].forEach(id => {
         $(id).classList.toggle("hidden", id !== sectionId);
       });
 
@@ -1683,6 +1982,7 @@
       calculateQuote();
       window.print();
     });
+    $("copyQuoteBtn").addEventListener("click", copyQuoteText);
     $("clearSavedBtn").addEventListener("click", clearSavedQuotes);
     $("calculateSoftwashBtn").addEventListener("click", calculateSoftwashMix);
     $("resetSoftwashBtn").addEventListener("click", resetSoftwashExample);
@@ -1700,9 +2000,23 @@
       $(id).addEventListener("change", calculateMaterials);
     });
 
+    ["measureShape","measureUnit","measureQty","measureLength","measureWidth","measureDiameter","manualArea","measureWaste","measureProductionRate","pricePerSqFt","volumeGal"].forEach(id => {
+      $(id).addEventListener("input", calculateMeasurement);
+      $(id).addEventListener("change", calculateMeasurement);
+    });
+    $("pricePerSqM").addEventListener("input", updatePriceFromSqM);
+    $("pricePerSqM").addEventListener("change", updatePriceFromSqM);
+    $("volumeLiters").addEventListener("input", updateVolumeFromLiters);
+    $("volumeLiters").addEventListener("change", updateVolumeFromLiters);
+    $("measureShape").addEventListener("change", setMeasureShapeVisibility);
+    $("calculateMeasureBtn").addEventListener("click", calculateMeasurement);
+    $("useAreaBtn").addEventListener("click", useMeasuredAreaForQuote);
+    $("resetMeasureBtn").addEventListener("click", resetMeasureExample);
+
     resetExample();
     resetSoftwashExample();
     resetMaterialsExample();
+    resetMeasureExample();
     renderSavedQuotes();
   </script>
 </body>
