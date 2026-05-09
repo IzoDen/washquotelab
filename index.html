@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>WashQuoteLab V2A - Pressure Washing Quote & Profit Calculator</title>
+  <title>WashQuoteLab V2B - Pressure Washing Quote, Profit & Softwash Calculator</title>
   <style>
     :root {
       --bg: #f5f7fb;
@@ -436,7 +436,7 @@
     }
 
     @media print {
-      header, nav, .input-card, .actions, footer, #savedSection, #methodologySection, .notice {
+      header, nav, .input-card, .actions, footer, #savedSection, #softwashSection, #methodologySection, .notice {
         display: none !important;
       }
       body { background: white; }
@@ -456,7 +456,7 @@
       <div>
         <h1>WashQuoteLab</h1>
         <p>
-          Pressure washing quote and profit calculator for contractors. Version 2A adds source-backed market sanity ranges, visible assumptions, quote details, and a cleaner customer quote.
+          Pressure washing quote, profit, and softwash dilution calculator for contractors. Version 2B adds a transparent softwash batch mix module with safety warnings.
         </p>
       </div>
       <div class="hero-card">
@@ -470,6 +470,7 @@
     <div class="container tabs">
       <button class="tab-btn active" data-tab="calculatorSection">New Quote</button>
       <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
+      <button class="tab-btn" data-tab="softwashSection">Softwash Mix</button>
       <button class="tab-btn" data-tab="methodologySection">Methodology</button>
     </div>
   </nav>
@@ -788,6 +789,100 @@
       </div>
     </section>
 
+
+    <section id="softwashSection" class="hidden">
+      <div class="grid">
+        <div class="card input-card">
+          <h2 class="section-title">Softwash batch mix calculator</h2>
+          <p class="section-note">
+            Dilution math only. Enter your stock sodium hypochlorite strength, target application strength, and final batch volume.
+          </p>
+
+          <div class="notice warn">
+            Safety: Do not mix sodium hypochlorite/bleach with acids, vinegar, ammonia, or unknown cleaners. Follow product labels, PPE requirements, local rules, and site safety procedures.
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="form-grid three">
+            <div class="field">
+              <label for="shStockStrength">Stock SH strength %</label>
+              <input id="shStockStrength" type="number" value="12.5" step="0.1" min="0.1" />
+            </div>
+            <div class="field">
+              <label for="shTargetStrength">Target mix strength %</label>
+              <input id="shTargetStrength" type="number" value="3" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="mixBatchVolume">Final batch volume</label>
+              <input id="mixBatchVolume" type="number" value="20" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="mixUnit">Volume unit</label>
+              <select id="mixUnit">
+                <option value="gal">gallons</option>
+                <option value="L">liters</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="surfactantRate">Surfactant rate</label>
+              <input id="surfactantRate" type="number" value="1" step="0.1" min="0" />
+            </div>
+            <div class="field">
+              <label for="surfactantUnit">Surfactant unit</label>
+              <select id="surfactantUnit">
+                <option value="ozPerGal">oz per gallon</option>
+                <option value="mlPerL">mL per liter</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="primary" id="calculateSoftwashBtn">Calculate Mix</button>
+            <button class="ghost" id="resetSoftwashBtn">Reset Example</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">Mix result</h2>
+          <p class="section-note">Based on the dilution balance C1 × V1 = C2 × V2.</p>
+
+          <div class="result-grid">
+            <div class="metric highlight">
+              <small>Stock SH needed</small>
+              <strong id="shNeeded">0</strong>
+            </div>
+            <div class="metric">
+              <small>Water needed</small>
+              <strong id="waterNeeded">0</strong>
+            </div>
+            <div class="metric">
+              <small>Surfactant</small>
+              <strong id="surfactantNeeded">0</strong>
+            </div>
+            <div class="metric">
+              <small>Water : SH ratio</small>
+              <strong id="mixRatio">0 : 1</strong>
+            </div>
+          </div>
+
+          <div id="softwashWarning" class="notice info">Enter values and calculate the mix.</div>
+
+          <div class="line-items">
+            <div class="line"><span>Formula</span><span>C1 × V1 = C2 × V2</span></div>
+            <div class="line"><span>Stock strength</span><span id="shStockOut">0%</span></div>
+            <div class="line"><span>Target strength</span><span id="shTargetOut">0%</span></div>
+            <div class="line"><span>Final batch</span><span id="batchOut">0</span></div>
+            <div class="line"><span>Stock chemical share</span><span id="stockShareOut">0%</span></div>
+          </div>
+
+          <div class="assumption-box">
+            This calculator only handles dilution math. It does not verify whether the target strength is appropriate for a roof, siding, concrete, vegetation risk, runoff control, or local regulation.
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section id="savedSection" class="hidden">
       <div class="card">
         <h2 class="section-title">Saved quotes</h2>
@@ -846,9 +941,9 @@
         </div>
 
         <div>
-          <h3>5. Safety note for future softwash module</h3>
+          <h3>5. Softwash dilution module</h3>
           <p>
-            A future softwash calculator should be treated as a dilution calculator only, not safety training. Always follow product labels, PPE requirements, local regulations, and chemical compatibility rules.
+            The softwash calculator is treated as a dilution calculator only, not safety training. Always follow product labels, PPE requirements, local regulations, and chemical compatibility rules.
             Do not mix bleach/sodium hypochlorite with acids, vinegar, ammonia, or unknown cleaners.
           </p>
         </div>
@@ -857,7 +952,7 @@
   </main>
 
   <footer>
-    WashQuoteLab V2A · Estimate only · Calibrate with your real job history
+    WashQuoteLab V2B · Estimate only · Calibrate with your real job history
   </footer>
 
   <script>
@@ -1279,8 +1374,80 @@
       applyPreset();
     }
 
+
+    function softwashUnitLabel(unit) {
+      return unit === "L" ? "L" : "gal";
+    }
+
+    function formatSoftwashVolume(value, unit) {
+      const safe = Number.isFinite(value) ? value : 0;
+      return `${safe.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${softwashUnitLabel(unit)}`;
+    }
+
+    function resetSoftwashExample() {
+      $("shStockStrength").value = 12.5;
+      $("shTargetStrength").value = 3;
+      $("mixBatchVolume").value = 20;
+      $("mixUnit").value = "gal";
+      $("surfactantRate").value = 1;
+      $("surfactantUnit").value = "ozPerGal";
+      calculateSoftwashMix();
+    }
+
+    function calculateSoftwashMix() {
+      const stock = Math.max(num("shStockStrength"), 0);
+      const target = Math.max(num("shTargetStrength"), 0);
+      const batch = Math.max(num("mixBatchVolume"), 0);
+      const unit = $("mixUnit").value;
+      const surfRate = Math.max(num("surfactantRate"), 0);
+      const surfUnit = $("surfactantUnit").value;
+
+      let shVolume = 0;
+      let waterVolume = 0;
+      let stockShare = 0;
+      let ratioText = "0 : 1";
+      const warningBox = $("softwashWarning");
+      warningBox.className = "notice good";
+
+      if (stock <= 0 || batch <= 0) {
+        warningBox.className = "notice bad";
+        warningBox.textContent = "Enter a stock strength greater than 0 and a final batch volume greater than 0.";
+      } else if (target >= stock) {
+        shVolume = batch;
+        waterVolume = 0;
+        stockShare = 100;
+        warningBox.className = "notice bad";
+        warningBox.textContent = "Target strength must be lower than stock strength. Otherwise this is not a dilution.";
+      } else {
+        shVolume = (target / stock) * batch;
+        waterVolume = batch - shVolume;
+        stockShare = batch > 0 ? (shVolume / batch) * 100 : 0;
+        const waterToStock = shVolume > 0 ? waterVolume / shVolume : 0;
+        ratioText = `${waterToStock.toFixed(2)} : 1`;
+
+        if (target > 6) {
+          warningBox.className = "notice warn";
+          warningBox.textContent = "High target strength warning: verify surface compatibility, product label, vegetation protection, runoff control, PPE, and local rules before use.";
+        } else {
+          warningBox.textContent = "Mix calculation complete. Verify target strength, surface compatibility, product label, PPE, and local rules before field use.";
+        }
+      }
+
+      const surfAmount = batch * surfRate;
+      const surfLabel = surfUnit === "mlPerL" ? "mL" : "oz";
+
+      $("shNeeded").textContent = formatSoftwashVolume(shVolume, unit);
+      $("waterNeeded").textContent = formatSoftwashVolume(waterVolume, unit);
+      $("surfactantNeeded").textContent = `${surfAmount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${surfLabel}`;
+      $("mixRatio").textContent = ratioText;
+      $("shStockOut").textContent = `${stock.toFixed(2)}%`;
+      $("shTargetOut").textContent = `${target.toFixed(2)}%`;
+      $("batchOut").textContent = formatSoftwashVolume(batch, unit);
+      $("stockShareOut").textContent = `${stockShare.toFixed(1)}%`;
+    }
+
     function showTab(sectionId) {
-      ["calculatorSection", "savedSection", "methodologySection"].forEach(id => {
+      ["calculatorSection", "savedSection", "softwashSection", "methodologySection"].forEach(id => {
         $(id).classList.toggle("hidden", id !== sectionId);
       });
 
@@ -1313,6 +1480,8 @@
       window.print();
     });
     $("clearSavedBtn").addEventListener("click", clearSavedQuotes);
+    $("calculateSoftwashBtn").addEventListener("click", calculateSoftwashMix);
+    $("resetSoftwashBtn").addEventListener("click", resetSoftwashExample);
 
     document.querySelectorAll("input, select, textarea").forEach(el => {
       el.addEventListener("input", calculateQuote);
@@ -1320,6 +1489,7 @@
     });
 
     resetExample();
+    resetSoftwashExample();
     renderSavedQuotes();
   </script>
 </body>
