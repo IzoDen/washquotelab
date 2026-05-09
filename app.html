@@ -528,13 +528,13 @@
 
 
 
-    /* Transparent sample defaults: prefilled values are visible as examples, not real user/business data. */
+    /* Transparent sample defaults: prefilled values are examples, not real business data. */
     input.sample-default,
     select.sample-default,
     textarea.sample-default {
-      color: rgba(24, 32, 47, 0.38) !important;
-      background: linear-gradient(0deg, rgba(18,102,241,0.035), rgba(18,102,241,0.035)), #fff !important;
-      border-style: dashed !important;
+      color: rgba(16, 24, 40, 0.30) !important;
+      background: repeating-linear-gradient(135deg, rgba(255,250,235,.95) 0 8px, rgba(255,247,218,.95) 8px 16px) !important;
+      border: 1.5px dashed #f59e0b !important;
       font-style: italic;
     }
 
@@ -544,17 +544,25 @@
       color: var(--text) !important;
       font-style: normal;
       background: #fff !important;
+      border-style: solid !important;
     }
 
     .field.sample-field label::after {
-      content: " sample";
+      content: " sample default";
       margin-left: 6px;
-      color: rgba(18,102,241,0.65);
-      font-weight: 800;
-      font-size: 11px;
+      color: #b45309;
+      background: #fffaeb;
+      border: 1px solid #fedf89;
+      border-radius: 999px;
+      padding: 2px 7px;
+      font-weight: 900;
+      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
+
+    .tab-btn { gap: 7px; }
+    .notice.visual-note { background: linear-gradient(135deg,#eff6ff,#ecfdf3); border-color:#b9d8ff; color:#123b7a; }
 
     @media (max-width: 920px) {
       .mini-grid { grid-template-columns: 1fr 1fr; }
@@ -806,19 +814,19 @@
 
   <nav>
     <div class="container tabs">
-      <a class="tab-btn" href="index.html" style="text-decoration:none; display:inline-flex; align-items:center;">Home</a>
-      <button class="tab-btn active" data-tab="calculatorSection">New Quote</button>
-      <button class="tab-btn" data-tab="softwashSection">Softwash Mix</button>
-      <button class="tab-btn" data-tab="materialsSection">Sealer & Sand</button>
-      <button class="tab-btn" data-tab="measureSection">Measure</button>
-      <button class="tab-btn" data-tab="pricingSection">Pricing</button>
-      <button class="tab-btn" data-tab="savedSection">Saved Quotes</button>
+      <a class="tab-btn" href="index.html" style="text-decoration:none; display:inline-flex; align-items:center;">🏠 Home</a>
+      <button class="tab-btn active" data-tab="calculatorSection">🧾 New Quote</button>
+      <button class="tab-btn" data-tab="softwashSection">🧪 Softwash Mix</button>
+      <button class="tab-btn" data-tab="materialsSection">🪣 Sealer & Sand</button>
+      <button class="tab-btn" data-tab="measureSection">📐 Measure</button>
+      <button class="tab-btn" data-tab="pricingSection">💳 Pricing</button>
+      <button class="tab-btn" data-tab="savedSection">💾 Saved Quotes</button>
     </div>
   </nav>
 
   <main class="container">
     <section id="calculatorSection">
-      <div class="notice warn" style="margin-bottom:18px;">Sample values are shown so the tool works immediately. They are not hidden recommendations. Review every assumption before using a quote commercially.</div>
+      <div class="notice visual-note" style="margin-bottom:18px;">⚠️ Sample values are visible examples only. They are not hidden recommendations. Review every assumption before using a quote commercially.</div>
       <div class="grid">
         <div class="card input-card">
           <h2 class="section-title">1. Pressure washing quote details</h2>
