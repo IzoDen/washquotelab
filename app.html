@@ -526,6 +526,36 @@
       gap: 12px;
     }
 
+
+
+    /* Transparent sample defaults: prefilled values are visible as examples, not real user/business data. */
+    input.sample-default,
+    select.sample-default,
+    textarea.sample-default {
+      color: rgba(24, 32, 47, 0.38) !important;
+      background: linear-gradient(0deg, rgba(18,102,241,0.035), rgba(18,102,241,0.035)), #fff !important;
+      border-style: dashed !important;
+      font-style: italic;
+    }
+
+    input.sample-default:focus,
+    select.sample-default:focus,
+    textarea.sample-default:focus {
+      color: var(--text) !important;
+      font-style: normal;
+      background: #fff !important;
+    }
+
+    .field.sample-field label::after {
+      content: " sample";
+      margin-left: 6px;
+      color: rgba(18,102,241,0.65);
+      font-weight: 800;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
     @media (max-width: 920px) {
       .mini-grid { grid-template-columns: 1fr 1fr; }
       .approval-grid { grid-template-columns: 1fr; }
@@ -2787,6 +2817,42 @@
       localStorage.setItem("washQuoteLabGrowthSettingsV1", JSON.stringify(settings));
       $("growthStatus").textContent = "Growth settings saved in this browser. Send me these IDs so I can hard-code them for production.";
   
+
+
+    // Mark prefilled values as transparent sample defaults.
+    // This keeps the app usable immediately but makes it obvious that these are examples, not real company/customer/pricing data.
+    const sampleDefaultMap = new Map();
+
+    function initSampleDefaultMap() {
+      document.querySelectorAll("input, select, textarea").forEach(el => {
+        if (!el.id) return;
+        if (sampleDefaultMap.has(el.id)) return;
+        const value = (el.value || "").trim();
+        if (value !== "") sampleDefaultMap.set(el.id, value);
+      });
+    }
+
+    function markSampleDefaults() {
+      document.querySelectorAll("input, select, textarea").forEach(el => {
+        if (!el.id || !sampleDefaultMap.has(el.id)) return;
+        const defaultValue = sampleDefaultMap.get(el.id);
+        const currentValue = (el.value || "").trim();
+        const isSample = currentValue === defaultValue;
+        el.classList.toggle("sample-default", isSample);
+        const field = el.closest(".field");
+        if (field) field.classList.toggle("sample-field", isSample);
+      });
+    }
+
+
+    function captureCurrentValuesAsSampleDefaults() {
+      document.querySelectorAll("input, select, textarea").forEach(el => {
+        if (!el.id) return;
+        const value = (el.value || "").trim();
+        if (value !== "") sampleDefaultMap.set(el.id, value);
+      });
+    }
+
     function routeFromHash() {
       const hash = window.location.hash.replace('#', '');
       const validSections = [
@@ -3029,8 +3095,8 @@
     $("jointType").addEventListener("change", applyJointPreset);
 
     document.querySelectorAll("input, select, textarea").forEach(el => {
-      el.addEventListener("input", calculateQuote);
-      el.addEventListener("change", calculateQuote);
+      el.addEventListener("input", () => { markSampleDefaults(); calculateQuote(); });
+      el.addEventListener("change", () => { markSampleDefaults(); calculateQuote(); });
     });
 
     ["sealArea","sealCoverage","sealCoats","sealWaste","sealCost","sealCurrency","sandArea","sandCoverage","sandWaste","sandCost","sandBagSize"].forEach(id => {
@@ -3064,15 +3130,18 @@
     window.addEventListener('hashchange', routeFromHash);
 
     loadGoogleAnalyticsIfConfigured();
+    initSampleDefaultMap();
     resetExample();
     resetSoftwashExample();
     resetMaterialsExample();
     resetMeasureExample();
+    captureCurrentValuesAsSampleDefaults();
     renderSavedQuotes();
     renderFeedback();
     loadPaymentLinks();
     renderProStatus();
     loadSupportEmail();
+    markSampleDefaults();
     routeFromHash();
   </script>
 </body>
