@@ -532,33 +532,61 @@
     input.sample-default,
     select.sample-default,
     textarea.sample-default {
-      color: rgba(16, 24, 40, 0.30) !important;
-      background: repeating-linear-gradient(135deg, rgba(255,250,235,.95) 0 8px, rgba(255,247,218,.95) 8px 16px) !important;
-      border: 1.5px dashed #f59e0b !important;
-      font-style: italic;
+      color: rgba(16, 24, 40, 0.50) !important;
+      -webkit-text-fill-color: rgba(16, 24, 40, 0.50) !important;
+      background: rgba(248, 250, 252, 0.55) !important;
+      border: 1.5px dashed rgba(18, 102, 241, 0.35) !important;
+      font-style: italic !important;
+      box-shadow: inset 0 0 0 9999px rgba(248, 250, 252, 0.20);
     }
 
     input.sample-default:focus,
     select.sample-default:focus,
     textarea.sample-default:focus {
       color: var(--text) !important;
-      font-style: normal;
+      -webkit-text-fill-color: var(--text) !important;
+      font-style: normal !important;
       background: #fff !important;
       border-style: solid !important;
+      box-shadow: 0 0 0 4px rgba(18, 102, 241, 0.11) !important;
     }
 
     .field.sample-field label::after {
-      content: " sample default";
+      content: " sample";
       margin-left: 6px;
-      color: #b45309;
-      background: #fffaeb;
-      border: 1px solid #fedf89;
+      color: rgba(16, 24, 40, 0.50);
+      background: rgba(248, 250, 252, 0.9);
+      border: 1px dashed rgba(18, 102, 241, 0.35);
       border-radius: 999px;
       padding: 2px 7px;
       font-weight: 900;
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      font-style: italic;
+    }
+
+    label.required-label::after {
+      content: " *";
+      color: var(--danger);
+      font-weight: 1000;
+    }
+
+    .required-note {
+      margin: -8px 0 16px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    .approval-box p {
+      margin: 12px 0;
+      line-height: 1.65;
+    }
+
+    .approval-grid {
+      margin-top: 20px;
+      gap: 22px;
     }
 
     .tab-btn { gap: 7px; }
@@ -831,23 +859,24 @@
         <div class="card input-card">
           <h2 class="section-title">1. Pressure washing quote details</h2>
           <p class="section-note">The prefilled values are transparent sample defaults only. Replace company, customer, cost, labor, production rate, and margin assumptions with your real local data before sending any quote.</p>
+          <p class="required-note"><strong>* Required before sending a real quote.</strong> Faded italic fields are sample data and should be replaced.</p>
 
           <div class="form-grid">
             <div class="field">
               <label for="companyName">Company name</label>
-              <input id="companyName" value="Your Cleaning Company" />
+              <input class="sample-default" id="companyName" value="Your Cleaning Company" />
             </div>
             <div class="field">
               <label for="companyEmail">Company email</label>
-              <input id="companyEmail" value="hello@example.com" />
+              <input class="sample-default" id="companyEmail" value="hello@example.com" />
             </div>
             <div class="field">
               <label for="companyPhone">Company phone</label>
-              <input id="companyPhone" value="+1 555 000 0000" />
+              <input class="sample-default" id="companyPhone" value="+1 555 000 0000" />
             </div>
             <div class="field">
               <label for="companyWebsite">Company website</label>
-              <input id="companyWebsite" value="www.example.com" />
+              <input class="sample-default" id="companyWebsite" value="www.example.com" />
             </div>
             <div class="field">
               <label for="quoteNumber">Quote number</label>
@@ -865,23 +894,23 @@
           <div class="form-grid">
             <div class="field">
               <label for="projectName">Project name</label>
-              <input id="projectName" value="Driveway cleaning estimate" />
+              <input class="sample-default" id="projectName" value="Driveway cleaning estimate" />
             </div>
             <div class="field">
               <label for="customerName">Customer name</label>
-              <input id="customerName" value="Sample Customer" />
+              <input class="sample-default" id="customerName" value="Sample Customer" />
             </div>
             <div class="field">
               <label for="customerEmail">Customer email</label>
-              <input id="customerEmail" value="customer@example.com" />
+              <input class="sample-default" id="customerEmail" value="customer@example.com" />
             </div>
             <div class="field">
               <label for="customerPhone">Customer phone</label>
-              <input id="customerPhone" value="+1 555 111 1111" />
+              <input class="sample-default" id="customerPhone" value="+1 555 111 1111" />
             </div>
             <div class="field full">
               <label for="jobAddress">Job address</label>
-              <input id="jobAddress" value="123 Sample Street" />
+              <input class="sample-default" id="jobAddress" value="123 Sample Street" />
             </div>
           </div>
 
@@ -918,7 +947,7 @@
 
             <div class="field">
               <label for="area">Area to clean, sq ft</label>
-              <input id="area" type="number" value="800" min="1" />
+              <input class="sample-default" id="area" type="number" value="800" min="1" />
             </div>
 
             <div class="field">
@@ -963,80 +992,80 @@
           <div class="form-grid three">
             <div class="field">
               <label for="productionRate">Production rate, sq ft/hour</label>
-              <input id="productionRate" type="number" value="450" min="1" />
+              <input class="sample-default" id="productionRate" type="number" value="450" min="1" />
             </div>
             <div class="field">
               <label for="setupHours">Setup/cleanup hours</label>
-              <input id="setupHours" type="number" value="0.5" step="0.1" min="0" />
+              <input class="sample-default" id="setupHours" type="number" value="0.5" step="0.1" min="0" />
             </div>
             <div class="field">
               <label for="crewSize">Crew size</label>
-              <input id="crewSize" type="number" value="1" step="1" min="1" />
+              <input class="sample-default" id="crewSize" type="number" value="1" step="1" min="1" />
             </div>
             <div class="field">
               <label for="laborRate">Labor cost per person/hour</label>
-              <input id="laborRate" type="number" value="35" step="1" min="0" />
+              <input class="sample-default" id="laborRate" type="number" value="35" step="1" min="0" />
             </div>
             <div class="field">
               <label for="chemicalRate">Chemical/material cost per sq ft</label>
-              <input id="chemicalRate" type="number" value="0.02" step="0.01" min="0" />
+              <input class="sample-default" id="chemicalRate" type="number" value="0.02" step="0.01" min="0" />
             </div>
             <div class="field">
               <label for="equipmentRate">Equipment/fuel cost per hour</label>
-              <input id="equipmentRate" type="number" value="12" step="1" min="0" />
+              <input class="sample-default" id="equipmentRate" type="number" value="12" step="1" min="0" />
             </div>
             <div class="field">
               <label for="travelHours">Travel time, hours</label>
-              <input id="travelHours" type="number" value="0.5" step="0.1" min="0" />
+              <input class="sample-default" id="travelHours" type="number" value="0.5" step="0.1" min="0" />
             </div>
             <div class="field">
               <label for="travelMiles">Travel distance, miles</label>
-              <input id="travelMiles" type="number" value="12" step="1" min="0" />
+              <input class="sample-default" id="travelMiles" type="number" value="12" step="1" min="0" />
             </div>
             <div class="field">
               <label for="mileRate">Vehicle cost per mile</label>
-              <input id="mileRate" type="number" value="0.75" step="0.01" min="0" />
+              <input class="sample-default" id="mileRate" type="number" value="0.75" step="0.01" min="0" />
             </div>
             <div class="field">
               <label for="overheadPct">Overhead %</label>
-              <input id="overheadPct" type="number" value="15" step="1" min="0" />
+              <input class="sample-default" id="overheadPct" type="number" value="15" step="1" min="0" />
             </div>
             <div class="field">
               <label for="targetMargin">Target gross margin %</label>
-              <input id="targetMargin" type="number" value="45" step="1" min="1" max="95" />
+              <input class="sample-default" id="targetMargin" type="number" value="45" step="1" min="1" max="95" />
             </div>
             <div class="field">
               <label for="minimumCharge">Minimum job charge</label>
-              <input id="minimumCharge" type="number" value="150" step="1" min="0" />
+              <input class="sample-default" id="minimumCharge" type="number" value="150" step="1" min="0" />
             </div>
             <div class="field">
               <label for="addOnCost">Special add-on internal cost</label>
-              <input id="addOnCost" type="number" value="0" step="1" min="0" />
+              <input class="sample-default" id="addOnCost" type="number" value="0" step="1" min="0" />
             </div>
             <div class="field">
               <label for="addOnCharge">Special add-on customer charge</label>
-              <input id="addOnCharge" type="number" value="0" step="1" min="0" />
+              <input class="sample-default" id="addOnCharge" type="number" value="0" step="1" min="0" />
             </div>
             <div class="field">
               <label for="taxPct">Tax %</label>
-              <input id="taxPct" type="number" value="0" step="0.1" min="0" />
+              <input class="sample-default" id="taxPct" type="number" value="0" step="0.1" min="0" />
             </div>
             <div class="field">
               <label for="discount">Discount amount</label>
-              <input id="discount" type="number" value="0" step="1" min="0" />
+              <input class="sample-default" id="discount" type="number" value="0" step="1" min="0" />
             </div>
             <div class="field">
               <label for="depositPct">Deposit %</label>
-              <input id="depositPct" type="number" value="30" step="1" min="0" max="100" />
+              <input class="sample-default" id="depositPct" type="number" value="30" step="1" min="0" max="100" />
             </div>
             <div class="field">
               <label for="currency">Currency symbol</label>
-              <input id="currency" value="$" />
+              <input class="sample-default" id="currency" value="$" />
             </div>
 
             <div class="field full">
               <label for="notes">Customer-facing notes</label>
-              <textarea id="notes">Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, water-access issues, or hazardous conditions may require revised pricing.</textarea>
+              <textarea class="sample-default" id="notes">Quote includes standard cleaning, setup, cleanup, and normal access. Extra stain removal, sealing, repairs, water-access issues, or hazardous conditions may require revised pricing.</textarea>
             </div>
           </div>
 
@@ -2798,7 +2827,7 @@
       };
     }
 
-    const WQL_PRODUCTION_GA_ID = "REPLACE_WITH_GA4_MEASUREMENT_ID";
+    const WQL_PRODUCTION_GA_ID = "G-6824YHJX6G";
     const WQL_PRODUCTION_GSC_CODE = "REPLACE_WITH_SEARCH_CONSOLE_CODE";
 
     function getGrowthSettings() {
@@ -2830,6 +2859,18 @@
     // Mark prefilled values as transparent sample defaults.
     // This keeps the app usable immediately but makes it obvious that these are examples, not real company/customer/pricing data.
     const sampleDefaultMap = new Map();
+
+    const requiredFieldIds = [
+      "companyName", "companyEmail", "projectName", "customerName", "serviceType", "area",
+      "productionRate", "laborRate", "targetMargin", "minimumCharge", "currency"
+    ];
+
+    function markRequiredFields() {
+      requiredFieldIds.forEach(id => {
+        const label = document.querySelector(`label[for="${id}"]`);
+        if (label) label.classList.add("required-label");
+      });
+    }
 
     function initSampleDefaultMap() {
       document.querySelectorAll("input, select, textarea").forEach(el => {
@@ -3138,6 +3179,7 @@
     window.addEventListener('hashchange', routeFromHash);
 
     loadGoogleAnalyticsIfConfigured();
+    markRequiredFields();
     initSampleDefaultMap();
     resetExample();
     resetSoftwashExample();
