@@ -11,8 +11,8 @@
   </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pressure Washing Calculator App | WashQuoteLab</title>
-  <meta name="description" content="Free pressure washing price calculator and quote builder for contractors. Estimate driveway, house wash, roof softwash, labor, chemicals, travel, overhead, profit margin, sealer, sand, and customer quotes." />
+  <title>Pressure Washing Quote Builder with Local Pricing Profiles | WashQuoteLab</title>
+  <meta name="description" content="Pressure washing quote builder with editable local pricing profiles for contractors. Set labor, travel, production speed, material cost, overhead, VAT/tax, minimum charge and margin." />
   <meta name="robots" content="index, follow" />
   <meta property="og:title" content="Pressure Washing Calculator App | WashQuoteLab" />
   <meta property="og:description" content="Create pressure washing price estimates and customer quotes, check profit margin, calculate softwash mix, and estimate sealer or polymeric sand materials." />
@@ -527,6 +527,84 @@
     }
 
 
+    .profile-card {
+      background: linear-gradient(135deg, #f0f9ff, #ffffff 55%, #f7fee7);
+      border: 1px solid #b9d8ff;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 26px rgba(18, 102, 241, 0.08);
+    }
+
+    .profile-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .profile-header h2 { margin: 0; }
+    .profile-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid #abefc6;
+      background: #ecfdf3;
+      color: #027a48;
+      border-radius: 999px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .profile-summary {
+      margin-top: 12px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .profile-chip {
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 10px 12px;
+    }
+
+    .profile-chip small {
+      display: block;
+      color: var(--muted);
+      text-transform: uppercase;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      margin-bottom: 3px;
+    }
+
+    .profile-chip strong { font-size: 15px; }
+
+    .feedback-quick {
+      margin-top: 18px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 16px;
+    }
+
+    .feedback-choice-row { display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 12px; }
+    .feedback-choice-row button {
+      border:1px solid var(--border); background:white; border-radius:999px; padding:9px 12px; font-weight:900; cursor:pointer;
+    }
+    .feedback-choice-row button:hover { border-color:#8ec5ff; box-shadow:0 6px 16px rgba(18,102,241,.10); }
+
+    @media (max-width: 760px) {
+      .profile-header { display: block; }
+      .profile-badge { margin-top: 10px; }
+      .profile-summary { grid-template-columns: 1fr 1fr; }
+    }
+
 
     /* Transparent sample defaults: prefilled values are examples, not real business data. */
     input.sample-default,
@@ -828,9 +906,9 @@
     <div class="container hero">
       <div>
         <div class="brand-kicker">WashQuoteLab · Contractor quoting toolkit</div>
-        <h1>Pressure Washing Price Calculator</h1>
+        <h1>Pressure Washing Quote Builder with Local Pricing Profiles</h1>
         <p>
-          Estimate pressure washing prices, job costs, profit margin, softwash mix, sealer, sand, measurements, and professional customer quotes from one mobile-friendly web app.
+          Set your own local labor rate, production speed, travel cost, materials, overhead, VAT/tax, minimum charge, and margin — then create a customer-ready pressure-washing quote.
         </p>
       </div>
       <div class="hero-card">
@@ -855,6 +933,43 @@
   <main class="container">
     <section id="calculatorSection">
       <div class="notice visual-note" style="margin-bottom:18px;">⚠️ Sample values are visible examples only. They are not hidden recommendations. Review every assumption before using a quote commercially.</div>
+
+      <div class="profile-card" id="pricingProfileCard">
+        <div class="profile-header">
+          <div>
+            <h2 class="section-title">0. Local pricing profile</h2>
+            <p class="section-note">This answers the biggest contractor objection: prices vary by location. Choose a starter profile, then overwrite the values with your real local rates.</p>
+          </div>
+          <div class="profile-badge">✓ Editable local assumptions</div>
+        </div>
+        <div class="form-grid three">
+          <div class="field">
+            <label for="pricingProfile">Pricing profile</label>
+            <select id="pricingProfile">
+              <option value="us">United States example</option>
+              <option value="germany">Germany / Bonn example</option>
+              <option value="custom">Custom local profile</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="profileServiceDefault">Apply profile to service</label>
+            <select id="profileServiceDefault">
+              <option value="current">Current selected service</option>
+              <option value="driveway">Driveway / flatwork</option>
+              <option value="house">House / facade wash</option>
+              <option value="commercial">Commercial flatwork</option>
+              <option value="deck">Pavers / deck / sealing prep</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>&nbsp;</label>
+            <button id="applyProfileBtn" class="secondary" type="button">Apply profile defaults</button>
+          </div>
+        </div>
+        <div class="profile-summary" id="profileSummary"></div>
+        <div class="notice info" style="margin-top:12px;">The calculator does not use one universal price. It calculates from your labor, material, travel, overhead, tax, minimum charge, production speed, and margin assumptions.</div>
+      </div>
+
       <div class="grid">
         <div class="card input-card">
           <h2 class="section-title">1. Pressure washing quote details</h2>
@@ -946,7 +1061,7 @@
             </div>
 
             <div class="field">
-              <label for="area">Area to clean, sq ft</label>
+              <label for="area">Area to clean, <span id="areaUnitLabel">sq ft</span></label>
               <input class="sample-default" id="area" type="number" value="800" min="1" />
             </div>
 
@@ -991,7 +1106,7 @@
 
           <div class="form-grid three">
             <div class="field">
-              <label for="productionRate">Production rate, sq ft/hour</label>
+              <label for="productionRate">Production rate, <span id="productionUnitLabel">sq ft/hour</span></label>
               <input class="sample-default" id="productionRate" type="number" value="450" min="1" />
             </div>
             <div class="field">
@@ -1007,7 +1122,7 @@
               <input class="sample-default" id="laborRate" type="number" value="35" step="1" min="0" />
             </div>
             <div class="field">
-              <label for="chemicalRate">Chemical/material cost per sq ft</label>
+              <label for="chemicalRate">Chemical/material cost per <span id="chemicalUnitLabel">sq ft</span></label>
               <input class="sample-default" id="chemicalRate" type="number" value="0.02" step="0.01" min="0" />
             </div>
             <div class="field">
@@ -1019,11 +1134,11 @@
               <input class="sample-default" id="travelHours" type="number" value="0.5" step="0.1" min="0" />
             </div>
             <div class="field">
-              <label for="travelMiles">Travel distance, miles</label>
+              <label for="travelMiles">Travel distance, <span id="distanceUnitLabel">miles</span></label>
               <input class="sample-default" id="travelMiles" type="number" value="12" step="1" min="0" />
             </div>
             <div class="field">
-              <label for="mileRate">Vehicle cost per mile</label>
+              <label for="mileRate">Vehicle cost per <span id="vehicleUnitLabel">mile</span></label>
               <input class="sample-default" id="mileRate" type="number" value="0.75" step="0.01" min="0" />
             </div>
             <div class="field">
@@ -1913,11 +2028,11 @@
         </div>
 
         <div>
-          <h3>3. Source-backed market sanity ranges used in this prototype</h3>
+          <h3>3. Market and local pricing assumptions used in this prototype</h3>
           <ul class="source-list">
-            <li>Housecall Pro 2026 guide: residential flatwork about $0.15–$0.75/sq ft, driveway cleaning about $100–$300, house washing about $250–$800, commercial flatwork about $0.08–$0.40/sq ft.</li>
-            <li>Angi 2026 driveway guide: professional driveway pressure washing about $0.30–$0.55/sq ft, with material affecting price.</li>
-            <li>Bark pressure-washing pricing guide: common pricing structures include per-square-foot, hourly, and flat project rates; it also notes typical small-job minimum charges.</li>
+            <li>United States example profile: broad public market sanity ranges for residential flatwork, driveway washing, house washing, roof softwash, deck/fence cleaning, and commercial flatwork. These remain editable.</li>
+            <li>Germany/Bonn example profile: uses 2026 German cleaning-sector minimum wages as a labor basis, €0.30/km travel basis, 19% VAT, two-person crew defaults, and m²-based production rates. It is a calibration example, not a universal German price list.</li>
+            <li>Bonn report examples included as local sanity checks: simple driveway cleaning can calculate below public market ranges, so the app warns when a cost-based quote is below the market sanity band; sanding and sealing are treated as material-heavy jobs.</li>
             <li>CDC and Washington State Department of Health: bleach/sodium hypochlorite must not be mixed with ammonia, vinegar, acids, or unknown cleaners because toxic chlorine or chloramine gases can be produced.</li>
           </ul>
         </div>
@@ -1970,7 +2085,7 @@
   </footer>
 
   <script>
-    const presets = {
+    const basePresets = {
       driveway: {
         label: "Driveway / concrete flatwork",
         method: "Surface cleaner",
@@ -2048,6 +2163,184 @@
       }
     };
 
+
+
+    const pricingProfiles = {
+      us: {
+        label: "United States example",
+        currency: "$",
+        unit: "sq ft",
+        productionUnit: "sq ft/hour",
+        distanceUnit: "miles",
+        vehicleUnit: "mile",
+        laborRate: 35,
+        crewSize: 1,
+        travelDistance: 12,
+        travelHours: 0.5,
+        vehicleRate: 0.75,
+        minimumCharge: 150,
+        taxPct: 0,
+        overheadPct: 15,
+        targetMargin: 45,
+        note: "US starter values. Replace with your state, city, payroll, vehicle, insurance, and job-history data."
+      },
+      germany: {
+        label: "Germany / Bonn example",
+        currency: "€",
+        unit: "m²",
+        productionUnit: "m²/hour",
+        distanceUnit: "km",
+        vehicleUnit: "km",
+        laborRate: 19.50,
+        facadeLaborRate: 23.92,
+        crewSize: 2,
+        travelDistance: 20,
+        travelHours: 0.5,
+        vehicleRate: 0.30,
+        minimumCharge: 250,
+        taxPct: 19,
+        overheadPct: 15,
+        targetMargin: 50,
+        note: "Bonn/Germany example based on local wage, VAT, travel, material and production-rate assumptions. It must be calibrated by the contractor."
+      },
+      custom: {
+        label: "Custom local profile",
+        currency: "$",
+        unit: "sq ft",
+        productionUnit: "sq ft/hour",
+        distanceUnit: "miles",
+        vehicleUnit: "mile",
+        note: "Keep your current values and adjust manually. Use this when you know your own local rates."
+      }
+    };
+
+    const serviceProfileOverrides = {
+      germany: {
+        driveway: {
+          productionRate: 60,
+          setupHours: 0.5,
+          chemicalRate: 0.17,
+          equipmentRate: 10,
+          minimumCharge: 250,
+          marketLow: 5,
+          marketHigh: 12,
+          projectLow: 250,
+          projectHigh: 400,
+          source: "Germany/Bonn example: local driveway and stone cleaning market sanity range, editable"
+        },
+        house: {
+          productionRate: 55,
+          setupHours: 0.75,
+          chemicalRate: 0.17,
+          equipmentRate: 10,
+          minimumCharge: 350,
+          marketLow: 7,
+          marketHigh: 25,
+          projectLow: 350,
+          projectHigh: 0,
+          source: "Germany/Bonn example: facade cleaning market sanity range, editable"
+        },
+        roof: {
+          productionRate: 45,
+          setupHours: 1,
+          chemicalRate: 0.20,
+          equipmentRate: 12,
+          minimumCharge: 400,
+          marketLow: 7,
+          marketHigh: 25,
+          projectLow: 400,
+          projectHigh: 0,
+          source: "Germany/Bonn example: use facade/softwash sanity range and calibrate locally"
+        },
+        deck: {
+          productionRate: 40,
+          setupHours: 0.75,
+          chemicalRate: 0.20,
+          equipmentRate: 10,
+          minimumCharge: 250,
+          marketLow: 10,
+          marketHigh: 20,
+          projectLow: 250,
+          projectHigh: 0,
+          source: "Germany/Bonn example: intensive paver/deck cleaning sanity range, editable"
+        },
+        commercial: {
+          productionRate: 150,
+          setupHours: 1,
+          chemicalRate: 0.08,
+          equipmentRate: 14,
+          minimumCharge: 350,
+          marketLow: 1.5,
+          marketHigh: 1.8,
+          projectLow: 350,
+          projectHigh: 0,
+          source: "Germany/Bonn example: large commercial flatwork efficiency range, editable"
+        }
+      }
+    };
+
+    let activePricingProfile = "us";
+
+    function currentProfile() {
+      return pricingProfiles[activePricingProfile] || pricingProfiles.us;
+    }
+
+    function getCurrentPreset(serviceKey) {
+      return { ...(basePresets[serviceKey] || basePresets.driveway), ...((serviceProfileOverrides[activePricingProfile] || {})[serviceKey] || {}) };
+    }
+
+    function getUnitLabel() { return currentProfile().unit || "sq ft"; }
+    function getDistanceUnitLabel() { return currentProfile().distanceUnit || "miles"; }
+
+    function updateUnitLabels() {
+      const profile = currentProfile();
+      if ($("areaUnitLabel")) $("areaUnitLabel").textContent = profile.unit;
+      if ($("productionUnitLabel")) $("productionUnitLabel").textContent = profile.productionUnit;
+      if ($("chemicalUnitLabel")) $("chemicalUnitLabel").textContent = profile.unit;
+      if ($("distanceUnitLabel")) $("distanceUnitLabel").textContent = profile.distanceUnit;
+      if ($("vehicleUnitLabel")) $("vehicleUnitLabel").textContent = profile.vehicleUnit;
+    }
+
+    function renderProfileSummary() {
+      const profile = currentProfile();
+      const html = [
+        ["Currency", profile.currency || text("currency") || "$"],
+        ["Area unit", profile.unit || "sq ft"],
+        ["Travel", `${profile.vehicleRate ?? num("mileRate")} per ${profile.vehicleUnit || "mile"}`],
+        ["Default labor", profile.facadeLaborRate ? `${profile.laborRate}/h · facade ${profile.facadeLaborRate}/h` : `${profile.laborRate ?? num("laborRate")}/h`]
+      ].map(([k,v]) => `<div class="profile-chip"><small>${escapeHtml(k)}</small><strong>${escapeHtml(String(v))}</strong></div>`).join("");
+      if ($("profileSummary")) $("profileSummary").innerHTML = html + `<div class="profile-chip" style="grid-column:1/-1"><small>Profile note</small><strong>${escapeHtml(profile.note || "Custom profile")}</strong></div>`;
+    }
+
+    function applyPricingProfile() {
+      activePricingProfile = $("pricingProfile") ? $("pricingProfile").value : "us";
+      if ($("profileServiceDefault") && $("profileServiceDefault").value !== "current") {
+        $("serviceType").value = $("profileServiceDefault").value;
+        $("profileServiceDefault").value = "current";
+      }
+      const profile = currentProfile();
+      if (activePricingProfile !== "custom") {
+        $("currency").value = profile.currency;
+        $("crewSize").value = profile.crewSize;
+        const serviceKey = $("serviceType").value;
+        const isFacade = ["house", "roof"].includes(serviceKey);
+        $("laborRate").value = isFacade && profile.facadeLaborRate ? profile.facadeLaborRate : profile.laborRate;
+        $("travelMiles").value = profile.travelDistance;
+        $("travelHours").value = profile.travelHours;
+        $("mileRate").value = profile.vehicleRate;
+        $("minimumCharge").value = profile.minimumCharge;
+        $("taxPct").value = profile.taxPct;
+        $("overheadPct").value = profile.overheadPct;
+        $("targetMargin").value = profile.targetMargin;
+        if ($("sealCurrency")) $("sealCurrency").value = profile.currency;
+      }
+      updateUnitLabels();
+      renderProfileSummary();
+      applyPreset();
+      markSampleDefaults();
+      trackAppEvent("pricing_profile_applied", { profile: activePricingProfile, service: $("serviceType").value });
+    }
+
     const conditionMultipliers = {
       light: { label: "Light dirt", time: 0.9, chemical: 0.8 },
       normal: { label: "Normal dirt", time: 1.0, chemical: 1.0 },
@@ -2117,7 +2410,7 @@
 
     function applyPreset() {
       const key = $("serviceType").value;
-      const preset = presets[key];
+      const preset = getCurrentPreset(key);
 
       $("productionRate").value = preset.productionRate;
       $("setupHours").value = preset.setupHours;
@@ -2132,7 +2425,7 @@
 
     function calculateQuote() {
       const serviceKey = $("serviceType").value;
-      const preset = presets[serviceKey];
+      const preset = getCurrentPreset(serviceKey);
       const condition = conditionMultipliers[$("condition").value];
       const access = accessMultipliers[$("access").value];
 
@@ -2226,6 +2519,10 @@
         crewSize,
         notes: text("notes"),
         currency: text("currency") || "$",
+        pricingProfile: activePricingProfile,
+        pricingProfileLabel: currentProfile().label,
+        unitLabel: getUnitLabel(),
+        distanceUnitLabel: getDistanceUnitLabel(),
         quoteStatus: text("quoteStatus") || "draft",
         acceptanceDate: text("acceptanceDate"),
         acceptedBy: text("acceptedBy"),
@@ -2267,7 +2564,7 @@
       $("quoteCustomerContact").textContent = [result.customerEmail, result.customerPhone].filter(Boolean).join(" · ") || "-";
       $("quoteJobAddress").textContent = result.jobAddress || "-";
       $("quoteService").textContent = `${result.service} · ${result.method}`;
-      $("quoteScope").textContent = `${result.area.toLocaleString()} sq ft · ${result.surfaceType} · ${result.condition} · ${result.access}`;
+      $("quoteScope").textContent = `${result.area.toLocaleString()} ${result.unitLabel || getUnitLabel()} · ${result.surfaceType} · ${result.condition} · ${result.access}`;
       $("quoteNotes").textContent = result.notes || "-";
 
       const status = result.quoteStatus || "draft";
@@ -2288,7 +2585,7 @@
       $("bestPrice").textContent = money(best);
 
       $("quoteAssumptions").innerHTML =
-        `<strong>Visible assumptions:</strong> ${result.productionRate.toLocaleString()} sq ft/hour production rate, ` +
+        `<strong>Visible assumptions:</strong> ${escapeHtml(result.pricingProfileLabel || currentProfile().label)} profile, ${result.productionRate.toLocaleString()} sq ft/hour production rate, ` +
         `${result.crewSize} crew member(s), ${hours(result.elapsedTime)} total estimated job time, ` +
         `${money(result.internalCost)} internal cost, ${pct(result.targetMargin)} target margin. ` +
         `Market sanity range: ${money(result.marketLow)} - ${money(result.marketHigh)}. Source note: ${escapeHtml(result.marketSource)}.`;
@@ -2973,6 +3270,31 @@
       $("growthStatus").textContent = "Test event logged. Check GA4 Realtime and Admin > Events.";
     }
 
+
+    let quickRealismChoice = "";
+
+    function saveQuickFeedback() {
+      const result = latestResult || calculateQuote();
+      const note = text("quickFeedbackNote");
+      const saved = JSON.parse(localStorage.getItem("washQuoteLabFeedbackV1") || "[]");
+      saved.unshift({
+        createdAt: new Date().toISOString(),
+        source: "quote_result_quick_feedback",
+        realism: quickRealismChoice || "not_selected",
+        note,
+        quoteNumber: result.quoteNumber,
+        service: result.service,
+        finalPrice: result.finalPrice,
+        currency: result.currency,
+        pricingProfile: result.pricingProfileLabel,
+        unitLabel: result.unitLabel
+      });
+      localStorage.setItem("washQuoteLabFeedbackV1", JSON.stringify(saved.slice(0, 100)));
+      renderFeedbackList();
+      trackAppEvent("feedback_saved", { source: "quote_result", realism: quickRealismChoice || "not_selected", service: result.service });
+      alert("Feedback saved locally in this browser.");
+    }
+
     function loadPaymentLinks() {
       const links = getPaymentLinks();
       if ($("proMonthlyPaymentLink")) $("proMonthlyPaymentLink").value = links.proMonthly || "";
@@ -3107,8 +3429,20 @@
       });
     });
 
-    $("serviceType").addEventListener("change", applyPreset);
-    $("calculateBtn").addEventListener("click", () => { calculateQuote(); trackAppEvent("quote_calculated", { service: $("serviceType").value }); });
+    $("serviceType").addEventListener("change", () => { if ($("pricingProfile") && $("pricingProfile").value !== "custom") applyPricingProfile(); else applyPreset(); });
+
+    if ($("pricingProfile")) $("pricingProfile").addEventListener("change", applyPricingProfile);
+    if ($("applyProfileBtn")) $("applyProfileBtn").addEventListener("click", applyPricingProfile);
+    document.querySelectorAll("[data-realism]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        quickRealismChoice = btn.getAttribute("data-realism");
+        document.querySelectorAll("[data-realism]").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+      });
+    });
+    if ($("saveQuickFeedbackBtn")) $("saveQuickFeedbackBtn").addEventListener("click", saveQuickFeedback);
+
+    $("calculateBtn").addEventListener("click", () => { calculateQuote(); trackAppEvent("quote_calculated", { service: $("serviceType").value, profile: activePricingProfile }); });
     $("saveQuoteBtn").addEventListener("click", () => { saveQuote(); trackAppEvent("quote_saved", { service: $("serviceType").value }); });
     $("resetBtn").addEventListener("click", resetExample);
     $("printBtn").addEventListener("click", () => {
@@ -3183,6 +3517,8 @@
     initSampleDefaultMap();
     routeFromHash();
     resetExample();
+    updateUnitLabels();
+    renderProfileSummary();
     resetSoftwashExample();
     resetMaterialsExample();
     resetMeasureExample();
